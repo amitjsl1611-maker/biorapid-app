@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioRapid — Home</title>
+
+  <!-- Fustat Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --app-bg:      #FFFFFF;
+      --surface:     #FFFFFF;
+      --surface-2:   #F5F5F7;
+      --border:      rgba(0,0,0,0.09);
+
+      --card-green:  #C9EDA8;
+      --card-pink:   #F2DCED;
+      --card-blue:   #C9DCFA;
+
+      --green:       #2E6B3A;
+      --violet:      #6B48C2;
+      --orange:      #E8640A;
+
+      --text-1:      #111118;
+      --text-2:      #6C6C6C;
+      --text-3:      #ABABAB;
+
+      --r-sm:  12px;
+      --r-md:  18px;
+      --r-lg:  24px;
+      --r-xl:  28px;
+
+      --sh-xs: 0 1px 4px rgba(0,0,0,0.05);
+      --sh-sm: 0 2px 10px rgba(0,0,0,0.07);
+      --sh-md: 0 4px 22px rgba(0,0,0,0.10);
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+    img    { display: block; }
+
+    /* ─── STAGE ─── */
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #E8D8C8 0%, #D8C8C0 40%, #E0C8BC 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: 'Fustat', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── iPHONE 17 PRO FRAME ─── */
+    .iphone-frame { position: relative; flex-shrink: 0; }
+
+    .iphone-body {
+      width: 454px;
+      height: 982px;
+      background: linear-gradient(165deg,
+        #3A3836 0%, #2A2826 25%, #222020 50%, #2C2A28 75%, #3A3836 100%);
+      border-radius: 58px;
+      position: relative;
+      box-shadow:
+        inset 0 0 0 0.5px rgba(255,255,255,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 0 0 0.5px rgba(0,0,0,0.6),
+        0 50px 130px rgba(0,0,0,0.55),
+        0 15px 50px rgba(0,0,0,0.30);
+    }
+
+    /* Frame sheen */
+    .iphone-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 58px;
+      background: linear-gradient(125deg,
+        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.02) 35%,
+        transparent 60%);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Screen — thin 7px bezel */
+    .iphone-screen-wrap {
+      position: absolute;
+      top: 7px; left: 7px; right: 7px; bottom: 7px;
+      background: #000;
+      border-radius: 52px;
+      overflow: hidden;
+    }
+
+    /* Hardware buttons */
+    .btn {
+      position: absolute;
+      background: linear-gradient(90deg, #302E2C, #3C3A38 40%, #2E2C2A);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3);
+    }
+    .btn-silent   { left:-3.5px; top:128px; width:3.5px; height:30px; border-radius:2px 0 0 2px; }
+    .btn-vol-up   { left:-3.5px; top:185px; width:3.5px; height:62px; border-radius:2px 0 0 2px; }
+    .btn-vol-down { left:-3.5px; top:262px; width:3.5px; height:62px; border-radius:2px 0 0 2px; }
+    .btn-power {
+      right:-3.5px; top:200px; width:3.5px; height:78px; border-radius:0 2px 2px 0;
+      background: linear-gradient(270deg, #302E2C, #3C3A38 40%, #2E2C2A);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3);
+    }
+
+    /* ─── THE APP ─── */
+    .phone {
+      width: 100%;
+      height: 100%;
+      background: var(--app-bg);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 124px;
+      height: 36px;
+      background: #000;
+      border-radius: 22px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      pointer-events: none;
+    }
+    .di-dot { width:9px; height:9px; border-radius:50%; background:#1A1A1A; border:1px solid #2A2A2A; }
+    .di-dot.cam::after {
+      content:''; display:block; width:4px; height:4px; border-radius:50%;
+      background:#0D1520; margin:2px auto 0;
+      box-shadow: 0 0 3px rgba(80,160,255,0.35);
+    }
+    .di-bar { width:44px; height:5px; border-radius:3px; background:#1E1E1E; }
+
+    /* ─── STATUS BAR — fixed inside phone ─── */
+    .status-bar {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 26px 0;
+      background: var(--app-bg);
+      color: var(--text-1);
+      z-index: 100;
+    }
+    .status-time { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+    .status-icons { display: flex; align-items: center; gap: 5px; }
+
+    /* ─── SCROLL AREA ─── */
+    .scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 110px;
+    }
+    .scroll-area::-webkit-scrollbar { display: none; }
+
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 14px 20px 6px;
+    }
+    .avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .greeting-wrap { flex: 1; min-width: 0; }
+    .greeting-name {
+      font-size: 15px; font-weight: 700;
+      color: var(--text-1); letter-spacing: -0.2px;
+    }
+    .greeting-sub {
+      font-size: 11.5px; color: var(--text-2); margin-top: 1px;
+    }
+    .header-icons { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-1);
+      transition: transform 0.12s ease;
+      position: relative;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .icon-btn:active { transform: scale(0.90); }
+    .icon-btn.has-badge::after {
+      content: '';
+      position: absolute; top: 7px; right: 7px;
+      width: 7px; height: 7px;
+      background: var(--orange);
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .sec-hd {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 20px 10px;
+    }
+    .sec-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #6C6C6C;
+      letter-spacing: -0.1px;
+    }
+    .sec-action {
+      display: flex; align-items: center; gap: 3px;
+      font-size: 12.5px; font-weight: 500;
+      color: var(--text-2); cursor: pointer;
+    }
+
+    /* ─── HERO CARD ─── */
+    .hero-card {
+      margin: 0 16px 0;
+      background: var(--card-green);
+      border-radius: var(--r-xl);
+      padding: 20px 20px 20px;
+      overflow: hidden;
+    }
+
+    /* Card-level section header row */
+    .hero-hd {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .hero-hd-title {
+      font-size: 15px; font-weight: 600; color: #3A5C40;
+    }
+    .hero-hd-viewall {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 600; color: #111111;
+      cursor: pointer;
+    }
+    .viewall-dot {
+      width: 11px; height: 11px;
+      background: #111111;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+
+    .hero-chapter {
+      font-size: 26px; font-weight: 800; color: #111111;
+      letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 3px;
+    }
+    .hero-mode {
+      font-size: 13px; font-weight: 400; color: #3D5244;
+      margin-bottom: 16px;
+    }
+    .hero-concepts-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-top: 10px; margin-bottom: 6px;
+    }
+    .hero-concepts-stmt {
+      font-size: 13px; font-weight: 600; color: #111111;
+    }
+    .hero-prog-label {
+      font-size: 11px; font-weight: 600; color: #4A4A4A;
+    }
+    .hero-prog-track {
+      width: 100%;
+      height: 6px; background: rgba(46,107,58,0.18);
+      border-radius: 100px; overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .hero-prog-fill {
+      height: 100%; border-radius: 100px;
+      background: var(--green); width: 43%;
+    }
+    /* CTA row */
+    .hero-cta {
+      display: flex; align-items: center; gap: 8px;
+      cursor: pointer; background: none; border: none; padding: 0;
+      font-family: 'Fustat', system-ui;
+      transition: opacity 0.15s ease;
+    }
+    .hero-cta:active { opacity: 0.7; }
+    .hero-cta-text {
+      font-size: 12.5px; font-weight: 700; color: #111111;
+      letter-spacing: -0.1px;
+    }
+    .hero-cta-arrow {
+      width: 11px; height: 11px; min-width: 11px;
+      background: #111111;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; flex-shrink: 0;
+    }
+
+    /* ─── CHAPTER BENTO GRID ─── */
+    .bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 10px 16px 0;
+    }
+    /* 3rd card spans full width */
+    .bento .ben:nth-child(3) { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 14px; }
+
+    .ben {
+      border-radius: var(--r-lg);
+      padding: 16px;
+      cursor: pointer;
+      transition: transform 0.12s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .ben:active { transform: scale(0.96); }
+    .ben.pink  { background: var(--card-pink); }
+    .ben.blue  { background: var(--card-blue); }
+    .ben.green { background: var(--card-green); }
+
+    .ben-emoji {
+      font-size: 22px; line-height: 1;
+      margin-bottom: 10px;
+    }
+    /* For the full-width 3rd card the emoji doesn't stack */
+    .ben:nth-child(3) .ben-emoji { margin-bottom: 0; flex-shrink: 0; }
+    .ben:nth-child(3) .ben-body  { flex: 1; }
+    .ben:nth-child(3) .ben-cta   { flex-shrink: 0; margin-top: 0; }
+
+    .ben-chapter {
+      font-size: 14px; font-weight: 700; color: var(--text-1);
+      letter-spacing: -0.2px; margin-bottom: 2px;
+    }
+    .ben-pct {
+      font-size: 11px; font-weight: 500; color: #6C6C6C;
+      margin-bottom: 10px;
+    }
+    .ben-bar {
+      height: 5px; background: rgba(0,0,0,0.1);
+      border-radius: 100px; overflow: hidden; margin-bottom: 12px;
+    }
+    .ben-bar-fill {
+      height: 100%; border-radius: 100px; background: var(--text-1);
+    }
+    .ben-cta {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 700; color: #111111;
+      margin-top: auto;
+      cursor: pointer;
+    }
+    .ben-cta-dot {
+      width: 11px; height: 11px;
+      background: #111111;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; flex-shrink: 0;
+    }
+    /* 3D icon images inside bento cards */
+    .ben-icon-3d {
+      width: 44px; height: 44px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .ben:nth-child(3) .ben-icon-3d { margin-bottom: 0; flex-shrink: 0; }
+
+    /* Ring kept for challenge section */
+    .ring-wrap { position: relative; width: 60px; height: 60px; margin-top: 8px; }
+    .ring-wrap svg { transform: rotate(-90deg); }
+    .rng-bg  { fill: none; stroke: rgba(255,255,255,0.45); stroke-width: 5.5; }
+    .rng-arc {
+      fill: none; stroke: #2563EB; stroke-width: 5.5; stroke-linecap: round;
+      stroke-dasharray: 150; stroke-dashoffset: 150;
+      transition: stroke-dashoffset 1.1s cubic-bezier(0.34,1.4,0.64,1) 0.5s;
+    }
+    .rng-arc.go { stroke-dashoffset: 56; }
+    .ring-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--text-1);
+    }
+
+    /* ─── LESSON CARDS ─── */
+    .lesson-list { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+    .lesson-card {
+      background: #fff; border-radius: var(--r-lg);
+      padding: 16px; border: 1px solid var(--border);
+      box-shadow: var(--sh-sm); cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .lesson-card:active { transform: scale(0.98); }
+    .lesson-card:hover  { box-shadow: var(--sh-md); }
+
+    .lesson-top { display: flex; align-items: flex-start; gap: 12px; }
+    .lesson-info { flex: 1; min-width: 0; }
+    .lesson-avatars { display: flex; margin-bottom: 8px; }
+    .lesson-av {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid #fff; font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; margin-left: -6px;
+    }
+    .lesson-av:first-child { margin-left: 0; }
+    .lesson-av.a1 { background: #E07040; }
+    .lesson-av.a2 { background: #4080E0; }
+    .lesson-av.a3 { background: #40A070; }
+
+    .lesson-tag {
+      font-size: 10px; font-weight: 500; color: #6C6C6C;
+      background: var(--surface-2); border-radius: 100px;
+      padding: 3px 8px; margin-bottom: 6px; display: inline-block;
+    }
+    .lesson-name {
+      font-size: 15px; font-weight: 700; color: var(--text-1);
+      letter-spacing: -0.3px; line-height: 1.25; margin-bottom: 4px;
+    }
+    .lesson-meta { font-size: 11.5px; color: #6C6C6C; }
+
+    .lesson-thumb {
+      width: 72px; height: 72px; border-radius: 16px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+    }
+    .lesson-thumb.g { background: #D4EDDF; }
+    .lesson-thumb.v { background: #E8E0F8; }
+    .lesson-thumb.b { background: #D8EAFC; }
+
+    .seg-bar-wrap { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+    .seg-bar { flex: 1; display: flex; gap: 2.5px; }
+    .seg { flex: 1; height: 7px; border-radius: 2px; background: #E8E8EE; }
+    .seg.done { background: #3B82F6; }
+    .seg-label { font-size: 11px; font-weight: 500; color: #6C6C6C; white-space: nowrap; flex-shrink: 0; }
+
+    /* ─── TODAY'S CHALLENGE CARD ─── */
+    .challenge-wrap {
+      margin: 0 16px;
+      background: #fff;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--sh-sm);
+      overflow: hidden;
+    }
+    .challenge-top {
+      padding: 18px 18px 16px;
+      border-bottom: 1px solid #F0F0F4;
+    }
+    .challenge-goal-label {
+      font-size: 10px; font-weight: 600; color: #6C6C6C;
+      text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 10px;
+    }
+    .challenge-goal-row {
+      display: flex; justify-content: space-between;
+      align-items: baseline; margin-bottom: 10px;
+    }
+    .challenge-goal-text {
+      font-size: 15px; font-weight: 700; color: #111111; letter-spacing: -0.2px;
+    }
+    .challenge-goal-count {
+      font-size: 13px; font-weight: 600; color: var(--green);
+      font-variant-numeric: tabular-nums;
+    }
+    .ch-prog-track {
+      height: 8px; background: #EEF0EC;
+      border-radius: 100px; overflow: hidden; margin-bottom: 6px;
+    }
+    .ch-prog-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, #2E6B3A, #4CAF72);
+      width: 0%;
+      transition: width 1s cubic-bezier(0.34,1.4,0.64,1) 0.4s;
+    }
+    .ch-prog-fill.go { width: 60%; }
+    .ch-prog-meta {
+      display: flex; justify-content: space-between;
+      font-size: 10.5px; color: #6C6C6C; font-weight: 500;
+    }
+    .ch-prog-meta .pct { color: var(--green); font-weight: 700; }
+
+    /* Mission rows inside challenge card */
+    .mission-list { display: flex; flex-direction: column; }
+    .mc {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 18px;
+      border-bottom: 1px solid #F5F5F8;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+    .mc:last-child { border-bottom: none; }
+    .mc:active { background: #F8F8FA; }
+    .mc-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .mc-icon.g { background: #D8F0E0; }
+    .mc-icon.v { background: #EAE4F8; }
+    .mc-icon.b { background: #D8EAFC; }
+    .mc-icon img { width: 24px; height: 24px; object-fit: contain; }
+    .mc-body { flex: 1; min-width: 0; }
+    .mc-chapter { font-size: 13px; font-weight: 700; color: #111111; letter-spacing: -0.2px; }
+    .mc-mode    { font-size: 11px; color: #6C6C6C; margin-top: 1px; }
+    .mc-time    {
+      display: flex; align-items: center; gap: 3px;
+      font-size: 10.5px; color: #ABABAB; margin-top: 3px;
+    }
+    .mc-start {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: #111111;
+      flex-shrink: 0;
+    }
+    .mc-start-dot {
+      width: 11px; height: 11px;
+      background: #111111; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+
+    /* ─── AI COACH CARD ─── */
+    .ai-coach-card {
+      margin: 0 16px;
+      background: #F2EDFC;
+      border-radius: var(--r-xl);
+      padding: 18px;
+      border: 1px solid rgba(107,72,194,0.10);
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-coach-card::before {
+      content: '';
+      position: absolute; top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(107,72,194,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .ai-coach-hd {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+    }
+    .ai-coach-icon {
+      width: 28px; height: 28px;
+      background: var(--violet); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; flex-shrink: 0;
+    }
+    .ai-coach-title {
+      font-size: 14px; font-weight: 700; color: #111111; letter-spacing: -0.2px;
+    }
+    .ai-coach-sub {
+      font-size: 11px; color: #6C6C6C; margin-bottom: 14px; line-height: 1.4;
+    }
+    .ai-rec-card {
+      background: #fff;
+      border-radius: var(--r-md);
+      padding: 14px;
+      border: 1px solid rgba(107,72,194,0.10);
+    }
+    .ai-rec-top {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .ai-rec-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: #EAE4F8;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ai-rec-icon img { width: 22px; height: 22px; object-fit: contain; }
+    .ai-rec-chapter { font-size: 14px; font-weight: 800; color: #111111; letter-spacing: -0.3px; }
+    .ai-rec-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #FEF0E6; border-radius: 100px;
+      padding: 3px 8px; margin-top: 3px;
+    }
+    .ai-rec-tag span { font-size: 10px; font-weight: 600; color: #C44D00; }
+    .ai-rec-reasons {
+      display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px;
+    }
+    .ai-rec-reason {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11.5px; color: #555564;
+    }
+    .ai-rec-reason i { color: #9898A8; flex-shrink: 0; }
+    .ai-rec-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid #F0F0F4;
+    }
+    .ai-rec-time { font-size: 11px; color: #6C6C6C; }
+    .ai-rec-time strong { color: #111111; font-weight: 700; }
+    .ai-rec-cta {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 700; color: var(--violet);
+      cursor: pointer;
+    }
+    .ai-rec-cta-dot {
+      width: 11px; height: 11px;
+      background: var(--violet); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; color: #fff;
+    }
+
+    /* ─── RECENT ACTIVITY ─── */
+    .act-list { display: flex; flex-direction: column; gap: 7px; padding: 0 16px; }
+    .act-item {
+      display: flex; align-items: center; gap: 11px;
+      background: #fff; border-radius: var(--r-md);
+      padding: 12px 14px; border: 1px solid var(--border);
+      box-shadow: var(--sh-xs);
+    }
+    .act-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #D8F0E0; color: var(--green);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .act-body { flex: 1; min-width: 0; }
+    .act-name { font-size: 13px; font-weight: 600; color: #111111; }
+    .act-status { font-size: 11px; color: #6C6C6C; margin-top: 1px; }
+    .act-time { font-size: 10.5px; color: #ABABAB; flex-shrink: 0; }
+
+    /* ─── STREAK CARD ─── */
+    .streak-card {
+      margin: 0 16px;
+      background: #FEF0E6;
+      border-radius: var(--r-xl);
+      padding: 18px;
+      border: 1px solid rgba(232,100,10,0.09);
+    }
+    .streak-hd {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 16px;
+    }
+    .streak-left { display: flex; align-items: center; gap: 10px; }
+    .streak-flame { font-size: 26px; line-height: 1; }
+    .streak-title { font-size: 18px; font-weight: 800; color: #C44D00; letter-spacing: -0.4px; }
+    .streak-sub   { font-size: 11px; color: #A05A30; margin-top: 1px; }
+    .streak-stats {
+      display: flex; gap: 14px;
+    }
+    .streak-stat { text-align: center; }
+    .streak-stat-num { font-size: 14px; font-weight: 800; color: #C44D00; font-variant-numeric: tabular-nums; }
+    .streak-stat-label { font-size: 9px; font-weight: 500; color: #A05A30; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 1px; }
+
+    /* Dot tracker */
+    .streak-dots-row {
+      display: flex; gap: 8px; align-items: center; justify-content: space-between;
+    }
+    .streak-dot-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .streak-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(232,100,10,0.12);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .streak-dot.on { background: var(--orange); }
+    .streak-dot.on i { color: #fff; }
+    .streak-dot i { color: rgba(232,100,10,0.3); }
+    .streak-day-label { font-size: 9px; font-weight: 600; color: #A05A30; }
+
+    /* ─── BOTTOM NAV — Apple-style frosted glass ─── */
+    .bottom-nav {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      /* Very translucent white */
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border-radius: 100px;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      /* Hairline border + soft shadow like iOS */
+      box-shadow:
+        0 0 0 0.5px rgba(0,0,0,0.08),
+        0 4px 24px rgba(0,0,0,0.08),
+        inset 0 0.5px 0 rgba(255,255,255,0.8);
+      z-index: 200;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 5px 12px; border-radius: 100px; cursor: pointer;
+      color: var(--text-3);
+      transition: color 0.2s ease, background 0.15s ease;
+      min-width: 54px;
+    }
+    .nav-item.active { color: var(--text-1); }
+    .nav-item:active { background: rgba(0,0,0,0.05); }
+    .nav-label { font-size: 9.5px; font-weight: 500; letter-spacing: 0.1px; }
+
+    /* Home indicator */
+    .home-indicator {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      width: 134px; height: 5px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px; z-index: 300; pointer-events: none;
+    }
+
+    /* ─── SPACING ─── */
+    .mt-8  { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rng-arc { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- iPHONE 17 PRO FRAME -->
+<div class="iphone-frame">
+  <div class="btn btn-silent"></div>
+  <div class="btn btn-vol-up"></div>
+  <div class="btn btn-vol-down"></div>
+  <div class="btn btn-power"></div>
+
+  <div class="iphone-body">
+    <div class="iphone-screen-wrap">
+
+      <!-- Dynamic Island -->
+      <div class="dynamic-island">
+        <div class="di-dot cam"></div>
+        <div class="di-bar"></div>
+        <div class="di-dot"></div>
+      </div>
+
+      <!-- ════ APP ════ -->
+      <div class="phone" id="phone">
+
+        <!-- STATUS BAR — sits outside scroll area so it never scrolls away -->
+        <div class="status-bar">
+          <span class="status-time">9:41</span>
+          <div class="status-icons">
+            <i data-lucide="signal" style="width:15px;height:15px;"></i>
+            <i data-lucide="wifi" style="width:15px;height:15px;"></i>
+            <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
+          </div>
+        </div>
+
+        <!-- SCROLL AREA -->
+        <div class="scroll-area">
+
+          <!-- HEADER -->
+          <div class="header">
+            <div class="avatar">
+              <img src="https://i.pravatar.cc/100?img=47" alt="Amit" loading="lazy">
+            </div>
+            <div class="greeting-wrap">
+              <div class="greeting-name">Good Morning, Amit 👋</div>
+              <div class="greeting-sub">Ready for another winning session?</div>
+            </div>
+            <div class="header-icons">
+              <button class="icon-btn" aria-label="Search">
+                <i data-lucide="search" style="width:16px;height:16px;"></i>
+              </button>
+              <button class="icon-btn has-badge" aria-label="Notifications">
+                <i data-lucide="bell" style="width:16px;height:16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- SECTION HEADER: Let's continue -->
+          <div class="sec-hd">
+            <span class="sec-title">Let's Jump Back In</span>
+            <span class="hero-hd-viewall">
+              View all
+              <span class="viewall-dot">
+                <i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i>
+              </span>
+            </span>
+          </div>
+
+          <!-- HERO CARD -->
+          <div class="hero-card">
+            <div class="hero-chapter">Human Physiology</div>
+            <div class="hero-mode">Memory Lock &nbsp;·&nbsp; Est. 8 mins</div>
+            <div class="hero-concepts-row">
+              <span class="hero-concepts-stmt">18 out of 42 concepts done</span>
+              <span class="hero-prog-label">43%</span>
+            </div>
+            <div class="hero-prog-track">
+              <div class="hero-prog-fill"></div>
+            </div>
+            <button class="hero-cta">
+              <span class="hero-cta-text">Resume</span>
+              <span class="hero-cta-arrow">
+                <i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i>
+              </span>
+            </button>
+          </div>
+
+          <!-- 3 CHAPTER CARDS (no separate section header) -->
+          <div class="bento">
+            <!-- Genetics — pink -->
+            <div class="ben pink">
+              <img class="ben-icon-3d"
+                src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Dna/3D/dna_3d.png"
+                alt="Genetics">
+              <div class="ben-chapter">Genetics</div>
+              <div class="ben-pct">54% Complete</div>
+              <div class="ben-bar"><div class="ben-bar-fill" style="width:54%;"></div></div>
+              <div class="ben-cta">
+                Resume
+                <div class="ben-cta-dot">
+                  <i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ecology — blue -->
+            <div class="ben blue">
+              <img class="ben-icon-3d"
+                src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Herb/3D/herb_3d.png"
+                alt="Ecology">
+              <div class="ben-chapter">Ecology</div>
+              <div class="ben-pct">80% Complete</div>
+              <div class="ben-bar"><div class="ben-bar-fill" style="width:80%;"></div></div>
+              <div class="ben-cta">
+                Resume
+                <div class="ben-cta-dot">
+                  <i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- TODAY'S CHALLENGE -->
+          <div class="sec-hd mt-8">
+            <span class="sec-title">Today's Challenge</span>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <i data-lucide="zap" style="width:12px;height:12px;color:var(--orange);"></i>
+              <span style="font-size:11.5px;font-weight:600;color:var(--orange);">16 left</span>
+            </div>
+          </div>
+
+          <div class="challenge-wrap">
+            <!-- Goal progress header -->
+            <div class="challenge-top">
+              <div class="challenge-goal-label">Daily Goal</div>
+              <div class="challenge-goal-row">
+                <span class="challenge-goal-text">Revise 40 Concepts</span>
+                <span class="challenge-goal-count">24 / 40</span>
+              </div>
+              <div class="ch-prog-track">
+                <div class="ch-prog-fill" id="chFill"></div>
+              </div>
+              <div class="ch-prog-meta">
+                <span>Stay consistent. Small revisions lead to big results.</span>
+                <span class="pct">60%</span>
+              </div>
+            </div>
+
+            <!-- Mission rows -->
+            <div class="mission-list">
+              <div class="mc">
+                <div class="mc-icon g">
+                  <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Brain/3D/brain_3d.png" alt="">
+                </div>
+                <div class="mc-body">
+                  <div class="mc-chapter">Human Physiology</div>
+                  <div class="mc-mode">Memory Lock</div>
+                  <div class="mc-time"><i data-lucide="clock" style="width:10px;height:10px;"></i> 8 mins</div>
+                </div>
+                <div class="mc-start">
+                  Start
+                  <div class="mc-start-dot"><i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i></div>
+                </div>
+              </div>
+              <div class="mc">
+                <div class="mc-icon v">
+                  <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Seedling/3D/seedling_3d.png" alt="">
+                </div>
+                <div class="mc-body">
+                  <div class="mc-chapter">Ecology</div>
+                  <div class="mc-mode">Figure Strike</div>
+                  <div class="mc-time"><i data-lucide="clock" style="width:10px;height:10px;"></i> 5 mins</div>
+                </div>
+                <div class="mc-start">
+                  Start
+                  <div class="mc-start-dot"><i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i></div>
+                </div>
+              </div>
+              <div class="mc">
+                <div class="mc-icon b">
+                  <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/DNA/3D/dna_3d.png" alt="">
+                </div>
+                <div class="mc-body">
+                  <div class="mc-chapter">Genetics</div>
+                  <div class="mc-mode">10 PYQs</div>
+                  <div class="mc-time"><i data-lucide="clock" style="width:10px;height:10px;"></i> 12 mins</div>
+                </div>
+                <div class="mc-start">
+                  Start
+                  <div class="mc-start-dot"><i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI COACH RECOMMENDATION -->
+          <div class="sec-hd mt-12">
+            <span class="sec-title">AI Coach Recommends</span>
+          </div>
+
+          <div class="ai-coach-card">
+            <div class="ai-coach-hd">
+              <div class="ai-coach-icon">
+                <i data-lucide="sparkles" style="width:14px;height:14px;"></i>
+              </div>
+              <div class="ai-coach-title">Focus on Genetics today</div>
+            </div>
+            <div class="ai-coach-sub">Based on your recent performance and revision history</div>
+
+            <div class="ai-rec-card">
+              <div class="ai-rec-top">
+                <div class="ai-rec-icon">
+                  <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/DNA/3D/dna_3d.png" alt="">
+                </div>
+                <div>
+                  <div class="ai-rec-chapter">Genetics</div>
+                  <div class="ai-rec-tag">
+                    <i data-lucide="trending-down" style="width:9px;height:9px;color:#C44D00;"></i>
+                    <span>Accuracy dropped to 58%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ai-rec-reasons">
+                <div class="ai-rec-reason">
+                  <i data-lucide="calendar-x" style="width:11px;height:11px;"></i>
+                  Not revised in 6 days
+                </div>
+                <div class="ai-rec-reason">
+                  <i data-lucide="alert-circle" style="width:11px;height:11px;"></i>
+                  3 weak concepts need reinforcement
+                </div>
+              </div>
+
+              <div class="ai-rec-footer">
+                <div class="ai-rec-time"><i data-lucide="clock" style="width:10px;height:10px;vertical-align:middle;margin-right:3px;"></i><strong>10 min</strong> session</div>
+                <div class="ai-rec-cta">
+                  Review Now
+                  <div class="ai-rec-cta-dot"><i data-lucide="arrow-up-right" style="width:7px;height:7px;"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECENT ACTIVITY -->
+          <div class="sec-hd mt-12">
+            <span class="sec-title">Recent Activity</span>
+          </div>
+          <div class="act-list">
+            <div class="act-item">
+              <div class="act-icon"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+              <div class="act-body">
+                <div class="act-name">Plant Physiology Quiz</div>
+                <div class="act-status">Completed · 32/40 correct</div>
+              </div>
+              <div class="act-time">2h ago</div>
+            </div>
+            <div class="act-item">
+              <div class="act-icon"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+              <div class="act-body">
+                <div class="act-name">Blood Circulation</div>
+                <div class="act-status">Revised · 18 concepts</div>
+              </div>
+              <div class="act-time">5h ago</div>
+            </div>
+            <div class="act-item">
+              <div class="act-icon"><i data-lucide="check" style="width:14px;height:14px;"></i></div>
+              <div class="act-body">
+                <div class="act-name">Photosynthesis Flashcards</div>
+                <div class="act-status">Completed · 24 cards</div>
+              </div>
+              <div class="act-time">Yesterday</div>
+            </div>
+          </div>
+
+          <!-- DAILY STREAK -->
+          <div class="sec-hd mt-12">
+            <span class="sec-title">Daily Streak</span>
+          </div>
+          <div class="streak-card">
+            <div class="streak-hd">
+              <div class="streak-left">
+                <div class="streak-flame">🔥</div>
+                <div>
+                  <div class="streak-title">12 Day Streak</div>
+                  <div class="streak-sub">You're on a roll — keep it up!</div>
+                </div>
+              </div>
+              <div class="streak-stats">
+                <div class="streak-stat">
+                  <div class="streak-stat-num">12</div>
+                  <div class="streak-stat-label">Current</div>
+                </div>
+                <div class="streak-stat">
+                  <div class="streak-stat-num">21</div>
+                  <div class="streak-stat-label">Best</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="streak-dots-row">
+              <div class="streak-dot-col">
+                <div class="streak-dot on"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+                <div class="streak-day-label">MON</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot on"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+                <div class="streak-day-label">TUE</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot on"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+                <div class="streak-day-label">WED</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot on"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+                <div class="streak-day-label">THU</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot on"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+                <div class="streak-day-label">FRI</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot"><i data-lucide="minus" style="width:11px;height:11px;"></i></div>
+                <div class="streak-day-label">SAT</div>
+              </div>
+              <div class="streak-dot-col">
+                <div class="streak-dot"><i data-lucide="minus" style="width:11px;height:11px;"></i></div>
+                <div class="streak-day-label">SUN</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:28px;"></div>
+        </div><!-- /scroll-area -->
+
+        <!-- Home indicator -->
+        <div class="home-indicator"></div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bottom-nav">
+          <div class="nav-item active">
+            <i data-lucide="home" style="width:20px;height:20px;"></i>
+            <span class="nav-label">Home</span>
+          </div>
+          <div class="nav-item">
+            <i data-lucide="calendar" style="width:20px;height:20px;"></i>
+            <span class="nav-label">Schedule</span>
+          </div>
+          <div class="nav-item">
+            <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+            <span class="nav-label">Library</span>
+          </div>
+          <div class="nav-item">
+            <i data-lucide="message-square" style="width:20px;height:20px;"></i>
+            <span class="nav-label">Coach</span>
+          </div>
+          <div class="nav-item">
+            <i data-lucide="user" style="width:20px;height:20px;"></i>
+            <span class="nav-label">Profile</span>
+          </div>
+        </nav>
+
+      </div><!-- /phone -->
+    </div><!-- /iphone-screen-wrap -->
+  </div><!-- /iphone-body -->
+</div><!-- /iphone-frame -->
+
+<script>
+  lucide.createIcons();
+
+  // Build segmented bars
+  function buildSegBar(id, total, done) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    for (let i = 0; i < total; i++) {
+      const s = document.createElement('div');
+      s.className = 'seg' + (i < done ? ' done' : '');
+      el.appendChild(s);
+    }
+  }
+  buildSegBar('seg1', 23, 18);
+  buildSegBar('seg2', 20, 10);
+
+  // Animate rings
+  setTimeout(() => {
+    document.querySelectorAll('.rng-arc').forEach(el => el.classList.add('go'));
+  }, 300);
+
+  // Animate challenge progress bar
+  setTimeout(() => {
+    const fill = document.getElementById('chFill');
+    if (fill) fill.classList.add('go');
+  }, 400);
+
+  // Nav switching
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
