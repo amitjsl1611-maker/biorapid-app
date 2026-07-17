@@ -905,18 +905,24 @@
     /* ─────────────────────────────────────
        SCREEN 2 — SPLASH (editorial style)
     ───────────────────────────────────── */
-    #ob-splash { background: #fff; }
+    #ob-splash {
+      background: radial-gradient(ellipse 120% 80% at 20% 10%, #B8E4FF 0%, transparent 55%),
+                  radial-gradient(ellipse 100% 70% at 85% 5%,  #C4F0FF 0%, transparent 50%),
+                  radial-gradient(ellipse 90%  90% at 50% 50%, #D6F0FF 0%, transparent 65%),
+                  radial-gradient(ellipse 80%  60% at 10% 80%, #A8DAFF 0%, transparent 55%),
+                  radial-gradient(ellipse 110% 70% at 90% 90%, #C9ECFF 0%, transparent 55%),
+                  #E8F7FF;
+    }
 
-    /* Hero area with diagonal bottom cut */
     .splash-hero {
       flex-shrink: 0;
-      height: 360px;
-      background: linear-gradient(145deg, #EBF5FF 0%, #E8F5EC 60%, #F0EEFF 100%);
+      height: 400px;
+      background: transparent;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative;
+      overflow: visible; position: relative;
     }
     .splash-student-img {
-      height: 360px;
+      height: 400px;
       width: auto;
       object-fit: contain;
       object-position: top center;
@@ -925,12 +931,14 @@
       z-index: 1;
     }
     .splash-hero-fade {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
-      background: linear-gradient(to bottom, transparent, #fff);
+      position: absolute; bottom: 0; left: 0; right: 0; height: 140px;
+      background: linear-gradient(to bottom, transparent,
+        radial-gradient(ellipse 120% 80% at 20% 10%, #B8E4FF 0%, transparent 55%) #E8F7FF);
       z-index: 2;
+      pointer-events: none;
     }
     .splash-status-bar {
-      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      position: absolute; top: 0; left: 0; right: 0; z-index: 10;
       display: flex; justify-content: space-between; align-items: center;
       padding: 16px 26px 0;
     }
@@ -938,17 +946,13 @@
     .splash-status-bar .ob-status-icons { display: flex; align-items: center; gap: 5px; color: var(--text-1); }
 
     .splash-content {
-      padding: 28px 24px 0; flex: 1;
-    }
-    .splash-eyebrow {
-      font-size: 11px; font-weight: 700; color: #2B97FF;
-      letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px;
+      padding: 20px 24px 0; flex: 1; text-align: center;
     }
     .splash-headline {
-      font-size: 28px; font-weight: 900; color: var(--text-1);
-      letter-spacing: -0.7px; line-height: 1.15; margin-bottom: 12px;
+      font-size: 30px; font-weight: 500; color: #111118;
+      letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 0;
     }
-    .splash-headline em { font-style: normal; color: var(--green); }
+    .splash-headline strong { font-weight: 900; color: #111118; }
     .splash-copy {
       font-size: 13px; color: var(--text-2); line-height: 1.56; font-weight: 600;
     }
@@ -1193,11 +1197,9 @@
               <div class="splash-hero-fade"></div>
             </div>
 
-            <!-- Content: left-aligned, editorial -->
+            <!-- Content: centred, clean -->
             <div class="splash-content">
-              <div class="splash-eyebrow">NEET Biology · Smart Revision</div>
-              <div class="splash-headline">Master Biology.<br><em>One Swipe</em> at a Time.</div>
-              <div class="splash-copy">Turn daily revision into lasting confidence with bite-sized learning, smart practice, and personalized guidance.</div>
+              <div class="splash-headline">Master Biology.<br><strong>One Swipe</strong> at a Time.</div>
             </div>
 
             <div class="ob-cta-area">
