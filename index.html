@@ -912,18 +912,22 @@
       flex-shrink: 0;
       height: 360px;
       background: linear-gradient(145deg, #EBF5FF 0%, #E8F5EC 60%, #F0EEFF 100%);
-      clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
-      display: flex; align-items: flex-end; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden; position: relative;
     }
     .splash-student-img {
-      height: 340px;
+      height: 360px;
       width: auto;
       object-fit: contain;
       object-position: top center;
       display: block;
       position: relative;
       z-index: 1;
+    }
+    .splash-hero-fade {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+      background: linear-gradient(to bottom, transparent, #fff);
+      z-index: 2;
     }
     .splash-status-bar {
       position: absolute; top: 0; left: 0; right: 0; z-index: 2;
@@ -946,7 +950,7 @@
     }
     .splash-headline em { font-style: normal; color: var(--green); }
     .splash-copy {
-      font-size: 13px; color: var(--text-2); line-height: 1.56; font-weight: 400;
+      font-size: 13px; color: var(--text-2); line-height: 1.56; font-weight: 600;
     }
 
     /* ─────────────────────────────────────
@@ -1186,6 +1190,7 @@
               </div>
 
               <img class="splash-student-img" src="Images/image 24091.png" alt="Student">
+              <div class="splash-hero-fade"></div>
             </div>
 
             <!-- Content: left-aligned, editorial -->
