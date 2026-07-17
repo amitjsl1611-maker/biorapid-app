@@ -910,11 +910,20 @@
     /* Hero area with diagonal bottom cut */
     .splash-hero {
       flex-shrink: 0;
-      height: 336px;
+      height: 360px;
       background: linear-gradient(145deg, #EBF5FF 0%, #E8F5EC 60%, #F0EEFF 100%);
       clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: flex-end; justify-content: center;
       overflow: hidden; position: relative;
+    }
+    .splash-student-img {
+      height: 340px;
+      width: auto;
+      object-fit: contain;
+      object-position: top center;
+      display: block;
+      position: relative;
+      z-index: 1;
     }
     .splash-status-bar {
       position: absolute; top: 0; left: 0; right: 0; z-index: 2;
@@ -1176,55 +1185,7 @@
                 </div>
               </div>
 
-              <!-- Biology SVG illustration — updated palette -->
-              <svg width="320" height="296" viewBox="0 0 320 296" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer ring -->
-                <circle cx="160" cy="148" r="104" fill="rgba(43,151,255,0.06)" stroke="rgba(43,151,255,0.12)" stroke-width="1.5"/>
-                <!-- Mid ring -->
-                <circle cx="160" cy="148" r="68" fill="rgba(46,107,58,0.05)" stroke="rgba(46,107,58,0.11)" stroke-width="1"/>
-                <!-- Nucleus -->
-                <circle cx="160" cy="148" r="30" fill="rgba(43,151,255,0.12)"/>
-                <circle cx="160" cy="148" r="15" fill="rgba(43,151,255,0.20)"/>
-                <!-- Logo leaf in center -->
-                <g transform="translate(145,133)">
-                  <svg width="30" height="29" viewBox="0 0 100 95" fill="none">
-                    <defs>
-                      <linearGradient id="sl1" x1="30%" y1="0%" x2="70%" y2="100%">
-                        <stop offset="0%" stop-color="#8DD4FF"/>
-                        <stop offset="100%" stop-color="#2B97FF"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M50 58 C46 44,30 30,14 18 C8 14,6 28,12 38 C18 50,34 56,50 58Z" fill="url(#sl1)"/>
-                    <path d="M50 58 C54 44,70 30,86 18 C92 14,94 28,88 38 C82 50,66 56,50 58Z" fill="url(#sl1)"/>
-                    <rect x="44" y="57" width="12" height="30" rx="6" fill="url(#sl1)"/>
-                  </svg>
-                </g>
-                <!-- DNA helix left -->
-                <path d="M76 58 C94 76,102 102,92 126 C82 150,74 174,92 194" stroke="#2E6B3A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
-                <path d="M90 58 C108 76,116 102,106 126 C96 150,88 174,106 194" stroke="#4CAF72" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
-                <line x1="76" y1="72"  x2="90"  y2="72"  stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
-                <line x1="100" y1="92" x2="114" y2="92" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
-                <line x1="97" y1="116" x2="111" y2="116" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
-                <line x1="83" y1="142" x2="97"  y2="142" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
-                <line x1="80" y1="168" x2="94"  y2="168" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
-                <!-- Heartbeat line bottom -->
-                <polyline points="115,222 128,222 136,200 144,242 152,210 160,226 174,226" stroke="#E8640A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
-                <!-- Floating cell top-right -->
-                <circle cx="252" cy="76"  r="19" fill="rgba(43,151,255,0.09)"  stroke="rgba(43,151,255,0.18)"  stroke-width="1.5"/>
-                <circle cx="252" cy="76"  r="8"  fill="rgba(43,151,255,0.18)"/>
-                <!-- Molecule cluster right -->
-                <circle cx="238" cy="144" r="7"  fill="rgba(107,72,194,0.20)"/>
-                <circle cx="256" cy="132" r="5"  fill="rgba(107,72,194,0.16)"/>
-                <circle cx="248" cy="162" r="5"  fill="rgba(107,72,194,0.16)"/>
-                <line x1="238" y1="144" x2="256" y2="132" stroke="rgba(107,72,194,0.16)" stroke-width="1.5"/>
-                <line x1="238" y1="144" x2="248" y2="162" stroke="rgba(107,72,194,0.16)" stroke-width="1.5"/>
-                <!-- Bottom-left cell -->
-                <circle cx="64" cy="216" r="14" fill="rgba(43,151,255,0.08)"  stroke="rgba(43,151,255,0.16)"  stroke-width="1.5"/>
-                <circle cx="64" cy="216" r="6"  fill="rgba(43,151,255,0.16)"/>
-                <!-- Floating cell bottom-right -->
-                <circle cx="272" cy="200" r="12" fill="rgba(232,100,10,0.08)" stroke="rgba(232,100,10,0.16)" stroke-width="1.5"/>
-                <circle cx="272" cy="200" r="5"  fill="rgba(232,100,10,0.14)"/>
-              </svg>
+              <img class="splash-student-img" src="Images/image 24091.png" alt="Student">
             </div>
 
             <!-- Content: left-aligned, editorial -->
