@@ -1086,49 +1086,49 @@
     /* SCREEN 7 — DIAGNOSTIC redesign */
     #ob-diag {
       display: flex; flex-direction: column;
-      background: linear-gradient(180deg, #C2E4FF 0%, #D8F0FF 30%, #EEF8FF 55%, #fff 75%);
+      align-items: center; justify-content: center;
+      background: linear-gradient(180deg, #C2E4FF 0%, #D8F0FF 35%, #EEF8FF 65%, #fff 100%);
+    }
+    .diag-center-group {
+      display: flex; flex-direction: column; align-items: center;
+      width: 100%; padding: 0 20px;
     }
     .diag-orbit-area {
-      flex: 0 0 auto; position: relative;
-      height: 300px; display: flex; align-items: center; justify-content: center;
+      position: relative; width: 280px; height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
     }
     /* concentric rings */
     .diag-ring {
       position: absolute; border-radius: 50%;
-      border: 1.5px solid rgba(60,150,255,0.18);
+      border: 1.5px solid rgba(60,150,255,0.20);
     }
     .diag-ring-1 { width: 100px; height: 100px; }
     .diag-ring-2 { width: 176px; height: 176px; }
-    .diag-ring-3 { width: 256px; height: 256px; }
-    /* center logo */
+    .diag-ring-3 { width: 264px; height: 264px; }
+    /* center logo — bigger */
     .diag-logo-center {
       position: relative; z-index: 4;
-      width: 64px; height: 64px; border-radius: 20px;
-      background: #fff; box-shadow: 0 6px 28px rgba(60,150,255,0.22);
+      width: 80px; height: 80px; border-radius: 24px;
+      background: #fff; box-shadow: 0 8px 32px rgba(60,150,255,0.25);
       display: flex; align-items: center; justify-content: center;
     }
-    /* floating orbit icons */
+    /* orbit icons — no bg, just the icon */
     .diag-orb {
       position: absolute; z-index: 3;
       animation: splFloat 5s ease-in-out infinite;
-    }
-    .diag-orb-ico {
-      width: 46px; height: 46px; border-radius: 14px;
-      background: rgba(255,255,255,0.78); backdrop-filter: blur(6px);
-      box-shadow: 0 3px 14px rgba(60,150,255,0.16);
-      display: flex; align-items: center; justify-content: center;
       color: #3A9AE8;
     }
-    /* bottom text block */
+    /* text block */
     .diag-body {
-      flex: 1; padding: 0 26px; display: flex; flex-direction: column;
+      width: 100%; padding: 0 26px; text-align: left;
     }
     .diag-title {
-      font-size: 28px; font-weight: 900; color: var(--text-1);
-      letter-spacing: -0.6px; line-height: 1.18; margin-bottom: 10px;
+      font-size: 36px; font-weight: 900; color: var(--text-1);
+      letter-spacing: -1px; line-height: 1.12; margin-bottom: 12px;
     }
     .diag-sub {
-      font-size: 13.5px; color: var(--text-2); line-height: 1.6; font-weight: 500;
+      font-size: 14px; color: var(--text-2); line-height: 1.6; font-weight: 500;
     }
 
     /* ─────────────────────────────────────
@@ -1525,47 +1525,48 @@
               </div>
             </div>
 
-            <!-- orbit illustration -->
-            <div class="diag-orbit-area">
-              <!-- rings -->
-              <div class="diag-ring diag-ring-1"></div>
-              <div class="diag-ring diag-ring-2"></div>
-              <div class="diag-ring diag-ring-3"></div>
+            <div class="diag-center-group">
+              <!-- orbit illustration -->
+              <div class="diag-orbit-area">
+                <div class="diag-ring diag-ring-1"></div>
+                <div class="diag-ring diag-ring-2"></div>
+                <div class="diag-ring diag-ring-3"></div>
 
-              <!-- center BioRapid leaf logo -->
-              <div class="diag-logo-center">
-                <svg width="36" height="28" viewBox="0 0 120 90" fill="none">
-                  <path d="M60 52 C54 42, 36 24, 8 16 C1 14, 1 30, 10 40 C22 52, 44 54, 60 52Z" fill="#3A9AE8"/>
-                  <path d="M60 52 C66 42, 84 24, 112 16 C119 14, 119 30, 110 40 C98 52, 76 54, 60 52Z" fill="#3A9AE8"/>
-                  <rect x="54" y="51" width="12" height="26" rx="6" fill="#3A9AE8"/>
-                </svg>
+                <!-- center BioRapid leaf logo — bigger -->
+                <div class="diag-logo-center">
+                  <svg width="48" height="36" viewBox="0 0 120 90" fill="none">
+                    <path d="M60 52 C54 42, 36 24, 8 16 C1 14, 1 30, 10 40 C22 52, 44 54, 60 52Z" fill="#3A9AE8"/>
+                    <path d="M60 52 C66 42, 84 24, 112 16 C119 14, 119 30, 110 40 C98 52, 76 54, 60 52Z" fill="#3A9AE8"/>
+                    <rect x="54" y="51" width="12" height="26" rx="6" fill="#3A9AE8"/>
+                  </svg>
+                </div>
+
+                <!-- orbit icons — bare, no white box -->
+                <div class="diag-orb" style="top:6%;left:22%;animation-delay:0s;animation-duration:5.5s;">
+                  <i data-lucide="dna" style="width:28px;height:28px;"></i>
+                </div>
+                <div class="diag-orb" style="top:6%;right:20%;animation-delay:1.2s;animation-duration:6s;">
+                  <i data-lucide="leaf" style="width:26px;height:26px;"></i>
+                </div>
+                <div class="diag-orb" style="top:40%;left:1%;animation-delay:2s;animation-duration:5.2s;">
+                  <i data-lucide="flask-conical" style="width:28px;height:28px;"></i>
+                </div>
+                <div class="diag-orb" style="top:40%;right:1%;animation-delay:0.7s;animation-duration:6.3s;">
+                  <i data-lucide="microscope" style="width:28px;height:28px;"></i>
+                </div>
+                <div class="diag-orb" style="bottom:6%;left:22%;animation-delay:1.5s;animation-duration:5.7s;">
+                  <i data-lucide="atom" style="width:28px;height:28px;"></i>
+                </div>
+                <div class="diag-orb" style="bottom:6%;right:20%;animation-delay:0.4s;animation-duration:5s;">
+                  <i data-lucide="brain" style="width:26px;height:26px;"></i>
+                </div>
               </div>
 
-              <!-- orbit icons (positioned around ring-3) -->
-              <div class="diag-orb" style="top:12%;left:18%;animation-delay:0s;animation-duration:5.5s;">
-                <div class="diag-orb-ico"><i data-lucide="dna" style="width:22px;height:22px;"></i></div>
+              <!-- text -->
+              <div class="diag-body">
+                <div class="diag-title">Know where<br>you stand.</div>
+                <div class="diag-sub">A quick 5-min biology check maps your strengths and gaps — so every revision session is exactly what you need.</div>
               </div>
-              <div class="diag-orb" style="top:10%;right:16%;animation-delay:1.2s;animation-duration:6s;">
-                <div class="diag-orb-ico"><i data-lucide="leaf" style="width:22px;height:22px;"></i></div>
-              </div>
-              <div class="diag-orb" style="top:42%;left:4%;animation-delay:2s;animation-duration:5.2s;">
-                <div class="diag-orb-ico"><i data-lucide="flask-conical" style="width:22px;height:22px;"></i></div>
-              </div>
-              <div class="diag-orb" style="top:42%;right:4%;animation-delay:0.7s;animation-duration:6.3s;">
-                <div class="diag-orb-ico"><i data-lucide="microscope" style="width:22px;height:22px;"></i></div>
-              </div>
-              <div class="diag-orb" style="bottom:8%;left:18%;animation-delay:1.5s;animation-duration:5.7s;">
-                <div class="diag-orb-ico"><i data-lucide="atom" style="width:22px;height:22px;"></i></div>
-              </div>
-              <div class="diag-orb" style="bottom:8%;right:18%;animation-delay:0.4s;animation-duration:5s;">
-                <div class="diag-orb-ico"><i data-lucide="brain" style="width:22px;height:22px;"></i></div>
-              </div>
-            </div>
-
-            <!-- text + cta -->
-            <div class="diag-body">
-              <div class="diag-title">Know where<br>you stand.</div>
-              <div class="diag-sub">A quick 5-min biology check helps us map your strengths and gaps — so every revision session is exactly what you need.</div>
             </div>
 
             <div class="ob-cta-area">
