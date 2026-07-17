@@ -831,79 +831,110 @@
     }
     .lde {
       position: absolute; opacity: 0;
-      animation: ldeFloat 5s ease-in-out infinite, ldeFadeIn 0.6s ease forwards;
+      animation: ldeFloat 5s ease-in-out infinite, ldeFadeIn 1.8s ease forwards;
     }
     @keyframes ldeFadeIn { to { opacity: 1; } }
     @keyframes ldeFloat {
       0%,100% { transform: translateY(0) rotate(0deg); }
       50%      { transform: translateY(-10px) rotate(6deg); }
     }
+
+    /* ── Quik-style spring entrance ── */
     .loader-center { text-align: center; position: relative; z-index: 1; }
-    /* Leaf logo — above wordmark */
+
     .loader-leaf {
-      width: 80px; height: 80px;
-      margin: 0 auto 14px;
-      animation: leafPulse 2.8s ease-in-out infinite;
-      filter: drop-shadow(0 10px 22px rgba(43,151,255,0.32));
+      width: 84px; height: 84px;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 12px 26px rgba(43,151,255,0.38));
+      animation: leafSpring 0.8s cubic-bezier(0.34, 1.62, 0.64, 1) 0.1s both;
     }
-    @keyframes leafPulse {
-      0%,100% { transform: scale(1);    filter: drop-shadow(0 10px 22px rgba(43,151,255,0.32)); }
-      50%      { transform: scale(1.06); filter: drop-shadow(0 14px 32px rgba(43,151,255,0.48)); }
+    @keyframes leafSpring {
+      0%   { opacity: 0; transform: scale(0.25) rotate(-30deg); }
+      65%  { opacity: 1; }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
     }
-    @keyframes markPulse {
-      0%,100% { box-shadow: 0 10px 28px rgba(43,151,255,0.30); transform: scale(1); }
-      50%      { box-shadow: 0 14px 38px rgba(43,151,255,0.46); transform: scale(1.04); }
-    }
+
     .loader-wordmark {
-      font-size: 32px; font-weight: 900; color: var(--text-1); letter-spacing: -1px;
-      margin-bottom: 4px;
+      font-size: 34px; font-weight: 900; color: var(--text-1);
+      letter-spacing: -1px; margin-bottom: 5px;
+      overflow: hidden; display: inline-block;
     }
-    .loader-wordmark em { font-style: normal; color: #2B97FF; }
+    .wm-bio {
+      display: inline-block;
+      animation: wordUp 0.5s cubic-bezier(0.34,1.4,0.64,1) 0.72s both;
+    }
+    .wm-rapid {
+      display: inline-block; color: #2B97FF;
+      animation: wordUp 0.5s cubic-bezier(0.34,1.4,0.64,1) 0.88s both;
+    }
+    @keyframes wordUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     .loader-tagline {
       font-size: 12.5px; color: var(--text-2); font-weight: 500;
-      margin-bottom: 42px; letter-spacing: 0.1px;
+      margin-bottom: 44px; letter-spacing: 0.1px;
+      animation: fadeUp 0.45s ease 1.1s both;
     }
     .loader-track {
       width: 160px; height: 4px; background: rgba(43,151,255,0.12);
       border-radius: 100px; overflow: hidden; margin: 0 auto 12px;
+      animation: fadeUp 0.4s ease 1.28s both;
     }
     .loader-fill {
       height: 100%; border-radius: 100px;
       background: linear-gradient(90deg, #5BB8FF, #2B97FF);
       width: 0%;
-      transition: width 2.9s cubic-bezier(0.4,0,0.2,1);
+      transition: width 2.7s cubic-bezier(0.4,0,0.2,1);
     }
     .loader-hint {
       font-size: 11.5px; color: var(--text-3); font-weight: 500;
+      animation: fadeUp 0.4s ease 1.45s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes markPulse {
+      0%,100% { box-shadow: 0 10px 28px rgba(43,151,255,0.30); transform: scale(1); }
+      50%      { box-shadow: 0 14px 38px rgba(43,151,255,0.46); transform: scale(1.04); }
     }
 
     /* ─────────────────────────────────────
-       SCREEN 2 — SPLASH
+       SCREEN 2 — SPLASH (editorial style)
     ───────────────────────────────────── */
     #ob-splash { background: #fff; }
-    .splash-illo-wrap { position: relative; flex-shrink: 0; }
-    .splash-illo {
-      height: 300px;
-      background: linear-gradient(155deg, #EDF8EC 0%, #F4EFFE 80%);
+
+    /* Hero area with diagonal bottom cut */
+    .splash-hero {
+      flex-shrink: 0;
+      height: 336px;
+      background: linear-gradient(145deg, #EBF5FF 0%, #E8F5EC 60%, #F0EEFF 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; border-radius: 0 0 36px 36px;
+      overflow: hidden; position: relative;
     }
-    .splash-ob-status {
-      position: absolute; top: 0; left: 0; right: 0;
+    .splash-status-bar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 26px 0; z-index: 1;
+      padding: 16px 26px 0;
     }
-    .splash-ob-status .ob-status-time { color: var(--text-1); }
-    .splash-content { padding: 26px 24px 0; flex: 1; }
-    .splash-brand {
-      font-size: 26px; font-weight: 900; color: var(--text-1);
-      letter-spacing: -0.7px; margin-bottom: 10px;
+    .splash-status-bar .ob-status-time { color: var(--text-1); }
+    .splash-status-bar .ob-status-icons { display: flex; align-items: center; gap: 5px; color: var(--text-1); }
+
+    .splash-content {
+      padding: 28px 24px 0; flex: 1;
     }
-    .splash-brand em { font-style: normal; color: var(--green); }
+    .splash-eyebrow {
+      font-size: 11px; font-weight: 700; color: #2B97FF;
+      letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px;
+    }
     .splash-headline {
-      font-size: 21px; font-weight: 800; color: var(--text-1);
-      letter-spacing: -0.5px; line-height: 1.22; margin-bottom: 12px;
+      font-size: 28px; font-weight: 900; color: var(--text-1);
+      letter-spacing: -0.7px; line-height: 1.15; margin-bottom: 12px;
     }
+    .splash-headline em { font-style: normal; color: var(--green); }
     .splash-copy {
       font-size: 13px; color: var(--text-2); line-height: 1.56; font-weight: 400;
     }
@@ -1111,7 +1142,7 @@
               </div>
             </div>
             <div class="loader-center">
-              <!-- Blue leaf logo -->
+              <!-- Blue leaf logo — spring entrance -->
               <svg class="loader-leaf" viewBox="0 0 100 95" xmlns="http://www.w3.org/2000/svg" fill="none">
                 <defs>
                   <linearGradient id="lg1" x1="30%" y1="0%" x2="70%" y2="100%">
@@ -1119,14 +1150,14 @@
                     <stop offset="100%" stop-color="#2B97FF"/>
                   </linearGradient>
                 </defs>
-                <!-- Left leaf -->
                 <path d="M50 58 C46 44, 30 30, 14 18 C8 14, 6 28, 12 38 C18 50, 34 56, 50 58Z" fill="url(#lg1)"/>
-                <!-- Right leaf -->
                 <path d="M50 58 C54 44, 70 30, 86 18 C92 14, 94 28, 88 38 C82 50, 66 56, 50 58Z" fill="url(#lg1)"/>
-                <!-- Stem -->
                 <rect x="44" y="57" width="12" height="30" rx="6" fill="url(#lg1)"/>
               </svg>
-              <div class="loader-wordmark">Bio<em>Rapid</em></div>
+              <!-- Wordmark — staggered slide-up per word -->
+              <div class="loader-wordmark">
+                <span class="wm-bio">Bio</span><span class="wm-rapid">Rapid</span>
+              </div>
               <div class="loader-tagline">Your NEET Biology Companion</div>
               <div class="loader-track">
                 <div class="loader-fill" id="loaderFill"></div>
@@ -1137,46 +1168,11 @@
 
           <!-- ── SCREEN 2: SPLASH ── -->
           <div class="ob-screen" id="ob-splash">
-            <div class="splash-illo-wrap">
-              <div class="splash-illo">
-                <svg width="310" height="268" viewBox="0 0 310 268" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Outer cell ring -->
-                  <circle cx="155" cy="138" r="96" fill="rgba(46,107,58,0.07)" stroke="rgba(46,107,58,0.13)" stroke-width="1.5"/>
-                  <circle cx="155" cy="138" r="62" fill="rgba(107,72,194,0.06)" stroke="rgba(107,72,194,0.12)" stroke-width="1"/>
-                  <!-- Nucleus -->
-                  <circle cx="155" cy="138" r="28" fill="rgba(107,72,194,0.14)"/>
-                  <circle cx="155" cy="138" r="14" fill="rgba(107,72,194,0.22)"/>
-                  <!-- DNA helix left -->
-                  <path d="M72 55 C90 72, 98 96, 88 118 C78 140, 70 162, 88 180" stroke="#2E6B3A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.65"/>
-                  <path d="M86 55 C104 72, 112 96, 102 118 C92 140, 84 162, 102 180" stroke="#4CAF72" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.65"/>
-                  <line x1="72" y1="68" x2="86" y2="68" stroke="#2E6B3A" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="96" y1="86" x2="110" y2="86" stroke="#2E6B3A" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="93" y1="108" x2="107" y2="108" stroke="#2E6B3A" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="79" y1="132" x2="93" y2="132" stroke="#2E6B3A" stroke-width="1.5" opacity="0.5"/>
-                  <line x1="76" y1="156" x2="90" y2="156" stroke="#2E6B3A" stroke-width="1.5" opacity="0.5"/>
-                  <!-- Heartbeat line -->
-                  <polyline points="110,205 122,205 129,185 137,225 145,196 153,210 165,210" stroke="#E8640A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-                  <!-- Floating cell top-right -->
-                  <circle cx="240" cy="72" r="18" fill="rgba(46,107,58,0.10)" stroke="rgba(46,107,58,0.20)" stroke-width="1.5"/>
-                  <circle cx="240" cy="72" r="8" fill="rgba(46,107,58,0.18)"/>
-                  <!-- Floating cell bottom-right -->
-                  <circle cx="260" cy="185" r="13" fill="rgba(232,100,10,0.09)" stroke="rgba(232,100,10,0.18)" stroke-width="1.5"/>
-                  <circle cx="260" cy="185" r="5" fill="rgba(232,100,10,0.18)"/>
-                  <!-- Molecule cluster top-right -->
-                  <circle cx="228" cy="130" r="7" fill="rgba(107,72,194,0.22)"/>
-                  <circle cx="246" cy="118" r="5" fill="rgba(107,72,194,0.18)"/>
-                  <circle cx="238" cy="148" r="5" fill="rgba(107,72,194,0.18)"/>
-                  <line x1="228" y1="130" x2="246" y2="118" stroke="rgba(107,72,194,0.18)" stroke-width="1.5"/>
-                  <line x1="228" y1="130" x2="238" y2="148" stroke="rgba(107,72,194,0.18)" stroke-width="1.5"/>
-                  <!-- Bottom-left cell -->
-                  <circle cx="62" cy="205" r="14" fill="rgba(107,72,194,0.09)" stroke="rgba(107,72,194,0.17)" stroke-width="1.5"/>
-                  <circle cx="62" cy="205" r="6" fill="rgba(107,72,194,0.17)"/>
-                  <!-- Logo mark center -->
-                  <rect x="138" y="121" width="34" height="34" rx="11" fill="rgba(46,107,58,0.82)"/>
-                  <text x="155" y="143" text-anchor="middle" font-family="system-ui" font-size="16" fill="white">🧬</text>
-                </svg>
-              </div>
-              <div class="splash-ob-status">
+
+            <!-- Hero: diagonal-cut illustration area -->
+            <div class="splash-hero">
+              <!-- Status bar floats over hero -->
+              <div class="splash-status-bar">
                 <span class="ob-status-time">9:41</span>
                 <div class="ob-status-icons">
                   <i data-lucide="signal" style="width:15px;height:15px;"></i>
@@ -1184,12 +1180,65 @@
                   <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
                 </div>
               </div>
+
+              <!-- Biology SVG illustration — updated palette -->
+              <svg width="320" height="296" viewBox="0 0 320 296" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer ring -->
+                <circle cx="160" cy="148" r="104" fill="rgba(43,151,255,0.06)" stroke="rgba(43,151,255,0.12)" stroke-width="1.5"/>
+                <!-- Mid ring -->
+                <circle cx="160" cy="148" r="68" fill="rgba(46,107,58,0.05)" stroke="rgba(46,107,58,0.11)" stroke-width="1"/>
+                <!-- Nucleus -->
+                <circle cx="160" cy="148" r="30" fill="rgba(43,151,255,0.12)"/>
+                <circle cx="160" cy="148" r="15" fill="rgba(43,151,255,0.20)"/>
+                <!-- Logo leaf in center -->
+                <g transform="translate(145,133)">
+                  <svg width="30" height="29" viewBox="0 0 100 95" fill="none">
+                    <defs>
+                      <linearGradient id="sl1" x1="30%" y1="0%" x2="70%" y2="100%">
+                        <stop offset="0%" stop-color="#8DD4FF"/>
+                        <stop offset="100%" stop-color="#2B97FF"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M50 58 C46 44,30 30,14 18 C8 14,6 28,12 38 C18 50,34 56,50 58Z" fill="url(#sl1)"/>
+                    <path d="M50 58 C54 44,70 30,86 18 C92 14,94 28,88 38 C82 50,66 56,50 58Z" fill="url(#sl1)"/>
+                    <rect x="44" y="57" width="12" height="30" rx="6" fill="url(#sl1)"/>
+                  </svg>
+                </g>
+                <!-- DNA helix left -->
+                <path d="M76 58 C94 76,102 102,92 126 C82 150,74 174,92 194" stroke="#2E6B3A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <path d="M90 58 C108 76,116 102,106 126 C96 150,88 174,106 194" stroke="#4CAF72" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <line x1="76" y1="72"  x2="90"  y2="72"  stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
+                <line x1="100" y1="92" x2="114" y2="92" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
+                <line x1="97" y1="116" x2="111" y2="116" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
+                <line x1="83" y1="142" x2="97"  y2="142" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
+                <line x1="80" y1="168" x2="94"  y2="168" stroke="#2E6B3A" stroke-width="1.5" opacity="0.45"/>
+                <!-- Heartbeat line bottom -->
+                <polyline points="115,222 128,222 136,200 144,242 152,210 160,226 174,226" stroke="#E8640A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+                <!-- Floating cell top-right -->
+                <circle cx="252" cy="76"  r="19" fill="rgba(43,151,255,0.09)"  stroke="rgba(43,151,255,0.18)"  stroke-width="1.5"/>
+                <circle cx="252" cy="76"  r="8"  fill="rgba(43,151,255,0.18)"/>
+                <!-- Molecule cluster right -->
+                <circle cx="238" cy="144" r="7"  fill="rgba(107,72,194,0.20)"/>
+                <circle cx="256" cy="132" r="5"  fill="rgba(107,72,194,0.16)"/>
+                <circle cx="248" cy="162" r="5"  fill="rgba(107,72,194,0.16)"/>
+                <line x1="238" y1="144" x2="256" y2="132" stroke="rgba(107,72,194,0.16)" stroke-width="1.5"/>
+                <line x1="238" y1="144" x2="248" y2="162" stroke="rgba(107,72,194,0.16)" stroke-width="1.5"/>
+                <!-- Bottom-left cell -->
+                <circle cx="64" cy="216" r="14" fill="rgba(43,151,255,0.08)"  stroke="rgba(43,151,255,0.16)"  stroke-width="1.5"/>
+                <circle cx="64" cy="216" r="6"  fill="rgba(43,151,255,0.16)"/>
+                <!-- Floating cell bottom-right -->
+                <circle cx="272" cy="200" r="12" fill="rgba(232,100,10,0.08)" stroke="rgba(232,100,10,0.16)" stroke-width="1.5"/>
+                <circle cx="272" cy="200" r="5"  fill="rgba(232,100,10,0.14)"/>
+              </svg>
             </div>
+
+            <!-- Content: left-aligned, editorial -->
             <div class="splash-content">
-              <div class="splash-brand">Bio<em>Rapid</em></div>
-              <div class="splash-headline">Master Biology. One&nbsp;Swipe at a Time.</div>
+              <div class="splash-eyebrow">NEET Biology · Smart Revision</div>
+              <div class="splash-headline">Master Biology.<br><em>One Swipe</em> at a Time.</div>
               <div class="splash-copy">Turn daily revision into lasting confidence with bite-sized learning, smart practice, and personalized guidance.</div>
             </div>
+
             <div class="ob-cta-area">
               <button class="ob-btn" id="splashBtn">
                 Get Started
