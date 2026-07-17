@@ -1083,26 +1083,53 @@
     /* ─────────────────────────────────────
        SCREEN 7 — DIAGNOSTIC
     ───────────────────────────────────── */
-    .diag-hero {
-      background: linear-gradient(140deg, #EDF8EC 0%, #F4EFFE 100%);
-      border-radius: var(--r-xl); padding: 24px 22px;
-      border: 1px solid rgba(46,107,58,0.10); text-align: center; margin-bottom: 20px;
+    /* SCREEN 7 — DIAGNOSTIC redesign */
+    #ob-diag {
+      display: flex; flex-direction: column;
+      background: linear-gradient(180deg, #C2E4FF 0%, #D8F0FF 30%, #EEF8FF 55%, #fff 75%);
     }
-    .diag-tag {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--card-green); color: var(--green);
-      border-radius: 100px; padding: 4px 12px;
-      font-size: 11px; font-weight: 700; margin-bottom: 16px;
+    .diag-orbit-area {
+      flex: 0 0 auto; position: relative;
+      height: 300px; display: flex; align-items: center; justify-content: center;
     }
-    .diag-icon-wrap {
-      width: 60px; height: 60px; border-radius: 20px;
-      background: #fff; box-shadow: var(--sh-md);
+    /* concentric rings */
+    .diag-ring {
+      position: absolute; border-radius: 50%;
+      border: 1.5px solid rgba(60,150,255,0.18);
+    }
+    .diag-ring-1 { width: 100px; height: 100px; }
+    .diag-ring-2 { width: 176px; height: 176px; }
+    .diag-ring-3 { width: 256px; height: 256px; }
+    /* center logo */
+    .diag-logo-center {
+      position: relative; z-index: 4;
+      width: 64px; height: 64px; border-radius: 20px;
+      background: #fff; box-shadow: 0 6px 28px rgba(60,150,255,0.22);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 14px; color: var(--green);
     }
-    .diag-card-title { font-size: 17px; font-weight: 800; color: var(--text-1); letter-spacing: -0.3px; margin-bottom: 8px; }
-    .diag-card-sub { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
-    .diag-skip-note { font-size: 11.5px; color: var(--text-3); text-align: center; line-height: 1.5; padding: 0 8px 4px; }
+    /* floating orbit icons */
+    .diag-orb {
+      position: absolute; z-index: 3;
+      animation: splFloat 5s ease-in-out infinite;
+    }
+    .diag-orb-ico {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: rgba(255,255,255,0.78); backdrop-filter: blur(6px);
+      box-shadow: 0 3px 14px rgba(60,150,255,0.16);
+      display: flex; align-items: center; justify-content: center;
+      color: #3A9AE8;
+    }
+    /* bottom text block */
+    .diag-body {
+      flex: 1; padding: 0 26px; display: flex; flex-direction: column;
+    }
+    .diag-title {
+      font-size: 28px; font-weight: 900; color: var(--text-1);
+      letter-spacing: -0.6px; line-height: 1.18; margin-bottom: 10px;
+    }
+    .diag-sub {
+      font-size: 13.5px; color: var(--text-2); line-height: 1.6; font-weight: 500;
+    }
 
     /* ─────────────────────────────────────
        SCREEN 8 — PERSONALIZATION LOADER
@@ -1477,15 +1504,17 @@
 
           <!-- ── SCREEN 7: DIAGNOSTIC ASSESSMENT ── -->
           <div class="ob-screen" id="ob-diag">
-            <div class="ob-status">
-              <span class="ob-status-time">9:41</span>
-              <div class="ob-status-icons">
+
+            <!-- status + nav float over gradient -->
+            <div class="ob-status" style="position:absolute;top:0;left:0;right:0;padding:14px 20px 0;z-index:10;">
+              <span class="ob-status-time" style="color:#111;">9:41</span>
+              <div class="ob-status-icons" style="color:#111;">
                 <i data-lucide="signal" style="width:15px;height:15px;"></i>
                 <i data-lucide="wifi" style="width:15px;height:15px;"></i>
                 <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
               </div>
             </div>
-            <div class="ob-nav-row">
+            <div class="ob-nav-row" style="position:absolute;top:36px;left:0;right:0;z-index:10;padding:0 18px;">
               <button class="ob-back" id="backDiag"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
               <div class="ob-steps">
                 <div class="ob-step done"></div>
@@ -1495,27 +1524,53 @@
                 <div class="ob-step cur"></div>
               </div>
             </div>
-            <div class="ob-content">
-              <div class="ob-title-block">
-                <div class="ob-screen-title">Personalize Your Study Plan</div>
-                <div class="ob-screen-sub">Take a quick assessment to unlock a tailored revision experience.</div>
+
+            <!-- orbit illustration -->
+            <div class="diag-orbit-area">
+              <!-- rings -->
+              <div class="diag-ring diag-ring-1"></div>
+              <div class="diag-ring diag-ring-2"></div>
+              <div class="diag-ring diag-ring-3"></div>
+
+              <!-- center BioRapid leaf logo -->
+              <div class="diag-logo-center">
+                <svg width="36" height="28" viewBox="0 0 120 90" fill="none">
+                  <path d="M60 52 C54 42, 36 24, 8 16 C1 14, 1 30, 10 40 C22 52, 44 54, 60 52Z" fill="#3A9AE8"/>
+                  <path d="M60 52 C66 42, 84 24, 112 16 C119 14, 119 30, 110 40 C98 52, 76 54, 60 52Z" fill="#3A9AE8"/>
+                  <rect x="54" y="51" width="12" height="26" rx="6" fill="#3A9AE8"/>
+                </svg>
               </div>
-              <div class="diag-hero">
-                <div class="diag-tag">
-                  <i data-lucide="clock" style="width:11px;height:11px;"></i>
-                  5 minutes
-                </div>
-                <div class="diag-icon-wrap">
-                  <i data-lucide="brain" style="width:28px;height:28px;"></i>
-                </div>
-                <div class="diag-card-title">Quick Biology Assessment</div>
-                <div class="diag-card-sub">We'll identify your strengths and gaps across all NEET Biology chapters so your revision plan is perfectly tailored to where you actually need help.</div>
+
+              <!-- orbit icons (positioned around ring-3) -->
+              <div class="diag-orb" style="top:12%;left:18%;animation-delay:0s;animation-duration:5.5s;">
+                <div class="diag-orb-ico"><i data-lucide="dna" style="width:22px;height:22px;"></i></div>
               </div>
-              <div class="diag-skip-note">You can also skip and let BioRapid learn from your revision activity over time.</div>
+              <div class="diag-orb" style="top:10%;right:16%;animation-delay:1.2s;animation-duration:6s;">
+                <div class="diag-orb-ico"><i data-lucide="leaf" style="width:22px;height:22px;"></i></div>
+              </div>
+              <div class="diag-orb" style="top:42%;left:4%;animation-delay:2s;animation-duration:5.2s;">
+                <div class="diag-orb-ico"><i data-lucide="flask-conical" style="width:22px;height:22px;"></i></div>
+              </div>
+              <div class="diag-orb" style="top:42%;right:4%;animation-delay:0.7s;animation-duration:6.3s;">
+                <div class="diag-orb-ico"><i data-lucide="microscope" style="width:22px;height:22px;"></i></div>
+              </div>
+              <div class="diag-orb" style="bottom:8%;left:18%;animation-delay:1.5s;animation-duration:5.7s;">
+                <div class="diag-orb-ico"><i data-lucide="atom" style="width:22px;height:22px;"></i></div>
+              </div>
+              <div class="diag-orb" style="bottom:8%;right:18%;animation-delay:0.4s;animation-duration:5s;">
+                <div class="diag-orb-ico"><i data-lucide="brain" style="width:22px;height:22px;"></i></div>
+              </div>
             </div>
+
+            <!-- text + cta -->
+            <div class="diag-body">
+              <div class="diag-title">Know where<br>you stand.</div>
+              <div class="diag-sub">A quick 5-min biology check helps us map your strengths and gaps — so every revision session is exactly what you need.</div>
+            </div>
+
             <div class="ob-cta-area">
               <button class="ob-btn" id="startAssessBtn">
-                Start Assessment
+                Take Assessment
                 <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
               </button>
               <button class="ob-btn ghost" id="skipDiagBtn">Skip for Now</button>
