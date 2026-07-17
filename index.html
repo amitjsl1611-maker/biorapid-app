@@ -1474,61 +1474,6 @@
             </div>
           </div>
 
-          <!-- ── SCREEN 6: DAILY REVISION GOAL ── -->
-          <div class="ob-screen" id="ob-goal">
-            <div class="ob-status">
-              <span class="ob-status-time">9:41</span>
-              <div class="ob-status-icons">
-                <i data-lucide="signal" style="width:15px;height:15px;"></i>
-                <i data-lucide="wifi" style="width:15px;height:15px;"></i>
-                <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
-              </div>
-            </div>
-            <div class="ob-nav-row">
-              <button class="ob-back" id="backGoal"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
-              <div class="ob-steps">
-                <div class="ob-step done"></div>
-                <div class="ob-step done"></div>
-                <div class="ob-step done"></div>
-                <div class="ob-step cur"></div>
-                <div class="ob-step"></div>
-              </div>
-            </div>
-            <div class="ob-content">
-              <div class="ob-title-block">
-                <div class="ob-screen-title">Set your daily revision goal</div>
-                <div class="ob-screen-sub">How much time can you dedicate each day?</div>
-              </div>
-              <div class="ob-time-grid" id="timeGrid">
-                <div class="ob-time-card" data-group="time">
-                  <div class="ob-time-emoji">⚡</div>
-                  <div class="ob-time-val">10 mins</div>
-                  <div class="ob-time-sub">Quick daily boost</div>
-                </div>
-                <div class="ob-time-card" data-group="time">
-                  <div class="ob-time-emoji">⏱️</div>
-                  <div class="ob-time-val">20 mins</div>
-                  <div class="ob-time-sub">Steady progress</div>
-                </div>
-                <div class="ob-time-card" data-group="time">
-                  <div class="ob-time-emoji">📚</div>
-                  <div class="ob-time-val">30 mins</div>
-                  <div class="ob-time-sub">Deep revision</div>
-                </div>
-                <div class="ob-time-card" data-group="time">
-                  <div class="ob-time-emoji">🚀</div>
-                  <div class="ob-time-val">45+ mins</div>
-                  <div class="ob-time-sub">Full power mode</div>
-                </div>
-              </div>
-            </div>
-            <div class="ob-cta-area">
-              <button class="ob-btn" id="goalBtn" disabled>
-                Continue
-                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-              </button>
-            </div>
-          </div>
 
           <!-- ── SCREEN 7: DIAGNOSTIC ASSESSMENT ── -->
           <div class="ob-screen" id="ob-diag">
@@ -1993,7 +1938,7 @@
    ONBOARDING CONTROLLER
 ════════════════════════════════════════ */
 (function () {
-  const SCREENS = ['ob-loader','ob-splash','ob-create','ob-otp','ob-prep','ob-goal','ob-diag','ob-ploader'];
+  const SCREENS = ['ob-loader','ob-splash','ob-create','ob-otp','ob-prep','ob-diag','ob-ploader'];
   let cur = 0;
   let otpTimer = null;
 
@@ -2169,17 +2114,6 @@
     });
   });
 
-  /* ── SCREEN 6: Daily Goal ── */
-  document.getElementById('backGoal').addEventListener('click', back);
-  document.getElementById('goalBtn').addEventListener('click', next);
-
-  document.querySelectorAll('#timeGrid .ob-time-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('#timeGrid .ob-time-card').forEach(c => c.classList.remove('sel'));
-      card.classList.add('sel');
-      document.getElementById('goalBtn').disabled = false;
-    });
-  });
 
   /* ── SCREEN 7: Diagnostic ── */
   document.getElementById('backDiag').addEventListener('click', back);
