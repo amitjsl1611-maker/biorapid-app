@@ -769,7 +769,7 @@
     }
     .ob-back {
       width: 36px; height: 36px; border-radius: 50%;
-      background: var(--surface-2); border: none;
+      background: rgba(255,255,255,0.7); border: 1.5px solid rgba(0,0,0,0.10);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; flex-shrink: 0; color: var(--text-1);
       transition: transform 0.12s ease;
@@ -979,9 +979,15 @@
 
     /* create account hero gradient strip */
     .create-hero {
-      flex-shrink: 0; height: 160px; position: relative; overflow: hidden;
-      background: linear-gradient(180deg, #C8E8FF 0%, #D8F0FF 50%, #ffffff 100%);
+      flex-shrink: 0; height: 200px; position: relative; overflow: hidden;
+      background: linear-gradient(180deg, #C2E4FF 0%, #D8F0FF 55%, #EEF8FF 80%, #fff 100%);
     }
+    .create-hero-title {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0 24px 18px; z-index: 4;
+    }
+    .create-hero-title .ob-screen-title { margin-bottom: 0; }
+    .create-hero-title .ob-screen-sub { margin-top: 4px; }
 
     /* ─────────────────────────────────────
        FORM INPUTS
@@ -1016,7 +1022,7 @@
     .otp-boxes { display: flex; gap: 8px; margin-bottom: 20px; }
     .otp-box {
       flex: 1; height: 52px; max-width: 44px;
-      background: var(--surface-2); border: 1.5px solid transparent;
+      background: #fff; border: 1.5px solid #D8D8E0;
       border-radius: 12px;
       font-family: 'Fustat', system-ui; font-size: 20px; font-weight: 700;
       color: var(--text-1); text-align: center; outline: none;
@@ -1034,7 +1040,7 @@
     .ob-choices { display: flex; flex-direction: column; gap: 10px; }
     .ob-choice {
       display: flex; align-items: center; gap: 14px;
-      background: #E8F4FF; border: 1.5px solid transparent;
+      background: #fff; border: 1.5px solid #E0E0E8;
       border-radius: var(--r-lg); padding: 14px 16px;
       cursor: pointer;
       transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
@@ -1292,18 +1298,18 @@
               <div class="spl-fi" style="top:14%;right:8%;animation-delay:1s;animation-duration:6s;z-index:2;">
                 <i data-lucide="leaf" style="width:36px;height:36px;color:rgba(60,150,255,0.15);"></i>
               </div>
-              <div class="spl-fi" style="bottom:20%;left:8%;animation-delay:1.6s;animation-duration:5.2s;z-index:2;">
+              <div class="spl-fi" style="bottom:28%;left:8%;animation-delay:1.6s;animation-duration:5.2s;z-index:2;">
                 <i data-lucide="flask-conical" style="width:34px;height:34px;color:rgba(60,150,255,0.14);"></i>
               </div>
-              <div class="spl-fi" style="bottom:18%;right:7%;animation-delay:0.7s;animation-duration:6.2s;z-index:2;">
+              <div class="spl-fi" style="bottom:26%;right:7%;animation-delay:0.7s;animation-duration:6.2s;z-index:2;">
                 <i data-lucide="atom" style="width:38px;height:38px;color:rgba(60,150,255,0.16);"></i>
               </div>
-            </div>
-            <div class="ob-content">
-              <div class="ob-title-block">
+              <div class="create-hero-title">
                 <div class="ob-screen-title">Create Your Account</div>
                 <div class="ob-screen-sub">Join thousands of NEET aspirants already revising smarter.</div>
               </div>
+            </div>
+            <div class="ob-content">
               <div class="ob-form">
                 <div class="ob-field">
                   <div class="ob-label">Full Name</div>
@@ -1355,18 +1361,18 @@
               <div class="spl-fi" style="top:14%;right:8%;animation-delay:1.2s;animation-duration:6s;z-index:2;">
                 <i data-lucide="smartphone" style="width:34px;height:34px;color:rgba(60,150,255,0.14);"></i>
               </div>
-              <div class="spl-fi" style="bottom:20%;left:8%;animation-delay:1.8s;animation-duration:5.2s;z-index:2;">
+              <div class="spl-fi" style="bottom:28%;left:8%;animation-delay:1.8s;animation-duration:5.2s;z-index:2;">
                 <i data-lucide="lock" style="width:32px;height:32px;color:rgba(60,150,255,0.13);"></i>
               </div>
-              <div class="spl-fi" style="bottom:18%;right:7%;animation-delay:0.6s;animation-duration:6.2s;z-index:2;">
+              <div class="spl-fi" style="bottom:26%;right:7%;animation-delay:0.6s;animation-duration:6.2s;z-index:2;">
                 <i data-lucide="key" style="width:36px;height:36px;color:rgba(60,150,255,0.15);"></i>
               </div>
-            </div>
-            <div class="ob-content">
-              <div class="ob-title-block">
+              <div class="create-hero-title">
                 <div class="ob-screen-title">Verify Your Number</div>
                 <div class="ob-screen-sub">We sent a 6-digit code to your mobile. Enter it below to continue.</div>
               </div>
+            </div>
+            <div class="ob-content">
               <div class="otp-boxes">
                 <input class="otp-box" id="otp0" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
                 <input class="otp-box" id="otp1" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]">
@@ -1415,15 +1421,15 @@
               <div class="spl-fi" style="bottom:18%;left:7%;animation-delay:1.6s;animation-duration:5.3s;z-index:2;">
                 <i data-lucide="target" style="width:34px;height:34px;color:rgba(60,150,255,0.13);"></i>
               </div>
-              <div class="spl-fi" style="bottom:16%;right:6%;animation-delay:0.7s;animation-duration:6s;z-index:2;">
+              <div class="spl-fi" style="bottom:26%;right:6%;animation-delay:0.7s;animation-duration:6s;z-index:2;">
                 <i data-lucide="trending-up" style="width:36px;height:36px;color:rgba(60,150,255,0.15);"></i>
               </div>
-            </div>
-            <div class="ob-content">
-              <div class="ob-title-block">
+              <div class="create-hero-title">
                 <div class="ob-screen-title">Tell us about your preparation</div>
                 <div class="ob-screen-sub">Where are you in your NEET journey?</div>
               </div>
+            </div>
+            <div class="ob-content">
               <div class="ob-choices" id="prepChoices">
                 <div class="ob-choice" data-group="prep">
                   <div class="ob-choice-ico">🌱</div>
