@@ -927,14 +927,14 @@
       50%      { transform: translateY(-10px); }
     }
 
-    /* big halo circle behind student */
-    .splash-halo {
+    /* big darker circle behind student — clipped by sides+bottom */
+    .splash-circle {
       position: absolute;
-      width: 340px; height: 340px;
+      width: 320px; height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(200,235,255,0.22) 60%, transparent 100%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -62%);
+      background: rgba(150, 210, 255, 0.38);
+      top: 12%; left: 50%;
+      transform: translateX(-50%);
       z-index: 2;
     }
 
@@ -942,26 +942,37 @@
     .splash-student-wrap {
       position: relative; z-index: 3;
       display: flex; flex-direction: column; align-items: center;
-      margin-top: -20px;
     }
     .splash-student-img {
-      height: 340px; width: auto;
+      height: 350px; width: auto;
       object-fit: contain; object-position: top center;
       display: block;
-      mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
     }
 
     .splash-content {
       position: relative; z-index: 4;
       text-align: center; padding: 0 28px;
-      margin-top: -12px;
+      margin-top: -8px;
     }
     .splash-headline {
       font-size: 30px; font-weight: 400; color: #111118;
       letter-spacing: -0.4px; line-height: 1.25;
     }
     .splash-headline strong { font-weight: 900; color: #111118; }
+
+    /* bottom-docked CTA for splash */
+    .splash-cta {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+      padding: 0 0 32px;
+    }
+    .splash-cta .ob-btn {
+      width: 100%; border-radius: 0;
+      border-radius: 0 0 0 0;
+      padding: 18px 0;
+      font-size: 17px;
+    }
 
     .splash-status-bar {
       position: absolute; top: 0; left: 0; right: 0; z-index: 10;
@@ -1225,8 +1236,8 @@
               <i data-lucide="activity" style="width:28px;height:28px;color:rgba(60,160,255,0.12);"></i>
             </div>
 
-            <!-- Halo circle -->
-            <div class="splash-halo"></div>
+            <!-- Big darker circle behind student -->
+            <div class="splash-circle"></div>
 
             <!-- Student image -->
             <div class="splash-student-wrap">
@@ -1238,10 +1249,11 @@
               <div class="splash-headline">Master Biology.<br><strong>One Swipe</strong> at a Time.</div>
             </div>
 
-            <div class="ob-cta-area">
-              <button class="ob-btn" id="splashBtn">
+            <!-- Bottom-docked full-width CTA -->
+            <div class="splash-cta">
+              <button class="ob-btn" id="splashBtn" style="width:100%;border-radius:0;padding:20px 0;font-size:17px;letter-spacing:-0.2px;">
                 Get Started
-                <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
               </button>
             </div>
           </div>
