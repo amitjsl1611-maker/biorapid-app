@@ -1008,12 +1008,12 @@
       font-size: 13.5px; color: var(--text-2); line-height: 1.5; margin-bottom: 28px;
     }
     .otp-note strong { color: var(--text-1); font-weight: 700; }
-    .otp-boxes { display: flex; gap: 9px; margin-bottom: 20px; }
+    .otp-boxes { display: flex; gap: 8px; margin-bottom: 20px; }
     .otp-box {
-      flex: 1; height: 56px;
+      flex: 1; height: 52px; max-width: 44px;
       background: var(--surface-2); border: 1.5px solid transparent;
-      border-radius: var(--r-md);
-      font-family: 'Fustat', system-ui; font-size: 22px; font-weight: 700;
+      border-radius: 12px;
+      font-family: 'Fustat', system-ui; font-size: 20px; font-weight: 700;
       color: var(--text-1); text-align: center; outline: none;
       caret-color: var(--green);
       transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
@@ -1318,22 +1318,36 @@
 
           <!-- ── SCREEN 4: OTP VERIFICATION ── -->
           <div class="ob-screen" id="ob-otp">
-            <div class="ob-status">
-              <span class="ob-status-time">9:41</span>
-              <div class="ob-status-icons">
-                <i data-lucide="signal" style="width:15px;height:15px;"></i>
-                <i data-lucide="wifi" style="width:15px;height:15px;"></i>
-                <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
+            <div class="create-hero">
+              <div class="ob-status" style="position:absolute;top:0;left:0;right:0;padding:14px 20px 0;z-index:3;">
+                <span class="ob-status-time" style="color:#111;">9:41</span>
+                <div class="ob-status-icons" style="color:#111;">
+                  <i data-lucide="signal" style="width:15px;height:15px;"></i>
+                  <i data-lucide="wifi" style="width:15px;height:15px;"></i>
+                  <i data-lucide="battery-full" style="width:15px;height:15px;"></i>
+                </div>
               </div>
-            </div>
-            <div class="ob-nav-row">
-              <button class="ob-back" id="backOtp"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
-              <div class="ob-steps">
-                <div class="ob-step done"></div>
-                <div class="ob-step cur"></div>
-                <div class="ob-step"></div>
-                <div class="ob-step"></div>
-                <div class="ob-step"></div>
+              <div class="ob-nav-row" style="position:absolute;top:36px;left:0;right:0;z-index:3;padding:0 18px;">
+                <button class="ob-back" id="backOtp"><i data-lucide="chevron-left" style="width:18px;height:18px;"></i></button>
+                <div class="ob-steps">
+                  <div class="ob-step done"></div>
+                  <div class="ob-step cur"></div>
+                  <div class="ob-step"></div>
+                  <div class="ob-step"></div>
+                  <div class="ob-step"></div>
+                </div>
+              </div>
+              <div class="spl-fi" style="top:18%;left:6%;animation-delay:0.3s;animation-duration:5.5s;z-index:2;">
+                <i data-lucide="shield-check" style="width:40px;height:40px;color:rgba(60,150,255,0.17);"></i>
+              </div>
+              <div class="spl-fi" style="top:14%;right:8%;animation-delay:1.2s;animation-duration:6s;z-index:2;">
+                <i data-lucide="smartphone" style="width:34px;height:34px;color:rgba(60,150,255,0.14);"></i>
+              </div>
+              <div class="spl-fi" style="bottom:20%;left:8%;animation-delay:1.8s;animation-duration:5.2s;z-index:2;">
+                <i data-lucide="lock" style="width:32px;height:32px;color:rgba(60,150,255,0.13);"></i>
+              </div>
+              <div class="spl-fi" style="bottom:18%;right:7%;animation-delay:0.6s;animation-duration:6.2s;z-index:2;">
+                <i data-lucide="key" style="width:36px;height:36px;color:rgba(60,150,255,0.15);"></i>
               </div>
             </div>
             <div class="ob-content">
