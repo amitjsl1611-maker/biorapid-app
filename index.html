@@ -734,8 +734,9 @@
     #ob-overlay {
       position: absolute; inset: 0; z-index: 500;
       width: 100%; height: 100%;
-      overflow: hidden; pointer-events: all;
+      overflow: hidden; pointer-events: none; /* TEMP DISABLED */
       background: #fff;
+      display: none; /* TEMP DISABLED */
     }
 
     /* ── Base screen ── */
@@ -1169,6 +1170,536 @@
     }
     .ploader-row.done .ploader-dot { background: var(--green); color: #fff; }
     .ploader-row-text { font-size: 14px; font-weight: 600; color: var(--text-1); }
+  /* ════════════════════════════════════════
+     L2 / L3 SCREENS
+  ════════════════════════════════════════ */
+
+  /* ── Shared screen layer ── */
+  .app-screen {
+    position: absolute; inset: 0; z-index: 600;
+    background: var(--app-bg);
+    display: flex; flex-direction: column;
+    opacity: 0; pointer-events: none;
+    transform: translateX(100%);
+    transition: opacity 0.36s ease, transform 0.36s cubic-bezier(0.25,0.46,0.45,0.94);
+    overflow: hidden;
+  }
+  .app-screen.active   { opacity: 1; pointer-events: all; transform: translateX(0); }
+  .app-screen.exit-l   { opacity: 0; transform: translateX(-100%); pointer-events: none; }
+  .app-screen.enter-r  { transform: translateX(100%); opacity: 0; }
+  .app-screen.enter-l  { transform: translateX(-100%); opacity: 0; }
+
+  /* ── Shared nav bar ── */
+  .app-nav {
+    flex-shrink: 0; display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px 10px; background: var(--app-bg);
+    position: relative; z-index: 5;
+  }
+  .app-nav-back {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface-2); border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; color: var(--text-1);
+    transition: transform 0.1s ease;
+  }
+  .app-nav-back:active { transform: scale(0.88); }
+  .app-nav-title { font-size: 16px; font-weight: 800; color: var(--text-1); letter-spacing: -0.3px; flex: 1; }
+
+  /* ── Chapter Dashboard status bar ── */
+  .chap-status-bar {
+    flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 22px 4px; position: relative;
+  }
+  .chap-status-time { font-size: 15px; font-weight: 700; color: var(--text-1); }
+  .chap-status-island {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 34px; background: #000;
+    border-radius: 20px; top: 8px;
+  }
+  .chap-status-icons { display: flex; align-items: center; gap: 5px; color: var(--text-1); }
+
+  /* ── Chapter nav row ── */
+  .chap-nav-row {
+    flex-shrink: 0; display: flex; align-items: center; gap: 12px;
+    padding: 10px 20px 12px; background: var(--app-bg);
+  }
+  .chap-back-btn {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: #fff; border: 1.5px solid rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-1);
+    transition: transform 0.1s ease;
+  }
+  .chap-back-btn:active { transform: scale(0.88); }
+  .chap-menu-btn {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: #fff; border: 1.5px solid rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-1);
+  }
+
+  /* ── Hero card redesign ── */
+  .chap-hero-meta-row {
+    display: flex; align-items: center; gap: 0;
+  }
+  .chap-hero-stat {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0;
+  }
+  .chap-hero-illus { font-size: 36px; line-height: 1; margin-bottom: 2px; }
+  .chap-hero-stat-val { font-size: 20px; font-weight: 900; color: var(--text-1); letter-spacing: -0.5px; }
+  .chap-hero-stat-lbl { font-size: 11px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.4px; }
+  .chap-hero-divider { width: 1px; height: 60px; background: rgba(0,0,0,0.1); margin: 0 8px; }
+  .app-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 32px; }
+  .app-scroll::-webkit-scrollbar { display: none; }
+
+  /* ══════════════════════════════
+     SCREEN: CHAPTER DASHBOARD (L2)
+  ══════════════════════════════ */
+  .chap-hero {
+    margin: 0 18px 18px; padding: 20px 22px;
+    background: #D6E8FF; border-radius: var(--r-xl);
+    position: relative; overflow: hidden;
+  }
+  .chap-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 90% at 95% 10%, rgba(255,255,255,0.45) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .chap-hero-title { font-size: 24px; font-weight: 900; color: var(--text-1); letter-spacing: -0.7px; line-height: 1.1; }
+
+  /* Journey indicator */
+  .journey-wrap { margin: 0 18px 18px; }
+  .journey-title { font-size: 16px; font-weight: 500; color: #6C6C6C; letter-spacing: -0.1px; margin-bottom: 14px; }
+  .journey-row { display: flex; align-items: center; gap: 0; }
+  .journey-stop {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;
+    cursor: pointer;
+  }
+  .journey-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: transform 0.15s ease;
+  }
+  .journey-dot.done { background: var(--text-1); color: #fff; }
+  .journey-dot.cur  { background: var(--text-1); color: #fff; box-shadow: 0 0 0 3px rgba(17,17,24,0.12); }
+  .journey-dot.pend { background: var(--surface-2); color: var(--text-3); }
+  .journey-label { font-size: 9px; font-weight: 600; color: var(--text-3); text-align: center; letter-spacing: 0.3px; line-height: 1.2; max-width: 52px; }
+  .journey-label.done { color: var(--green); }
+  .journey-label.cur  { color: var(--text-1); font-weight: 700; }
+  .journey-line { flex: 1; height: 2px; background: var(--surface-2); margin-top: -14px; margin-bottom: 18px; }
+  .journey-line.done { background: var(--green); }
+
+  /* Module cards v2 */
+  .mod-list { display: flex; flex-direction: column; gap: 14px; padding: 0 18px; }
+  .mod-card2 {
+    border-radius: var(--r-xl); padding: 20px;
+    background: #fff;
+    box-shadow: var(--sh-sm);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .mod-card2:active { transform: scale(0.985); box-shadow: var(--sh-xs); }
+  .active-card2 { box-shadow: 0 4px 24px rgba(0,0,0,0.10); }
+  .mod2-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .mod2-body { flex: 1; min-width: 0; }
+  .mod2-title { font-size: 19px; font-weight: 800; color: var(--text-1); letter-spacing: -0.5px; line-height: 1.15; }
+  .mod2-sub { font-size: 13px; color: var(--text-2); margin-top: 4px; line-height: 1.4; font-weight: 500; }
+  .mod2-ring {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 2.5px solid;
+  }
+  .mod2-ring.done-ring   { border-color: var(--green); background: #F0FAF2; }
+  .mod2-ring.active-ring { border-color: #E0C060; background: #FFF9EC; }
+  .mod2-ring.lock-ring   { border-color: #E0E0E0; background: #F8F8F8; }
+  .mod2-meta { display: flex; gap: 16px; }
+  .mod2-meta-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-2); font-weight: 500; }
+  .mod2-cta {
+    margin-top: 16px; width: 100%; padding: 14px;
+    background: var(--text-1); color: #fff;
+    border-radius: 100px; font-size: 15px; font-weight: 700;
+    border: none; cursor: pointer; font-family: 'Fustat', system-ui;
+    transition: opacity 0.12s ease;
+  }
+  .mod2-cta:active { opacity: 0.85; }
+
+  /* ══════════════════════════════
+     SCREEN: MEMORY LOCK (L3) — LIGHT MODE
+  ══════════════════════════════ */
+  #sc-ml {
+    background: linear-gradient(180deg, #C2E4FF 0%, #D8F0FF 18%, #EEF8FF 36%, #fff 55%);
+  }
+  .ml-top-zone {
+    flex-shrink: 0; position: relative; overflow: hidden;
+    background: transparent;
+    padding-bottom: 4px;
+  }
+  .ml-card-area { background: transparent; }
+  .ml-status { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px 0; }
+  .ml-status-time { font-size: 15px; font-weight: 700; color: var(--text-1); }
+  .ml-status-icons { display: flex; align-items: center; gap: 5px; color: var(--text-1); }
+  .ml-header {
+    padding: 10px 20px 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ml-back {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: transparent; border: 1.5px solid rgba(0,0,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-1);
+  }
+  .ml-info { flex: 1; }
+  .ml-screen-title { font-size: 15px; font-weight: 800; color: var(--text-1); letter-spacing: -0.3px; }
+  .ml-screen-sub { font-size: 11px; color: var(--text-2); margin-top: 1px; }
+  .ml-progress-row { flex-shrink: 0; padding: 0 20px 12px; }
+  .ml-prog-dots { display: flex; gap: 6px; margin-bottom: 6px; }
+  .ml-prog-dot {
+    flex: 1; height: 3px; border-radius: 100px;
+    background: var(--surface-2);
+    transition: background 0.3s ease;
+  }
+  .ml-prog-dot.done { background: var(--text-1); }
+  .ml-prog-dot.cur  { background: var(--text-1); }
+  .ml-prog-label { font-size: 11px; color: var(--text-3); font-weight: 600; }
+
+  /* Swipe card stack */
+  .ml-card-area {
+    flex: 1; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 16px;
+    overflow: hidden;
+  }
+  .ml-swipe-card {
+    position: absolute; inset: 0; margin: 4px 16px;
+    background: #fff; border-radius: 28px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    touch-action: none; cursor: grab;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding-top: 28px;
+  }
+  .ml-swipe-card:active { cursor: grabbing; }
+  .ml-card-illus {
+    flex: 0 0 34%; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+    margin-bottom: 8px;
+  }
+  .ml-card-illus-emoji { font-size: 110px; line-height: 1; display: block; }
+  .ml-card-body { flex: 1; padding: 22px 20px 18px; display: flex; flex-direction: column; background: #fff; overflow-y: auto; }
+  .ml-card-body::-webkit-scrollbar { display: none; }
+  .ml-card-tag { display: none; }
+  .ml-card-q { font-size: 20px; font-weight: 700; color: #2A7FD4; letter-spacing: -0.4px; line-height: 1.35; }
+  .ml-answer-panel {
+    margin-top: 12px; padding: 0;
+    background: transparent; border: none;
+    display: none;
+  }
+  .ml-answer-panel.show { display: block; }
+  .ml-answer-title { font-size: 22px; font-weight: 800; color: var(--text-1); margin-bottom: 6px; line-height: 1.3; letter-spacing: -0.5px; }
+  .ml-answer-word {
+    display: inline-block;
+    opacity: 0; transform: translateY(6px);
+    animation: mlWordIn 0.3s ease forwards;
+  }
+  @keyframes mlWordIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .ml-answer-takeaway { font-size: 18px; color: var(--text-1); line-height: 1.55; }
+
+  /* Docked bottom CTA */
+  .ml-bottom-cta { flex-shrink: 0; padding: 16px 20px 28px; }
+  .ml-reveal-btn-dock {
+    width: 100%; padding: 16px;
+    background: var(--text-1); border-radius: 100px;
+    border: none; color: #fff; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; font-family: 'Fustat', system-ui;
+    transition: opacity 0.15s ease;
+  }
+  .ml-reveal-btn-dock:active { opacity: 0.85; }
+  .ml-reveal-btn-dock.hidden { display: none; }
+
+  /* Swipe hint bar */
+  .ml-swipe-hint { flex-shrink: 0; padding: 8px 20px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .ml-hint-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-3); font-weight: 600; }
+
+  /* Swipe direction overlays on card */
+  .ml-swipe-overlay {
+    position: absolute; inset: 0; border-radius: 28px;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 28px; font-size: 16px; font-weight: 900; letter-spacing: 2px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.12s ease;
+    border: 3px solid transparent;
+  }
+  .ml-swipe-overlay.left  { background: rgba(232,100,10,0.08); color: #E8640A; border-color: rgba(232,100,10,0.3); }
+  .ml-swipe-overlay.right { background: rgba(46,107,58,0.08);  color: var(--green); border-color: rgba(46,107,58,0.3); }
+
+  /* ── Memory Lock Launcher ── */
+  .ml-launcher {
+    position: absolute; inset: 0; z-index: 50;
+    background: linear-gradient(160deg, #C2E4FF 0%, #D8F0FF 40%, #EEF8FF 80%, #fff 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0;
+    animation: mlLaunchOut 0.55s cubic-bezier(0.4,0,0.2,1) 2.4s forwards;
+  }
+  @keyframes mlLaunchOut {
+    to { opacity: 0; transform: translateY(-30px); pointer-events: none; }
+  }
+  .ml-launcher-pulse {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+  }
+  .ml-launcher-ring {
+    position: absolute; border-radius: 50%; border: 1.5px solid rgba(60,150,255,0.18);
+    animation: mlRingPulse 1.6s ease-out infinite;
+  }
+  @keyframes mlRingPulse {
+    0%   { transform: scale(0.6); opacity: 0.8; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .ml-launcher-emoji { font-size: 64px; line-height: 1; position: relative; z-index: 2; animation: mlEmojiBounce 1.8s ease-in-out infinite; }
+  @keyframes mlEmojiBounce {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-8px); }
+  }
+  .ml-launcher-title { font-size: 28px; font-weight: 900; color: var(--text-1); letter-spacing: -0.8px; margin-bottom: 8px; }
+  .ml-launcher-sub   { font-size: 14px; font-weight: 500; color: var(--text-2); }
+  .ml-launcher-dots  { display: flex; gap: 6px; margin-top: 32px; }
+  .ml-launcher-dot   {
+    width: 6px; height: 6px; border-radius: 50%; background: #C2E4FF;
+    animation: mlDotFill 0.4s ease forwards;
+  }
+  .ml-launcher-dot:nth-child(1) { animation-delay: 0.3s; }
+  .ml-launcher-dot:nth-child(2) { animation-delay: 0.65s; }
+  .ml-launcher-dot:nth-child(3) { animation-delay: 1s; }
+  @keyframes mlDotFill {
+    to { background: #2A7FD4; transform: scale(1.3); }
+  }
+
+  /* Tutorial overlay */
+  @keyframes mlTutorialIn  { from { opacity:0; } to { opacity:1; } }
+  @keyframes mlTutorialOut { from { opacity:1; } to { opacity:0; } }
+  .ml-tutorial-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    border-radius: 28px;
+    background: rgba(0,0,0,0.45);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    animation: mlTutorialIn 0.4s ease 0.3s both, mlTutorialOut 0.5s ease 2.6s forwards;
+    pointer-events: none;
+  }
+  .ml-tut-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    background: rgba(20,20,20,0.88); border-radius: 50%;
+    width: 100px; height: 100px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    padding: 12px;
+  }
+  .ml-tut-label { font-size: 10px; font-weight: 700; color: #fff; text-align: center; line-height: 1.4; }
+
+  /* Card exit animations */
+  @keyframes cardExitRight {
+    to { transform: translateX(140%) rotate(20deg); opacity: 0; }
+  }
+  @keyframes cardExitLeft {
+    to { transform: translateX(-140%) rotate(-20deg); opacity: 0; }
+  }
+  .ml-swipe-card.exit-r { animation: cardExitRight 0.38s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .ml-swipe-card.exit-l { animation: cardExitLeft  0.38s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+  /* ── ML Completion Screen — light mode ── */
+  #sc-ml-done { background: #fff; }
+  .mld-emoji { font-size: 64px; margin-bottom: 16px; animation: mldBounce 0.6s cubic-bezier(0.36,0.07,0.19,0.97) 0.2s both; }
+  @keyframes mldBounce { 0%{transform:scale(0.3);opacity:0} 60%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+  .mld-title { font-size: 28px; font-weight: 900; color: var(--text-1); letter-spacing: -0.7px; margin-bottom: 8px; }
+  .mld-sub { font-size: 14px; color: var(--text-2); line-height: 1.5; font-weight: 500; margin-bottom: 24px; }
+  .mld-summary { display: flex; gap: 14px; width: 100%; }
+  .mld-stat-card {
+    flex: 1; padding: 18px 14px; border-radius: var(--r-lg);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    box-shadow: var(--sh-sm);
+  }
+  .mld-stat-card.green { background: #F0FAF2; border: 1px solid rgba(46,107,58,0.15); }
+  .mld-stat-card.orange { background: #FFF5EE; border: 1px solid rgba(232,100,10,0.15); }
+  .mld-stat-num.green { font-size: 32px; font-weight: 900; color: var(--green); }
+  .mld-stat-num.orange { font-size: 32px; font-weight: 900; color: var(--orange); }
+  .mld-stat-num { font-size: 32px; font-weight: 900; color: var(--text-1); }
+  .mld-stat-lbl { font-size: 11px; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .mld-revise-list { width: 100%; margin-top: 20px; text-align: left; }
+  .mld-revise-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; border-radius: var(--r-md);
+    background: #FFF5EE; border: 1px solid rgba(232,100,10,0.12);
+    margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--text-1);
+  }
+  .mld-revise-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+  .mld-cta-area { padding: 16px 24px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .mld-btn-primary {
+    width: 100%; padding: 16px; border-radius: 100px;
+    background: var(--text-1); color: #fff;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer;
+  }
+  .mld-btn-secondary {
+    width: 100%; padding: 14px; border-radius: 100px;
+    background: #fff; color: var(--text-1);
+    font-size: 14px; font-weight: 700; font-family: 'Fustat', system-ui;
+    border: 1.5px solid rgba(0,0,0,0.12); cursor: pointer;
+  }
+
+  /* ══════════════════════════════
+     SCREEN: PYQ WAR ROOM LANDING
+  ══════════════════════════════ */
+  #sc-pyq-land {
+    background: linear-gradient(160deg, #1A0A2E 0%, #0F0A1A 100%);
+    align-items: center; justify-content: center;
+  }
+  .pyql-wrap { padding: 0 28px; text-align: center; width: 100%; }
+  .pyql-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(107,72,194,0.25); border: 1px solid rgba(107,72,194,0.4);
+    border-radius: 100px; padding: 5px 14px; margin-bottom: 20px;
+    font-size: 11px; font-weight: 700; color: #A88BF5; letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .pyql-title { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: -0.7px; line-height: 1.12; margin-bottom: 10px; }
+  .pyql-sub { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; font-weight: 500; margin-bottom: 28px; }
+  .pyql-stats { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; }
+  .pyql-stat {
+    flex: 1; max-width: 110px; padding: 14px 12px; border-radius: var(--r-md);
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09);
+    text-align: center;
+  }
+  .pyql-stat-val { font-size: 18px; font-weight: 900; color: #fff; }
+  .pyql-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .pyql-btn {
+    width: 100%; padding: 16px; border-radius: 100px;
+    background: var(--violet); color: #fff;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 8px 32px rgba(107,72,194,0.45);
+  }
+
+  /* ══════════════════════════════
+     SCREEN: PYQ QUESTION FLOW
+  ══════════════════════════════ */
+  #sc-pyq-q {
+    background: var(--app-bg);
+  }
+  .pyq-header {
+    flex-shrink: 0; padding: 14px 20px 10px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pyq-back {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--surface-2); border: none;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    color: var(--text-1);
+  }
+  .pyq-prog-wrap { flex: 1; }
+  .pyq-prog-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .pyq-prog-label { font-size: 12px; font-weight: 700; color: var(--text-1); }
+  .pyq-prog-score { font-size: 12px; font-weight: 700; color: var(--green); }
+  .pyq-prog-bar { height: 5px; background: var(--surface-2); border-radius: 100px; overflow: hidden; }
+  .pyq-prog-fill { height: 100%; background: var(--violet); border-radius: 100px; transition: width 0.4s ease; }
+  .pyq-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 18px 20px; }
+  .pyq-scroll::-webkit-scrollbar { display: none; }
+
+  /* Question card */
+  .pyq-q-card {
+    background: var(--surface-2); border-radius: var(--r-xl);
+    padding: 20px; margin-bottom: 16px;
+  }
+  .pyq-q-tag { font-size: 10px; font-weight: 700; color: var(--violet); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; }
+  .pyq-q-text { font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.45; letter-spacing: -0.2px; }
+
+  /* Options */
+  .pyq-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .pyq-option {
+    padding: 14px 16px; border-radius: var(--r-md);
+    background: #fff; border: 1.5px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+    font-family: 'Fustat', system-ui;
+  }
+  .pyq-option-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--surface-2); color: var(--text-2);
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .pyq-option-text { font-size: 13.5px; font-weight: 600; color: var(--text-1); flex: 1; line-height: 1.4; }
+  .pyq-option.selected { border-color: var(--violet); background: rgba(107,72,194,0.05); }
+  .pyq-option.selected .pyq-option-letter { background: var(--violet); color: #fff; }
+  .pyq-option.correct { border-color: var(--green); background: rgba(46,107,58,0.07); }
+  .pyq-option.correct .pyq-option-letter { background: var(--green); color: #fff; }
+  .pyq-option.wrong { border-color: #E84040; background: rgba(232,64,64,0.06); }
+  .pyq-option.wrong .pyq-option-letter { background: #E84040; color: #fff; }
+  .pyq-option:disabled, .pyq-option.disabled { pointer-events: none; }
+
+  /* Explanation */
+  .pyq-explanation {
+    padding: 14px 16px; border-radius: var(--r-md);
+    background: rgba(46,107,58,0.07); border: 1px solid rgba(46,107,58,0.2);
+    margin-bottom: 16px; display: none;
+  }
+  .pyq-explanation.show { display: block; }
+  .pyq-exp-label { font-size: 10px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
+  .pyq-exp-text { font-size: 13px; color: var(--text-2); line-height: 1.5; font-weight: 500; }
+  .pyq-next-btn {
+    width: 100%; padding: 14px; border-radius: 100px;
+    background: var(--text-1); color: #fff;
+    font-size: 14px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer; display: none;
+    align-items: center; justify-content: center; gap: 8px;
+    transition: opacity 0.12s ease;
+  }
+  .pyq-next-btn.show { display: flex; }
+  .pyq-next-btn:active { opacity: 0.85; }
+
+  /* ══════════════════════════════
+     SCREEN: PYQ RESULTS
+  ══════════════════════════════ */
+  #sc-pyq-res {
+    background: var(--app-bg);
+    align-items: center; justify-content: center;
+  }
+  .pyqr-wrap { padding: 0 28px; text-align: center; width: 100%; }
+  .pyqr-emoji { font-size: 52px; margin-bottom: 14px; }
+  .pyqr-title { font-size: 26px; font-weight: 900; color: var(--text-1); letter-spacing: -0.7px; margin-bottom: 6px; }
+  .pyqr-sub { font-size: 14px; color: var(--text-2); font-weight: 500; }
+  .pyqr-score-ring {
+    width: 110px; height: 110px; border-radius: 50%; margin: 24px auto 0;
+    background: conic-gradient(var(--green) 0% 80%, var(--surface-2) 80% 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--sh-md);
+  }
+  .pyqr-score-inner {
+    width: 82px; height: 82px; border-radius: 50%; background: var(--app-bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .pyqr-score-val { font-size: 22px; font-weight: 900; color: var(--text-1); letter-spacing: -0.5px; }
+  .pyqr-score-lbl { font-size: 9px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .pyqr-accuracy { font-size: 14px; font-weight: 700; color: var(--green); margin-top: 10px; }
+  .pyqr-revise { margin: 22px 28px 0; background: #FEF6F0; border-radius: var(--r-lg); padding: 16px; border: 1px solid rgba(232,100,10,0.15); text-align: left; }
+  .pyqr-revise-title { font-size: 11px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 8px; }
+  .pyqr-revise-item { font-size: 13px; color: var(--text-2); font-weight: 500; padding: 3px 0; display: flex; align-items: center; gap: 6px; }
+  .pyqr-cta-area { padding: 22px 28px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .pyqr-btn-primary {
+    width: 100%; padding: 15px; border-radius: 100px;
+    background: var(--text-1); color: #fff;
+    font-size: 14px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .pyqr-btn-secondary {
+    width: 100%; padding: 13px; border-radius: 100px;
+    background: var(--surface-2); color: var(--text-2);
+    font-size: 13px; font-weight: 700; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer;
+  }
   </style>
 </head>
 <body>
@@ -1659,7 +2190,7 @@
           </div>
 
           <!-- HERO CARD -->
-          <div class="hero-card">
+          <div class="hero-card" id="heroPhysio" style="cursor:pointer;">
             <div class="hero-chapter">Human Physiology</div>
             <div class="hero-mode">Memory Lock &nbsp;·&nbsp; Est. 8 mins</div>
             <div class="hero-concepts-row">
@@ -1954,6 +2485,330 @@
           </div>
         </nav>
 
+      <!-- ══════════════════════════════════════════
+           L2 / L3 SCREEN OVERLAY
+      ══════════════════════════════════════════ -->
+      <div id="chapter-overlay" style="position:absolute;inset:0;z-index:600;pointer-events:none;overflow:hidden;">
+
+        <!-- ── 1. CHAPTER DASHBOARD ── -->
+        <div class="app-screen" id="sc-chap">
+          <!-- Status bar -->
+          <div class="chap-status-bar">
+            <span class="chap-status-time">9:41</span>
+            <div class="chap-status-island"></div>
+            <div class="chap-status-icons">
+              <i data-lucide="signal" style="width:13px;height:13px;"></i>
+              <i data-lucide="wifi" style="width:13px;height:13px;"></i>
+              <i data-lucide="battery-full" style="width:13px;height:13px;"></i>
+            </div>
+          </div>
+          <!-- Nav row -->
+          <div class="chap-nav-row">
+            <button class="chap-back-btn" id="chapBack"><i data-lucide="arrow-left" style="width:18px;height:18px;"></i></button>
+            <div class="app-nav-title">Human Physiology</div>
+            <button class="chap-menu-btn"><i data-lucide="layout-grid" style="width:17px;height:17px;"></i></button>
+          </div>
+          <div class="app-scroll">
+            <!-- Hero banner -->
+            <div class="chap-hero">
+              <div class="chap-hero-meta-row">
+                <div class="chap-hero-stat">
+                  <div class="chap-hero-illus">📚</div>
+                  <div class="chap-hero-stat-val" id="chapConceptsLabel">18/42</div>
+                  <div class="chap-hero-stat-lbl">Concepts</div>
+                </div>
+                <div class="chap-hero-divider"></div>
+                <div class="chap-hero-stat">
+                  <div class="chap-hero-illus">⏱️</div>
+                  <div class="chap-hero-stat-val">8 min</div>
+                  <div class="chap-hero-stat-lbl">Est. Time</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Journey -->
+            <div class="journey-wrap">
+              <div class="journey-title">Your Path</div>
+              <div class="journey-row">
+                <div class="journey-stop" onclick="chapNav.goTo('sc-ml')">
+                  <div class="journey-dot done" id="jDot1"><i data-lucide="check" style="width:13px;height:13px;"></i></div>
+                  <div class="journey-label done">Mission Brief</div>
+                </div>
+                <div class="journey-line done"></div>
+                <div class="journey-stop" id="jStop2">
+                  <div class="journey-dot cur" id="jDot2">2</div>
+                  <div class="journey-label cur" id="jLabel2">Memory Lock</div>
+                </div>
+                <div class="journey-line" id="jLine2"></div>
+                <div class="journey-stop">
+                  <div class="journey-dot pend" id="jDot3">3</div>
+                  <div class="journey-label" id="jLabel3">Figure Strike</div>
+                </div>
+                <div class="journey-line" id="jLine3"></div>
+                <div class="journey-stop">
+                  <div class="journey-dot pend" id="jDot4">4</div>
+                  <div class="journey-label">PYQ War Room</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Module cards -->
+            <div class="mod-list">
+
+              <!-- Mission Brief - done -->
+              <div class="mod-card2">
+                <div class="mod2-top">
+                  <div class="mod2-body">
+                    <div class="mod2-title">Mission Brief</div>
+                    <div class="mod2-sub">Key concepts, diagrams &amp; notes</div>
+                  </div>
+                  <div class="mod2-ring done-ring">
+                    <i data-lucide="check" style="width:24px;height:24px;color:var(--green);stroke-width:3;"></i>
+                  </div>
+                </div>
+                <div class="mod2-meta">
+                  <div class="mod2-meta-item"><i data-lucide="layers" style="width:13px;height:13px;"></i> 12 concepts</div>
+                  <div class="mod2-meta-item"><i data-lucide="clock" style="width:13px;height:13px;"></i> Completed</div>
+                </div>
+              </div>
+
+              <!-- Memory Lock - active -->
+              <div class="mod-card2 active-card2" id="modMLCard" onclick="chapNav.open('sc-ml')">
+                <div class="mod2-top">
+                  <div class="mod2-body">
+                    <div class="mod2-title">Memory Lock</div>
+                    <div class="mod2-sub">Swipe to test your recall on 5 key topics</div>
+                  </div>
+                  <div class="mod2-ring active-ring" id="mlBadge">
+                    <span style="font-size:12px;font-weight:800;color:var(--text-1);">0/5</span>
+                  </div>
+                </div>
+                <div class="mod2-meta">
+                  <div class="mod2-meta-item"><i data-lucide="layers" style="width:13px;height:13px;"></i> 5 Cards</div>
+                  <div class="mod2-meta-item"><i data-lucide="clock" style="width:13px;height:13px;"></i> ~3 min</div>
+                </div>
+                <button class="mod2-cta" id="mlCtaBtn" onclick="event.stopPropagation();chapNav.open('sc-ml')">
+                  Start Memory Lock
+                </button>
+              </div>
+
+              <!-- Figure Strike - locked -->
+              <div class="mod-card2">
+                <div class="mod2-top">
+                  <div class="mod2-body">
+                    <div class="mod2-title">Figure Strike</div>
+                    <div class="mod2-sub">Label diagrams under pressure</div>
+                  </div>
+                  <div class="mod2-ring lock-ring">
+                    <i data-lucide="lock" style="width:15px;height:15px;color:#BDBDBD;"></i>
+                  </div>
+                </div>
+                <div class="mod2-meta">
+                  <div class="mod2-meta-item"><i data-lucide="image" style="width:13px;height:13px;"></i> 8 diagrams</div>
+                  <div class="mod2-meta-item"><i data-lucide="clock" style="width:13px;height:13px;"></i> ~5 min</div>
+                </div>
+              </div>
+
+              <!-- PYQ War Room -->
+              <div class="mod-card2" id="modPYQCard" onclick="chapNav.openPYQ()">
+                <div class="mod2-top">
+                  <div class="mod2-body">
+                    <div class="mod2-title">PYQ War Room</div>
+                    <div class="mod2-sub">5 NEET questions · 5 min challenge</div>
+                  </div>
+                  <div class="mod2-ring lock-ring" id="pyqBadge">
+                    <i data-lucide="lock" style="width:15px;height:15px;color:#BDBDBD;"></i>
+                  </div>
+                </div>
+                <div class="mod2-meta">
+                  <div class="mod2-meta-item"><i data-lucide="trophy" style="width:13px;height:13px;"></i> Best: 4/5</div>
+                  <div class="mod2-meta-item"><i data-lucide="clock" style="width:13px;height:13px;"></i> 5 min</div>
+                </div>
+              </div>
+
+            </div>
+            <div style="height:24px;"></div>
+          </div>
+        </div>
+
+        <!-- ── 2. MEMORY LOCK ── -->
+        <div class="app-screen" id="sc-ml">
+          <div class="ml-top-zone">
+            <!-- floating icons -->
+            <div class="spl-fi" style="top:8px;left:14%;animation-delay:0s;animation-duration:5.5s;z-index:0;">
+              <i data-lucide="heart-pulse" style="width:22px;height:22px;color:rgba(60,150,255,0.18);"></i>
+            </div>
+            <div class="spl-fi" style="top:4px;right:18%;animation-delay:1.2s;animation-duration:6.3s;z-index:0;">
+              <i data-lucide="dna" style="width:20px;height:20px;color:rgba(60,150,255,0.15);"></i>
+            </div>
+            <div class="spl-fi" style="top:30px;right:8%;animation-delay:0.5s;animation-duration:5s;z-index:0;">
+              <i data-lucide="microscope" style="width:18px;height:18px;color:rgba(60,150,255,0.14);"></i>
+            </div>
+            <div class="spl-fi" style="top:24px;left:6%;animation-delay:2s;animation-duration:6.8s;z-index:0;">
+              <i data-lucide="flask-conical" style="width:20px;height:20px;color:rgba(60,150,255,0.14);"></i>
+            </div>
+            <div class="spl-fi" style="top:10px;left:40%;animation-delay:1.8s;animation-duration:7s;z-index:0;">
+              <i data-lucide="atom" style="width:16px;height:16px;color:rgba(60,150,255,0.12);"></i>
+            </div>
+          <div class="ml-status">
+            <span class="ml-status-time">9:41</span>
+            <div class="ml-status-icons">
+              <i data-lucide="signal" style="width:14px;height:14px;"></i>
+              <i data-lucide="wifi" style="width:14px;height:14px;"></i>
+              <i data-lucide="battery-full" style="width:14px;height:14px;"></i>
+            </div>
+          </div>
+          <div class="ml-header">
+            <button class="ml-back" id="mlBack"><i data-lucide="arrow-left" style="width:18px;height:18px;"></i></button>
+            <div class="ml-info">
+              <div class="ml-screen-title">Memory Lock</div>
+              <div class="ml-screen-sub">Human Physiology · 5 cards</div>
+            </div>
+          </div>
+          <div class="ml-progress-row">
+            <div class="ml-prog-dots" id="mlDots">
+              <div class="ml-prog-dot cur"></div>
+              <div class="ml-prog-dot"></div>
+              <div class="ml-prog-dot"></div>
+              <div class="ml-prog-dot"></div>
+              <div class="ml-prog-dot"></div>
+            </div>
+            <div class="ml-prog-label" id="mlProgLabel">Card 1 of 5</div>
+          </div>
+          </div><!-- /ml-top-zone -->
+
+          <!-- Launcher overlay injected by JS -->
+          <div id="mlLauncher" class="ml-launcher" style="display:none;">
+            <div class="ml-launcher-pulse">
+              <div class="ml-launcher-ring" style="width:100px;height:100px;animation-delay:0s;"></div>
+              <div class="ml-launcher-ring" style="width:100px;height:100px;animation-delay:0.5s;"></div>
+              <div class="ml-launcher-ring" style="width:100px;height:100px;animation-delay:1s;"></div>
+              <div class="ml-launcher-emoji">🧠</div>
+            </div>
+            <div class="ml-launcher-title">Memory Lock</div>
+            <div class="ml-launcher-sub">Human Physiology · 5 cards</div>
+            <div class="ml-launcher-dots">
+              <div class="ml-launcher-dot"></div>
+              <div class="ml-launcher-dot"></div>
+              <div class="ml-launcher-dot"></div>
+            </div>
+          </div>
+
+          <div class="ml-card-area" id="mlCardArea">
+            <!-- Cards injected by JS -->
+          </div>
+
+
+          <div class="ml-bottom-cta">
+            <button class="ml-reveal-btn-dock" id="mlRevealBtnDock" onclick="chapNav._mlReveal()">
+              <i data-lucide="eye" style="width:16px;height:16px;"></i> Reveal Answer
+            </button>
+          </div>
+        </div>
+
+        <!-- ── 3. MEMORY LOCK SUCCESS ── -->
+        <div class="app-screen" id="sc-ml-done">
+          <!-- Confetti canvas -->
+          <canvas id="mldConfetti" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;"></canvas>
+
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px;text-align:center;position:relative;z-index:11;">
+            <div class="mld-emoji">🎉</div>
+            <div class="mld-title">Memory Locked!</div>
+            <div class="mld-sub">You've reviewed all 5 Human Physiology concepts.</div>
+            <div class="mld-summary">
+              <div class="mld-stat-card green">
+                <div class="mld-stat-num" id="mldRemNum">3</div>
+                <div class="mld-stat-lbl">Remembered</div>
+              </div>
+              <div class="mld-stat-card orange">
+                <div class="mld-stat-num" id="mldRevNum">2</div>
+                <div class="mld-stat-lbl">Needs Revision</div>
+              </div>
+            </div>
+            <!-- Revision list -->
+            <div class="mld-revise-list" id="mldReviseList"></div>
+          </div>
+          <div class="mld-cta-area">
+            <button class="mld-btn-primary" onclick="chapNav.open('sc-pyq-land')">
+              Go to PYQ War Room
+            </button>
+            <button class="mld-btn-secondary" onclick="chapNav._showRevision()">Review Weak Concepts</button>
+          </div>
+        </div>
+
+        <!-- ── 4. PYQ WAR ROOM LANDING ── -->
+        <div class="app-screen" id="sc-pyq-land" style="background:linear-gradient(160deg,#1A0A2E 0%,#0F0A1A 100%);">
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;padding:14px 20px 0;">
+            <button style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;" onclick="chapNav.open('sc-chap')">
+              <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
+            </button>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+            <div class="pyql-wrap">
+              <div class="pyql-badge"><i data-lucide="swords" style="width:11px;height:11px;"></i> PYQ War Room</div>
+              <div class="pyql-title">Test What You<br>Actually Know</div>
+              <div class="pyql-sub">5 real NEET questions from Human Physiology. Timer on. No hints.</div>
+              <div class="pyql-stats">
+                <div class="pyql-stat"><div class="pyql-stat-val">5</div><div class="pyql-stat-lbl">Questions</div></div>
+                <div class="pyql-stat"><div class="pyql-stat-val">5 min</div><div class="pyql-stat-lbl">Time Limit</div></div>
+                <div class="pyql-stat"><div class="pyql-stat-val">4/5</div><div class="pyql-stat-lbl">Best Score</div></div>
+              </div>
+              <button class="pyql-btn" onclick="chapNav.startPYQ()">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 5. PYQ QUESTION FLOW ── -->
+        <div class="app-screen" id="sc-pyq-q">
+          <div class="pyq-header">
+            <button class="pyq-back" id="pyqBack" onclick="chapNav.open('sc-pyq-land')">
+              <i data-lucide="x" style="width:18px;height:18px;"></i>
+            </button>
+            <div class="pyq-prog-wrap">
+              <div class="pyq-prog-row">
+                <div class="pyq-prog-label" id="pyqProgLabel">Question 1 of 5</div>
+                <div class="pyq-prog-score" id="pyqScore">Score: 0</div>
+              </div>
+              <div class="pyq-prog-bar"><div class="pyq-prog-fill" id="pyqProgFill" style="width:20%;"></div></div>
+            </div>
+          </div>
+          <div class="pyq-scroll" id="pyqScroll">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- ── 6. PYQ RESULTS ── -->
+        <div class="app-screen" id="sc-pyq-res">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+            <div class="pyqr-wrap">
+              <div class="pyqr-emoji">🏆</div>
+              <div class="pyqr-title">Challenge Complete!</div>
+              <div class="pyqr-sub">Human Physiology · PYQ War Room</div>
+              <div class="pyqr-score-ring">
+                <div class="pyqr-score-inner">
+                  <div class="pyqr-score-val" id="pyqrScoreVal">4/5</div>
+                  <div class="pyqr-score-lbl">Score</div>
+                </div>
+              </div>
+              <div class="pyqr-accuracy" id="pyqrAccuracy">80% Accuracy</div>
+              <div class="pyqr-revise" id="pyqrRevise">
+                <div class="pyqr-revise-title">Topics to Revisit</div>
+                <div id="pyqrReviseList"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pyqr-cta-area">
+            <button class="pyqr-btn-primary" onclick="chapNav.open('sc-chap')">
+              <i data-lucide="home" style="width:16px;height:16px;"></i> Back to Chapter
+            </button>
+            <button class="pyqr-btn-secondary" onclick="chapNav.open('sc-ml')">Review Weak Concepts</button>
+          </div>
+        </div>
+
+      </div><!-- /chapter-overlay -->
+
       </div><!-- /phone -->
     </div><!-- /iphone-screen-wrap -->
   </div><!-- /iphone-body -->
@@ -2199,6 +3054,514 @@
     setTimeout(() => exitOnboarding(), 4200);
   }
 
+})();
+</script>
+
+<script>
+/* ══════════════════════════════════════════
+   CHAPTER / L2-L3 NAVIGATION CONTROLLER
+══════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas = document.getElementById('mldConfetti');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const colors = ['#4F9CF9','#2E6B3A','#E8640A','#F7D94C','#C084FC','#FB7185'];
+  const pieces = Array.from({length: 90}, () => ({
+    x: Math.random() * canvas.width,
+    y: -10 - Math.random() * 100,
+    r: 4 + Math.random() * 5,
+    d: 1.5 + Math.random() * 2.5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    tilt: Math.random() * 10 - 5,
+    tiltV: 0.15 + Math.random() * 0.1,
+    angle: Math.random() * Math.PI * 2,
+    angleV: 0.05 + Math.random() * 0.08,
+    shape: Math.random() > 0.5 ? 'rect' : 'circle'
+  }));
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.y += p.d;
+      p.angle += p.angleV;
+      p.tilt += p.tiltV * Math.sin(p.angle);
+      ctx.save();
+      ctx.translate(p.x + p.tilt, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, 1 - frame / 180);
+      if (p.shape === 'rect') { ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6); }
+      else { ctx.beginPath(); ctx.arc(0, 0, p.r / 2, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+const chapNav = (() => {
+  const overlay = document.getElementById('chapter-overlay');
+  let current = null;
+
+  /* PYQ state */
+  let pyqCurrent = 0;
+  let pyqScore = 0;
+  let pyqAnswered = [];
+
+  /* ML state */
+  let mlRemembered = 0;
+  let mlNeedsRevision = 0;
+  let mlRevisionCards = [];
+  let mlDone = false;
+
+  /* Memory Lock cards data */
+  const ML_CARDS = [
+    {
+      tag: 'Cardiovascular System',
+      q: 'What is the order of blood flow through the chambers of the human heart?',
+      answer: 'Right Atrium → Right Ventricle → Lungs → Left Atrium → Left Ventricle → Body',
+      takeaway: 'Deoxygenated blood enters the right side; oxygenated blood leaves the left side via the aorta.'
+    },
+    {
+      tag: 'Excretory System',
+      q: 'Which part of the nephron is responsible for selective reabsorption of glucose and amino acids?',
+      answer: 'Proximal Convoluted Tubule (PCT)',
+      takeaway: 'PCT reabsorbs ~80% of filtrate including all glucose, amino acids, and most water.'
+    },
+    {
+      tag: 'Respiratory System',
+      q: 'What is the role of surfactant in the alveoli?',
+      answer: 'Reduces surface tension to prevent alveolar collapse during expiration.',
+      takeaway: 'Secreted by Type II pneumocytes. Deficiency causes Respiratory Distress Syndrome in neonates.'
+    },
+    {
+      tag: 'Nervous System',
+      q: 'During an action potential, what causes repolarization?',
+      answer: 'Rapid efflux of K⁺ ions through voltage-gated potassium channels.',
+      takeaway: 'Na⁺ rushes IN during depolarization → K⁺ rushes OUT during repolarization.'
+    },
+    {
+      tag: 'Endocrine System',
+      q: 'Which hormone directly opposes insulin and raises blood glucose levels?',
+      answer: 'Glucagon — secreted by alpha cells of the islets of Langerhans.',
+      takeaway: 'Glucagon promotes glycogenolysis and gluconeogenesis in the liver.'
+    }
+  ];
+
+  /* PYQ questions */
+  const PYQ_QUESTIONS = [
+    {
+      type: 'MCQ',
+      q: 'Which of the following correctly describes the sinoatrial (SA) node?',
+      options: ['Located in the left atrium wall', 'Acts as the pacemaker of the heart', 'Delays impulse between atria and ventricles', 'Conducts impulse through the bundle of His'],
+      correct: 1,
+      topic: 'SA Node / Heart',
+      explanation: 'The SA node is located in the right atrium and generates spontaneous electrical impulses, setting the pace for the entire heart.'
+    },
+    {
+      type: 'MCQ',
+      q: 'The "juxtaglomerular apparatus" is associated with which function?',
+      options: ['Glucose reabsorption', 'Blood pressure regulation via renin secretion', 'Urea concentration in loop of Henle', 'Secretion of ADH'],
+      correct: 1,
+      topic: 'JGA / Kidney',
+      explanation: 'JGA cells secrete renin in response to low BP, activating the renin-angiotensin-aldosterone system.'
+    },
+    {
+      type: 'Assertion-Reason',
+      q: 'Assertion (A): Breathing rate increases during exercise.\nReason (R): CO₂ concentration in blood rises during exercise, stimulating the respiratory centre.',
+      options: ['Both A and R are true, and R is the correct explanation of A', 'Both A and R are true, but R is not the correct explanation of A', 'A is true, but R is false', 'A is false, but R is true'],
+      correct: 0,
+      topic: 'Respiratory Regulation',
+      explanation: 'Elevated CO₂ (hypercapnia) lowers blood pH, which stimulates the medullary respiratory centre to increase breathing rate.'
+    },
+    {
+      type: 'MCQ',
+      q: 'Which enzyme converts fibrinogen to fibrin during blood clotting?',
+      options: ['Plasmin', 'Prothrombin', 'Thrombin', 'Factor X'],
+      correct: 2,
+      topic: 'Blood Clotting',
+      explanation: 'Prothrombin is converted to Thrombin, which then catalyses the conversion of soluble fibrinogen to insoluble fibrin threads.'
+    },
+    {
+      type: 'Clinical MCQ',
+      q: 'A patient presents with excessive thirst, high urine output, and urine that tastes sweet. Which hormone is most likely deficient?',
+      options: ['ADH (Vasopressin)', 'Aldosterone', 'Insulin', 'Cortisol'],
+      correct: 2,
+      topic: 'Diabetes / Endocrine',
+      explanation: 'Sweet urine (glycosuria) with polydipsia and polyuria indicates Type 1 Diabetes — insulin deficiency prevents cellular glucose uptake, leading to hyperglycaemia.'
+    }
+  ];
+
+  /* ── Screen transition ── */
+  function show(id, dir = 'right') {
+    const next = document.getElementById(id);
+    if (!next) return;
+    overlay.style.pointerEvents = 'all';
+
+    if (current && current !== next) {
+      current.classList.remove('active');
+      current.classList.add(dir === 'right' ? 'exit-l' : 'exit-r');
+      const old = current;
+      setTimeout(() => { old.classList.remove('exit-l', 'exit-r'); }, 400);
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      next.classList.add('active');
+      current = next;
+      lucide.createIcons();
+    }));
+  }
+
+  function hide() {
+    if (current) {
+      current.classList.remove('active');
+      current.classList.add('exit-r');
+      const old = current;
+      setTimeout(() => { old.classList.remove('exit-r'); }, 400);
+      current = null;
+    }
+    overlay.style.pointerEvents = 'none';
+  }
+
+  /* ── Public API ── */
+  function open(id) {
+    if (id === 'sc-chap') { show('sc-chap'); updateChapState(); return; }
+    show(id);
+    if (id === 'sc-ml') initML();
+  }
+
+  function goTo(id) { open(id); }
+
+  function openPYQ() {
+    if (!mlDone) return; // still locked
+    open('sc-pyq-land');
+  }
+
+  /* ── Chapter state update ── */
+  function updateChapState() {
+    if (mlDone) {
+      // Memory Lock → done ring becomes green check
+      const mlBadge = document.getElementById('mlBadge');
+      mlBadge.className = 'mod2-ring done-ring';
+      mlBadge.innerHTML = '<i data-lucide="check" style="width:16px;height:16px;color:var(--green);"></i>';
+      document.getElementById('mlCtaBtn').textContent = 'Review Cards';
+      // PYQ unlock
+      const pyqBadge = document.getElementById('pyqBadge');
+      pyqBadge.className = 'mod2-ring active-ring';
+      pyqBadge.innerHTML = '<span style="font-size:11px;font-weight:800;color:#B8860B;">Go</span>';
+      document.getElementById('modPYQCard').style.opacity = '1';
+      // Journey
+      document.getElementById('jDot2').className = 'journey-dot done';
+      document.getElementById('jDot2').innerHTML = '<i data-lucide="check" style="width:13px;height:13px;"></i>';
+      document.getElementById('jLabel2').className = 'journey-label done';
+      document.getElementById('jLine2').className = 'journey-line done';
+      document.getElementById('jDot3').className = 'journey-dot pend';
+      document.getElementById('jDot4').className = 'journey-dot cur';
+      document.getElementById('jLabel3').className = 'journey-label';
+      // Progress
+      const cl = document.getElementById('chapConceptsLabel');
+      if (cl) cl.textContent = '28/42 concepts';
+      lucide.createIcons();
+    }
+  }
+
+  /* ── Memory Lock ── */
+  let mlIndex = 0;
+  let mlRevealed = false;
+  let mlDragging = false;
+  let mlStartX = 0;
+
+  function initML() {
+    mlIndex = 0;
+    mlRemembered = 0;
+    mlNeedsRevision = 0;
+    mlRevisionCards = [];
+    // Show launcher first, then reveal cards
+    const launcher = document.getElementById('mlLauncher');
+    if (launcher) {
+      launcher.style.display = 'flex';
+      // Remove after animation ends (2.4s delay + 0.55s transition)
+      setTimeout(() => { launcher.style.display = 'none'; }, 3000);
+    }
+    renderMLCard();
+    // Hide docked button during launcher
+    const btn = document.getElementById('mlRevealBtnDock');
+    if (btn) btn.style.display = 'none';
+    setTimeout(() => { if (btn) btn.style.display = ''; }, 3000);
+  }
+
+  function renderMLCard() {
+    const area = document.getElementById('mlCardArea');
+    // update dots
+    const dots = document.querySelectorAll('.ml-prog-dot');
+    dots.forEach((d, i) => {
+      d.className = 'ml-prog-dot' + (i < mlIndex ? ' done' : i === mlIndex ? ' cur' : '');
+    });
+    document.getElementById('mlProgLabel').textContent = `Card ${mlIndex + 1} of ${ML_CARDS.length}`;
+
+    const card = ML_CARDS[mlIndex];
+    const emojis = [null,null,null,null,null];
+    const cardImages = ['Images/chambers-of-the-heart.jpg','Images/nephron.png','Images/alveoli.png','Images/action potential.png','Images/pancreas.png'];
+    const cardBgs = [
+      null,
+      'linear-gradient(160deg,#FFF0E8 0%,#FFE4D0 50%,#fff 100%)',
+      'linear-gradient(160deg,#E8F4FF 0%,#D0E8FF 50%,#fff 100%)',
+      'linear-gradient(160deg,#F0E8FF 0%,#E0D0FF 50%,#fff 100%)',
+      'linear-gradient(160deg,#E8FFF0 0%,#D0FFE8 50%,#fff 100%)',
+    ];
+    const isFirst = mlIndex === 0;
+    const tutorialHTML = isFirst ? `
+      <div class="ml-tutorial-overlay">
+        <div class="ml-tut-btn">
+          <i data-lucide="hand" style="width:24px;height:24px;color:#fff;stroke-width:1.8;transform:rotate(90deg);"></i>
+          <div class="ml-tut-label">Swipe left<br>Needs Revision</div>
+        </div>
+        <div class="ml-tut-btn">
+          <i data-lucide="hand" style="width:24px;height:24px;color:#fff;stroke-width:1.8;transform:rotate(-90deg);"></i>
+          <div class="ml-tut-label">Swipe right<br>I Remember</div>
+        </div>
+      </div>` : '';
+
+    area.innerHTML = `
+      <div class="ml-swipe-card" id="mlCard">
+        <div class="ml-card-illus" style="${cardImages[mlIndex] ? 'background:#fff;' : cardBgs[mlIndex] ? `background:${cardBgs[mlIndex]};` : ''}">
+          ${cardImages[mlIndex]
+            ? `<img src="${cardImages[mlIndex]}" style="width:100%;height:100%;object-fit:contain;background:#fff;" alt="">`
+            : `<span class="ml-card-illus-emoji">${emojis[mlIndex]}</span>`}
+        </div>
+        <div class="ml-card-body">
+          <div class="ml-card-tag">${card.tag}</div>
+          <div class="ml-card-q"><span style="font-weight:900;">Q:</span> ${card.q}</div>
+          <div class="ml-answer-panel" id="mlAnswerPanel">
+            <div class="ml-answer-title"><span style="font-weight:900;color:#2A7FD4;">A:</span> ${card.answer}</div>
+            <div class="ml-answer-takeaway">${card.takeaway}</div>
+          </div>
+        </div>
+        <div class="ml-swipe-overlay left" id="mlOverlayLeft">✗ NEEDS REVISION</div>
+        <div class="ml-swipe-overlay right" id="mlOverlayRight">✓ I REMEMBER</div>
+        ${tutorialHTML}
+      </div>`;
+
+    // Reset docked button
+    const dockBtn = document.getElementById('mlRevealBtnDock');
+    if (dockBtn) { dockBtn.classList.remove('hidden'); dockBtn.style.display = ''; }
+
+    lucide.createIcons();
+    mlRevealed = false;
+    attachSwipe();
+  }
+
+  function _mlReveal() {
+    const panel = document.getElementById('mlAnswerPanel');
+    const titleEl = panel ? panel.querySelector('.ml-answer-title') : null;
+    const btn = document.getElementById('mlRevealBtnDock');
+    if (panel) panel.classList.add('show');
+    if (btn) btn.style.visibility = 'hidden';
+    // Word-by-word reveal for both title and takeaway
+    const animateWords = (el, baseDelay) => {
+      if (!el) return 0;
+      const words = el.textContent.trim().split(' ');
+      el.innerHTML = words.map((w, i) =>
+        `<span class="ml-answer-word" style="animation-delay:${baseDelay + i * 0.07}s">${w}</span>`
+      ).join(' ');
+      return words.length;
+    };
+    const takeawayEl = panel ? panel.querySelector('.ml-answer-takeaway') : null;
+    const titleWordCount = animateWords(titleEl, 0);
+    animateWords(takeawayEl, titleWordCount * 0.07 + 0.1);
+    // Scroll to show answer after words finish
+    const totalDelay = (titleWordCount + (takeawayEl ? takeawayEl.textContent.split(' ').length : 0)) * 70 + 200;
+    setTimeout(() => {
+      const body = panel ? panel.closest('.ml-card-body') : null;
+      if (body) body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
+    }, totalDelay);
+    mlRevealed = true;
+  }
+
+  function mlSwipe(dir) {
+    const card = document.getElementById('mlCard');
+    if (!card) return;
+    card.classList.add(dir === 'right' ? 'exit-r' : 'exit-l');
+    if (dir === 'right') mlRemembered++;
+    else { mlNeedsRevision++; mlRevisionCards.push(mlIndex); }
+    setTimeout(() => {
+      mlIndex++;
+      if (mlIndex >= ML_CARDS.length) {
+        mlDone = true;
+        // update stats
+        const remEl = document.getElementById('mldRemNum');
+        const revEl = document.getElementById('mldRevNum');
+        if (remEl) { remEl.textContent = mlRemembered; remEl.className = 'mld-stat-num green'; }
+        if (revEl) { revEl.textContent = mlNeedsRevision; revEl.className = 'mld-stat-num orange'; }
+        // populate revision list
+        const list = document.getElementById('mldReviseList');
+        if (list) {
+          if (mlRevisionCards.length === 0) {
+            list.innerHTML = '<div style="font-size:13px;color:var(--green);font-weight:600;margin-top:4px;">🎯 Perfect — nothing to revise!</div>';
+          } else {
+            list.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">Needs Revision</div>'
+              + mlRevisionCards.map(i => `<div class="mld-revise-item"><div class="mld-revise-dot"></div>${ML_CARDS[i].tag}</div>`).join('');
+          }
+        }
+        show('sc-ml-done');
+        launchConfetti();
+      } else {
+        renderMLCard();
+      }
+    }, 390);
+  }
+
+  function attachSwipe() {
+    const card = document.getElementById('mlCard');
+    if (!card) return;
+    let startX = 0, dx = 0;
+
+    card.addEventListener('pointerdown', e => {
+      startX = e.clientX; mlDragging = true;
+      card.style.transition = 'none';
+      card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener('pointermove', e => {
+      if (!mlDragging) return;
+      dx = e.clientX - startX;
+      card.style.transform = `translateX(${dx}px) rotate(${dx * 0.04}deg)`;
+      const ratio = Math.min(Math.abs(dx) / 80, 1);
+      const olL = document.getElementById('mlOverlayLeft');
+      const olR = document.getElementById('mlOverlayRight');
+      if (dx < 0) { olL.style.opacity = ratio; olR.style.opacity = 0; }
+      else { olR.style.opacity = ratio; olL.style.opacity = 0; }
+    });
+    card.addEventListener('pointerup', () => {
+      if (!mlDragging) return;
+      mlDragging = false;
+      card.style.transition = '';
+      if (dx > 60) mlSwipe('right');
+      else if (dx < -60) mlSwipe('left');
+      else {
+        card.style.transform = '';
+        document.getElementById('mlOverlayLeft').style.opacity = 0;
+        document.getElementById('mlOverlayRight').style.opacity = 0;
+      }
+      dx = 0;
+    });
+  }
+
+  /* ── PYQ Question Flow ── */
+  function startPYQ() {
+    pyqCurrent = 0;
+    pyqScore = 0;
+    pyqAnswered = new Array(PYQ_QUESTIONS.length).fill(null);
+    show('sc-pyq-q');
+    renderPYQQuestion();
+  }
+
+  function renderPYQQuestion() {
+    const q = PYQ_QUESTIONS[pyqCurrent];
+    const pct = ((pyqCurrent + 1) / PYQ_QUESTIONS.length * 100).toFixed(0);
+    document.getElementById('pyqProgLabel').textContent = `Question ${pyqCurrent + 1} of ${PYQ_QUESTIONS.length}`;
+    document.getElementById('pyqScore').textContent = `Score: ${pyqScore}`;
+    document.getElementById('pyqProgFill').style.width = pct + '%';
+
+    const opts = q.options.map((opt, i) => `
+      <div class="pyq-option" id="pyqOpt${i}" onclick="chapNav._pyqSelect(${i})">
+        <div class="pyq-option-letter">${['A','B','C','D'][i]}</div>
+        <div class="pyq-option-text">${opt}</div>
+      </div>`).join('');
+
+    const isLast = pyqCurrent === PYQ_QUESTIONS.length - 1;
+
+    document.getElementById('pyqScroll').innerHTML = `
+      <div style="height:8px;"></div>
+      <div class="pyq-q-card">
+        <div class="pyq-q-tag">${q.type}</div>
+        <div class="pyq-q-text" style="white-space:pre-line;">${q.q}</div>
+      </div>
+      <div class="pyq-options">${opts}</div>
+      <div class="pyq-explanation" id="pyqExp">
+        <div class="pyq-exp-label">Explanation</div>
+        <div class="pyq-exp-text">${q.explanation}</div>
+      </div>
+      <button class="pyq-next-btn" id="pyqNext" onclick="chapNav._pyqNext()">
+        ${isLast ? '<i data-lucide="trophy" style="width:15px;height:15px;"></i> See Results' : 'Next Question <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>'}
+      </button>
+      <div style="height:20px;"></div>`;
+    lucide.createIcons();
+  }
+
+  function _pyqSelect(idx) {
+    if (pyqAnswered[pyqCurrent] !== null) return;
+    pyqAnswered[pyqCurrent] = idx;
+    const q = PYQ_QUESTIONS[pyqCurrent];
+    const isCorrect = idx === q.correct;
+    if (isCorrect) pyqScore++;
+    document.getElementById('pyqScore').textContent = `Score: ${pyqScore}`;
+
+    const opts = document.querySelectorAll('.pyq-option');
+    opts.forEach((el, i) => {
+      el.classList.add('disabled');
+      if (i === q.correct) el.classList.add('correct');
+      else if (i === idx && !isCorrect) el.classList.add('wrong');
+    });
+    document.getElementById('pyqExp').classList.add('show');
+    const nextBtn = document.getElementById('pyqNext');
+    nextBtn.classList.add('show');
+    document.getElementById('pyqScroll').scrollTo({ top: 9999, behavior: 'smooth' });
+  }
+
+  function _pyqNext() {
+    if (pyqCurrent < PYQ_QUESTIONS.length - 1) {
+      pyqCurrent++;
+      renderPYQQuestion();
+      document.getElementById('pyqScroll').scrollTo({ top: 0, behavior: 'instant' });
+    } else {
+      showPYQResults();
+    }
+  }
+
+  function showPYQResults() {
+    const pct = Math.round((pyqScore / PYQ_QUESTIONS.length) * 100);
+    document.getElementById('pyqrScoreVal').textContent = `${pyqScore}/${PYQ_QUESTIONS.length}`;
+    document.getElementById('pyqrAccuracy').textContent = `${pct}% Accuracy`;
+
+    // update ring
+    const ring = document.querySelector('.pyqr-score-ring');
+    ring.style.background = `conic-gradient(var(--green) 0% ${pct}%, var(--surface-2) ${pct}% 100%)`;
+
+    // wrong topics
+    const wrongTopics = PYQ_QUESTIONS
+      .filter((_, i) => pyqAnswered[i] !== _.correct)
+      .map(q => `<div class="pyqr-revise-item"><span style="color:var(--orange);">•</span> ${q.topic}</div>`);
+    document.getElementById('pyqrReviseList').innerHTML = wrongTopics.length
+      ? wrongTopics.join('')
+      : '<div class="pyqr-revise-item" style="color:var(--green);">🎉 Perfect — nothing to revisit!</div>';
+
+    show('sc-pyq-res');
+  }
+
+  /* ── Hero card click handler ── */
+  function init() {
+    // Wire hero card tap on homepage
+    const heroPhysio = document.getElementById('heroPhysio');
+    if (heroPhysio) heroPhysio.addEventListener('click', () => open('sc-chap'));
+    // Back buttons
+    document.getElementById('chapBack').addEventListener('click', hide);
+    document.getElementById('mlBack').addEventListener('click', () => open('sc-chap'));
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  // Also run after a tick in case DOM is already ready
+  setTimeout(init, 100);
+
+  function _showRevision() {
+    const list = document.getElementById('mldReviseList');
+    if (list) list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  return { open, goTo, openPYQ, startPYQ, _mlReveal, mlSwipe, _pyqSelect, _pyqNext, _showRevision };
 })();
 </script>
 </body>
