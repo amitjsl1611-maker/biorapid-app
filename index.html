@@ -3030,8 +3030,17 @@
         <!-- ── 6. PYQ RESULTS ── -->
         <div class="app-screen" id="sc-pyq-res">
           <canvas id="pyqConfetti" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;"></canvas>
+          <div class="chap-status-bar" style="position:relative;z-index:11;">
+            <span class="chap-status-time">9:41</span>
+            <div class="chap-status-island"></div>
+            <div class="chap-status-icons">
+              <i data-lucide="signal" style="width:13px;height:13px;"></i>
+              <i data-lucide="wifi" style="width:13px;height:13px;"></i>
+              <i data-lucide="battery-full" style="width:13px;height:13px;"></i>
+            </div>
+          </div>
           <div style="flex:1;overflow-y:auto;width:100%;position:relative;z-index:11;">
-            <div class="pyqr-wrap">
+            <div class="pyqr-wrap" style="text-align:center;">
               <div class="pyqr-emoji">🏆</div>
               <div class="pyqr-title">Challenge Complete!</div>
               <div class="pyqr-sub">Human Physiology · PYQ War Room</div>
