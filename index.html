@@ -554,19 +554,36 @@
     /* ─── AI COACH CARD ─── */
     .ai-coach-card {
       margin: 0 16px;
-      background: #F2EDFC;
+      background: linear-gradient(140deg, #EAF4FF 0%, #F4F0FF 50%, #EEF8FF 100%);
       border-radius: var(--r-xl);
-      padding: 18px;
-      border: 1px solid rgba(107,72,194,0.10);
+      padding: 2px; /* space for gradient border */
       position: relative;
       overflow: hidden;
     }
+    /* Gradient stroke via inner wrapper */
     .ai-coach-card::before {
       content: '';
-      position: absolute; top: -30px; right: -30px;
-      width: 100px; height: 100px;
-      background: radial-gradient(circle, rgba(107,72,194,0.12), transparent 70%);
+      position: absolute; inset: 0;
+      border-radius: var(--r-xl);
+      padding: 1.5px;
+      background: linear-gradient(120deg, #A8D4FF, #C5B8FF, #80C8FF, #B8A0FF, #A8D4FF);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: shimmerBorder 3s linear infinite;
       pointer-events: none;
+    }
+    @keyframes shimmerBorder {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Inner padding wrapper */
+    .ai-coach-inner {
+      background: linear-gradient(140deg, #EAF4FF 0%, #F4F0FF 50%, #EEF8FF 100%);
+      border-radius: calc(var(--r-xl) - 1px);
+      padding: 18px;
     }
     .ai-coach-hd {
       display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
@@ -2440,6 +2457,7 @@
           </div>
 
           <div class="ai-coach-card">
+          <div class="ai-coach-inner">
             <div class="ai-coach-hd">
               <div class="ai-coach-icon">
                 <i data-lucide="sparkles" style="width:14px;height:14px;"></i>
@@ -2450,9 +2468,7 @@
 
             <div class="ai-rec-card">
               <div class="ai-rec-top">
-                <div class="ai-rec-icon">
-                  <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/DNA/3D/dna_3d.png" alt="">
-                </div>
+                <div class="ai-rec-icon" style="font-size:22px;display:flex;align-items:center;justify-content:center;">🧬</div>
                 <div>
                   <div class="ai-rec-chapter">Genetics</div>
                   <div class="ai-rec-tag">
@@ -2482,6 +2498,8 @@
               </div>
             </div>
           </div>
+          </div><!-- /ai-coach-inner -->
+          </div><!-- /ai-coach-card -->
 
           <!-- RECENT ACTIVITY -->
           <div class="sec-hd mt-12">
