@@ -1704,6 +1704,55 @@
   .pyqr-revise { margin: 0; padding: 0 28px; text-align: left; width: 100%; box-sizing: border-box; }
   .pyqr-revise-title { font-size: 16px; font-weight: 500; color: #6C6C6C; letter-spacing: -0.1px; margin-bottom: 12px; }
   .pyqr-revise-item { font-size: 15px; color: var(--text-1); font-weight: 600; padding: 5px 0; display: flex; align-items: center; gap: 8px; }
+  /* ── Welcome Back Modal ── */
+  .wm-blur {
+    position: absolute; inset: 0;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    background: rgba(10,20,60,0.35);
+  }
+  .wm-card {
+    position: relative; z-index: 1;
+    width: 100%; border-radius: 28px; overflow: hidden;
+    background: #fff;
+    box-shadow: 0 16px 56px rgba(0,0,0,0.22);
+    animation: wmSlideUp 0.42s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes wmSlideUp {
+    from { opacity:0; transform:translateY(32px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .wm-aurora {
+    position: absolute; top: 0; left: 0; right: 0; height: 200px;
+    background: linear-gradient(135deg, #1A6FFF 0%, #38CFFF 40%, #A0E9FF 70%, #E0F7FF 100%);
+    z-index: 0;
+  }
+  .wm-img-wrap {
+    position: relative; z-index: 1;
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .wm-img { height: 150px; width: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,60,180,0.18)); }
+  .wm-body {
+    position: relative; z-index: 1;
+    background: #fff; padding: 22px 22px 20px; border-radius: 0 0 28px 28px;
+  }
+  .wm-eyebrow { font-size: 13px; font-weight: 600; color: #6C6C6C; margin-bottom: 6px; }
+  .wm-title { font-size: 20px; font-weight: 900; color: #111118; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 4px; }
+  .wm-sub { font-size: 13px; color: #9090A0; font-weight: 500; margin-bottom: 20px; }
+  .wm-cta-area { display: flex; flex-direction: column; gap: 10px; }
+  .wm-btn-primary {
+    width: 100%; padding: 15px; border-radius: 100px;
+    background: #111118; color: #fff;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer;
+  }
+  .wm-btn-secondary {
+    width: 100%; padding: 13px; border-radius: 100px;
+    background: transparent; color: #6C6C6C;
+    font-size: 14px; font-weight: 600; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+  }
+
   /* PYQ Rules Modal */
   .pyq-rules-blur {
     position: absolute; inset: 0;
@@ -2543,6 +2592,26 @@
       <!-- ══════════════════════════════════════════
            L2 / L3 SCREEN OVERLAY
       ══════════════════════════════════════════ -->
+      <!-- ── WELCOME BACK MODAL ── -->
+      <div id="welcomeModal" style="display:none;position:absolute;inset:0;z-index:800;align-items:center;justify-content:center;padding:24px;">
+        <div class="wm-blur"></div>
+        <div class="wm-card">
+          <div class="wm-aurora"></div>
+          <div class="wm-img-wrap">
+            <img src="Images/nephron.png" class="wm-img" alt="">
+          </div>
+          <div class="wm-body">
+            <div class="wm-eyebrow">👋 Welcome back, Amit</div>
+            <div class="wm-title">You were about to start Memory Lock</div>
+            <div class="wm-sub">Human Physiology · 5 cards · ~4 min</div>
+            <div class="wm-cta-area">
+              <button class="wm-btn-primary" onclick="document.getElementById('welcomeModal').style.display='none'; chapNav && chapNav.open('sc-ml');">Let's get right in!</button>
+              <button class="wm-btn-secondary" onclick="document.getElementById('welcomeModal').style.display='none';">Skip for now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="chapter-overlay" style="position:absolute;inset:0;z-index:600;pointer-events:none;overflow:hidden;">
 
         <!-- ── 1. CHAPTER DASHBOARD ── -->
@@ -3703,12 +3772,15 @@ const chapNav = (() => {
 
   /* ── Hero card click handler ── */
   function init() {
-    // Wire hero card tap on homepage
     const heroPhysio = document.getElementById('heroPhysio');
     if (heroPhysio) heroPhysio.addEventListener('click', () => open('sc-chap'));
-    // Back buttons
     document.getElementById('chapBack').addEventListener('click', hide);
     document.getElementById('mlBack').addEventListener('click', () => open('sc-chap'));
+    // Show welcome modal after short delay
+    setTimeout(() => {
+      const modal = document.getElementById('welcomeModal');
+      if (modal) modal.style.display = 'flex';
+    }, 600);
   }
 
   document.addEventListener('DOMContentLoaded', init);
