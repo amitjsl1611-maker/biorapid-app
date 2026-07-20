@@ -1757,9 +1757,9 @@
   /* Aurora bg on whole card */
   .wm-aurora {
     position: absolute; inset: 0; border-radius: 28px; z-index: 0;
-    background: radial-gradient(ellipse at 18% 12%, rgba(100,170,255,0.55) 0%, transparent 52%),
-                radial-gradient(ellipse at 82% 80%, rgba(120,190,255,0.4) 0%, transparent 50%),
-                linear-gradient(160deg, #CDEAFF 0%, #E0F2FF 45%, #F0F8FF 100%);
+    background: radial-gradient(ellipse at 18% 15%, rgba(100,170,255,0.3) 0%, transparent 48%),
+                radial-gradient(ellipse at 80% 75%, rgba(140,200,255,0.22) 0%, transparent 45%),
+                linear-gradient(150deg, #E8F4FF 0%, #F2F8FF 40%, #FAFCFF 70%, #FFFFFF 100%);
     display: block;
   }
   /* Floating bio icons in bg */
@@ -1784,38 +1784,38 @@
     display: flex; flex-direction: column; justify-content: flex-start; padding: 14px 16px;
     gap: 8px;
   }
-  /* Back card 2 — peeking above, slightly shrunk */
+  /* Back card — fanned left */
   .wm-mini-card:nth-child(1) {
-    background: #D6EEFF;
-    transform: translateY(28px) scale(0.88);
+    background: #C8E0FF;
+    transform: rotate(-42deg) translate(-28px, 14px) scale(0.88);
     z-index: 1;
     animation: wmDeck1 3s ease-in-out infinite alternate;
   }
-  /* Back card 3 — peeking further, smallest */
+  /* Back card — fanned further left */
   .wm-mini-card:nth-child(3) {
-    background: #C8E4FF;
-    transform: translateY(52px) scale(0.78);
+    background: #B8D4FF;
+    transform: rotate(-58deg) translate(-50px, 22px) scale(0.78);
     z-index: 0;
     animation: wmDeck3 3s ease-in-out infinite alternate;
   }
-  /* Front card */
+  /* Front card — tilted 30° left */
   .wm-mini-card:nth-child(2) {
     background: #fff;
-    transform: translateY(0px) scale(1);
+    transform: rotate(-30deg);
     z-index: 3;
     animation: wmDeck2 3s ease-in-out infinite alternate;
   }
   @keyframes wmDeck1 {
-    from { transform: translateY(28px) scale(0.88); }
-    to   { transform: translateY(24px) scale(0.90); }
+    from { transform: rotate(-42deg) translate(-28px, 14px) scale(0.88); }
+    to   { transform: rotate(-40deg) translate(-26px, 12px) scale(0.90); }
   }
   @keyframes wmDeck2 {
-    from { transform: translateY(0px) scale(1); }
-    to   { transform: translateY(-5px) scale(1.01); }
+    from { transform: rotate(-30deg) translateY(0px); }
+    to   { transform: rotate(-30deg) translateY(-5px); }
   }
   @keyframes wmDeck3 {
-    from { transform: translateY(52px) scale(0.78); }
-    to   { transform: translateY(48px) scale(0.80); }
+    from { transform: rotate(-58deg) translate(-50px, 22px) scale(0.78); }
+    to   { transform: rotate(-56deg) translate(-48px, 20px) scale(0.80); }
   }
   .wm-mini-line {
     height: 8px; border-radius: 4px; background: currentColor; opacity: 0.12;
