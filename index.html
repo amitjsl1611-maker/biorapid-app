@@ -1553,33 +1553,24 @@
   /* ══════════════════════════════
      SCREEN: PYQ WAR ROOM LANDING
   ══════════════════════════════ */
-  #sc-pyq-land {
-    background: linear-gradient(160deg, #1A0A2E 0%, #0F0A1A 100%);
-    align-items: center; justify-content: center;
+  #sc-pyq-land { background: #fff; }
+  /* Loader */
+  .pyql-loader-ring {
+    position: relative; width: 80px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .pyql-wrap { padding: 0 28px; text-align: center; width: 100%; }
-  .pyql-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(107,72,194,0.25); border: 1px solid rgba(107,72,194,0.4);
-    border-radius: 100px; padding: 5px 14px; margin-bottom: 20px;
-    font-size: 11px; font-weight: 700; color: #A88BF5; letter-spacing: 0.5px; text-transform: uppercase;
+  .pyql-loader-icon {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   }
-  .pyql-title { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: -0.7px; line-height: 1.12; margin-bottom: 10px; }
-  .pyql-sub { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; font-weight: 500; margin-bottom: 28px; }
-  .pyql-stats { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; }
-  .pyql-stat {
-    flex: 1; max-width: 110px; padding: 14px 12px; border-radius: var(--r-md);
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09);
-    text-align: center;
+  @keyframes pyqlSpin { to { transform: rotate(360deg); } }
+  .pyql-loader-dots { display: flex; gap: 7px; }
+  .pyql-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #6B48C2;
+    animation: pyqlDotPulse 1s ease-in-out infinite;
   }
-  .pyql-stat-val { font-size: 18px; font-weight: 900; color: #fff; }
-  .pyql-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-  .pyql-btn {
-    width: 100%; padding: 16px; border-radius: 100px;
-    background: var(--violet); color: #fff;
-    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
-    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 8px 32px rgba(107,72,194,0.45);
+  @keyframes pyqlDotPulse {
+    0%,80%,100% { opacity: 0.25; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
   }
 
   /* ══════════════════════════════
@@ -1617,6 +1608,7 @@
 
   /* Options */
   .pyq-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  /* Radio-style options */
   .pyq-option {
     padding: 14px 16px; border-radius: var(--r-md);
     background: #fff; border: 1.5px solid var(--border);
@@ -1624,20 +1616,44 @@
     cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
     font-family: 'Fustat', system-ui;
   }
-  .pyq-option-letter {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--surface-2); color: var(--text-2);
-    font-size: 12px; font-weight: 800; flex-shrink: 0;
+  /* Radio circle */
+  .pyq-radio {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid #DCDCE0; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: border-color 0.15s, background 0.15s;
   }
-  .pyq-option-text { font-size: 13.5px; font-weight: 600; color: var(--text-1); flex: 1; line-height: 1.4; }
-  .pyq-option.selected { border-color: var(--violet); background: rgba(107,72,194,0.05); }
-  .pyq-option.selected .pyq-option-letter { background: var(--violet); color: #fff; }
-  .pyq-option.correct { border-color: var(--green); background: rgba(46,107,58,0.07); }
-  .pyq-option.correct .pyq-option-letter { background: var(--green); color: #fff; }
-  .pyq-option.wrong { border-color: #E84040; background: rgba(232,64,64,0.06); }
-  .pyq-option.wrong .pyq-option-letter { background: #E84040; color: #fff; }
+  .pyq-radio-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: transparent;
+    transition: background 0.15s;
+  }
+  .pyq-option-label { font-size: 12px; font-weight: 800; color: #BDBDBD; flex-shrink: 0; width: 18px; }
+  .pyq-option-text { font-size: 14px; font-weight: 600; color: var(--text-1); flex: 1; line-height: 1.4; }
+  /* Selected */
+  .pyq-option.selected { border-color: var(--violet); background: rgba(107,72,194,0.04); }
+  .pyq-option.selected .pyq-radio { border-color: var(--violet); }
+  .pyq-option.selected .pyq-radio-dot { background: var(--violet); }
+  .pyq-option.selected .pyq-option-label { color: var(--violet); }
+  /* Correct */
+  .pyq-option.correct { border-color: var(--green); background: rgba(46,107,58,0.06); }
+  .pyq-option.correct .pyq-radio { border-color: var(--green); }
+  .pyq-option.correct .pyq-radio-dot { background: var(--green); }
+  .pyq-option.correct .pyq-option-label { color: var(--green); }
+  .pyq-option.correct .pyq-option-text { color: var(--green); font-weight: 700; }
+  /* Wrong */
+  .pyq-option.wrong { border-color: #E84040; background: rgba(232,64,64,0.05); }
+  .pyq-option.wrong .pyq-radio { border-color: #E84040; }
+  .pyq-option.wrong .pyq-radio-dot { background: #E84040; }
+  .pyq-option.wrong .pyq-option-label { color: #E84040; }
+  .pyq-option.wrong .pyq-option-text { color: #E84040; }
+  /* Result pill on option */
+  .pyq-option-result {
+    font-size: 10px; font-weight: 800; border-radius: 100px;
+    padding: 2px 8px; flex-shrink: 0; opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .pyq-option.correct .pyq-option-result { opacity: 1; background: var(--green); color: #fff; }
+  .pyq-option.wrong .pyq-option-result { opacity: 1; background: #E84040; color: #fff; }
   .pyq-option:disabled, .pyq-option.disabled { pointer-events: none; }
 
   /* Explanation */
@@ -2736,26 +2752,28 @@
           </div>
         </div>
 
-        <!-- ── 4. PYQ WAR ROOM LANDING ── -->
-        <div class="app-screen" id="sc-pyq-land" style="background:linear-gradient(160deg,#1A0A2E 0%,#0F0A1A 100%);">
-          <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;padding:14px 20px 0;">
-            <button style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;" onclick="chapNav.open('sc-chap')">
-              <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
+        <!-- ── 4. PYQ WAR ROOM LOADER ── -->
+        <div class="app-screen" id="sc-pyq-land" style="background:#fff;">
+          <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;padding:52px 20px 0;">
+            <button style="width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.12);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="chapNav.open('sc-chap')">
+              <i data-lucide="arrow-left" style="width:18px;height:18px;color:#111;"></i>
             </button>
           </div>
-          <div style="flex:1;display:flex;align-items:center;justify-content:center;">
-            <div class="pyql-wrap">
-              <div class="pyql-badge"><i data-lucide="swords" style="width:11px;height:11px;"></i> PYQ War Room</div>
-              <div class="pyql-title">Test What You<br>Actually Know</div>
-              <div class="pyql-sub">5 real NEET questions from Human Physiology. Timer on. No hints.</div>
-              <div class="pyql-stats">
-                <div class="pyql-stat"><div class="pyql-stat-val">5</div><div class="pyql-stat-lbl">Questions</div></div>
-                <div class="pyql-stat"><div class="pyql-stat-val">5 min</div><div class="pyql-stat-lbl">Time Limit</div></div>
-                <div class="pyql-stat"><div class="pyql-stat-val">4/5</div><div class="pyql-stat-lbl">Best Score</div></div>
-              </div>
-              <button class="pyql-btn" onclick="chapNav.startPYQ()">
-                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Challenge
-              </button>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px 48px;">
+            <div class="pyql-loader-ring">
+              <svg viewBox="0 0 80 80" style="width:80px;height:80px;animation:pyqlSpin 1.4s linear infinite;">
+                <circle cx="40" cy="40" r="34" fill="none" stroke="#F0EDFF" stroke-width="6"/>
+                <circle cx="40" cy="40" r="34" fill="none" stroke="#6B48C2" stroke-width="6"
+                  stroke-dasharray="60 154" stroke-linecap="round" stroke-dashoffset="0"/>
+              </svg>
+              <div class="pyql-loader-icon"><i data-lucide="swords" style="width:24px;height:24px;color:#6B48C2;"></i></div>
+            </div>
+            <div id="pyqlLoaderTitle" style="font-size:20px;font-weight:900;color:#111118;letter-spacing:-0.4px;margin-top:24px;text-align:center;">Loading War Room…</div>
+            <div id="pyqlLoaderSub" style="font-size:13px;color:#9090A0;font-weight:500;margin-top:6px;text-align:center;">Fetching NEET questions</div>
+            <div class="pyql-loader-dots" style="margin-top:20px;">
+              <span class="pyql-dot"></span>
+              <span class="pyql-dot" style="animation-delay:0.2s;"></span>
+              <span class="pyql-dot" style="animation-delay:0.4s;"></span>
             </div>
           </div>
         </div>
@@ -3237,8 +3255,8 @@ const chapNav = (() => {
   function goTo(id) { open(id); }
 
   function openPYQ() {
-    if (!mlDone) return; // still locked
     open('sc-pyq-land');
+    _startPYQLoader();
   }
 
   /* ── Chapter state update ── */
@@ -3348,7 +3366,7 @@ const chapNav = (() => {
 
     // Reset docked button
     const dockBtn = document.getElementById('mlRevealBtnDock');
-    if (dockBtn) { dockBtn.classList.remove('hidden'); dockBtn.style.display = ''; }
+    if (dockBtn) { dockBtn.classList.remove('hidden'); dockBtn.style.display = ''; dockBtn.style.visibility = ''; }
 
     lucide.createIcons();
     mlRevealed = false;
@@ -3451,6 +3469,24 @@ const chapNav = (() => {
   }
 
   /* ── PYQ Question Flow ── */
+  function _startPYQLoader() {
+    const titles = ['Loading War Room…', 'Picking your questions…', 'Almost ready…'];
+    const subs   = ['Fetching NEET questions', 'Curating from past papers', 'Get ready to battle!'];
+    let t = 0;
+    const iv = setInterval(() => {
+      t++;
+      if (t < titles.length) {
+        const el = document.getElementById('pyqlLoaderTitle');
+        const sub = document.getElementById('pyqlLoaderSub');
+        if (el) el.textContent = titles[t];
+        if (sub) sub.textContent = subs[t];
+      } else {
+        clearInterval(iv);
+        startPYQ();
+      }
+    }, 900);
+  }
+
   function startPYQ() {
     pyqCurrent = 0;
     pyqScore = 0;
@@ -3462,14 +3498,17 @@ const chapNav = (() => {
   function renderPYQQuestion() {
     const q = PYQ_QUESTIONS[pyqCurrent];
     const pct = ((pyqCurrent + 1) / PYQ_QUESTIONS.length * 100).toFixed(0);
-    document.getElementById('pyqProgLabel').textContent = `Question ${pyqCurrent + 1} of ${PYQ_QUESTIONS.length}`;
+    document.getElementById('pyqProgLabel').textContent = `Q ${pyqCurrent + 1} / ${PYQ_QUESTIONS.length}`;
     document.getElementById('pyqScore').textContent = `Score: ${pyqScore}`;
     document.getElementById('pyqProgFill').style.width = pct + '%';
 
+    const labels = ['A', 'B', 'C', 'D'];
     const opts = q.options.map((opt, i) => `
       <div class="pyq-option" id="pyqOpt${i}" onclick="chapNav._pyqSelect(${i})">
-        <div class="pyq-option-letter">${['A','B','C','D'][i]}</div>
+        <div class="pyq-radio"><div class="pyq-radio-dot"></div></div>
+        <div class="pyq-option-label">${labels[i]}</div>
         <div class="pyq-option-text">${opt}</div>
+        <div class="pyq-option-result" id="pyqOptRes${i}"></div>
       </div>`).join('');
 
     const isLast = pyqCurrent === PYQ_QUESTIONS.length - 1;
@@ -3503,9 +3542,17 @@ const chapNav = (() => {
     const opts = document.querySelectorAll('.pyq-option');
     opts.forEach((el, i) => {
       el.classList.add('disabled');
-      if (i === q.correct) el.classList.add('correct');
-      else if (i === idx && !isCorrect) el.classList.add('wrong');
+      const resEl = document.getElementById(`pyqOptRes${i}`);
+      if (i === q.correct) {
+        el.classList.add('correct');
+        if (resEl) resEl.textContent = '✓ Correct';
+      } else if (i === idx && !isCorrect) {
+        el.classList.add('wrong');
+        if (resEl) resEl.textContent = '✗ Wrong';
+      }
     });
+    // also mark selected (the one tapped)
+    document.getElementById(`pyqOpt${idx}`).classList.add('selected');
     document.getElementById('pyqExp').classList.add('show');
     const nextBtn = document.getElementById('pyqNext');
     nextBtn.classList.add('show');
@@ -3561,7 +3608,7 @@ const chapNav = (() => {
     if (list) list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  return { open, goTo, openPYQ, startPYQ, _mlReveal, mlSwipe, _pyqSelect, _pyqNext, _showRevision };
+  return { open, goTo, openPYQ, startPYQ, _startPYQLoader, _mlReveal, mlSwipe, _pyqSelect, _pyqNext, _showRevision };
 })();
 </script>
 </body>
