@@ -1518,24 +1518,23 @@
   .mld-sub { font-size: 14px; color: var(--text-2); line-height: 1.5; font-weight: 500; margin-bottom: 24px; }
   .mld-summary { display: flex; gap: 14px; width: 100%; }
   .mld-stat-card {
-    flex: 1; padding: 18px 14px; border-radius: var(--r-lg);
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    box-shadow: var(--sh-sm);
+    flex: 1; padding: 22px 14px 18px; border-radius: var(--r-lg);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
   }
-  .mld-stat-card.green { background: #F0FAF2; border: 1px solid rgba(46,107,58,0.15); }
-  .mld-stat-card.orange { background: #FFF5EE; border: 1px solid rgba(232,100,10,0.15); }
-  .mld-stat-num.green { font-size: 32px; font-weight: 900; color: var(--green); }
-  .mld-stat-num.orange { font-size: 32px; font-weight: 900; color: var(--orange); }
-  .mld-stat-num { font-size: 32px; font-weight: 900; color: var(--text-1); }
-  .mld-stat-lbl { font-size: 11px; color: var(--text-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .mld-stat-card.green { background: #EBF4FF; }
+  .mld-stat-card.orange { background: #FFF0F0; }
+  .mld-stat-num { font-size: 42px; font-weight: 900; line-height: 1; }
+  .mld-stat-card.green .mld-stat-num { color: #1A5FA8; }
+  .mld-stat-card.orange .mld-stat-num { color: #C0282A; }
+  .mld-stat-lbl { font-size: 16px; font-weight: 500; color: #6C6C6C; letter-spacing: -0.1px; }
   .mld-revise-list { width: 100%; margin-top: 20px; text-align: left; }
+  .mld-revise-hdr { font-size: 16px; font-weight: 500; color: #6C6C6C; letter-spacing: -0.1px; margin-bottom: 10px; }
   .mld-revise-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 12px 14px; border-radius: var(--r-md);
-    background: #FFF5EE; border: 1px solid rgba(232,100,10,0.12);
-    margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--text-1);
+    padding: 4px 0; margin-bottom: 6px;
+    font-size: 13px; font-weight: 600; color: #C0282A;
   }
-  .mld-revise-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+  .mld-revise-dot { width: 7px; height: 7px; border-radius: 50%; background: #C0282A; flex-shrink: 0; }
   .mld-cta-area { padding: 16px 24px 32px; display: flex; flex-direction: column; gap: 10px; }
   .mld-btn-primary {
     width: 100%; padding: 16px; border-radius: 100px;
@@ -1593,87 +1592,95 @@
   .pyq-prog-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
   .pyq-prog-label { font-size: 12px; font-weight: 700; color: var(--text-1); }
   .pyq-prog-score { font-size: 12px; font-weight: 700; color: var(--green); }
+  .pyq-continue-later {
+    font-size: 12px; font-weight: 600; color: var(--text-2);
+    background: none; border: none; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
+    font-family: 'Fustat', system-ui; padding: 0;
+  }
   .pyq-prog-bar { height: 5px; background: var(--surface-2); border-radius: 100px; overflow: hidden; }
-  .pyq-prog-fill { height: 100%; background: var(--violet); border-radius: 100px; transition: width 0.4s ease; }
+  .pyq-prog-fill { height: 100%; background: var(--text-1); border-radius: 100px; transition: width 0.4s ease; }
   .pyq-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 18px 20px; }
   .pyq-scroll::-webkit-scrollbar { display: none; }
 
   /* Question card */
   .pyq-q-card {
-    background: var(--surface-2); border-radius: var(--r-xl);
-    padding: 20px; margin-bottom: 16px;
+    padding: 4px 0 16px; margin-bottom: 4px;
   }
   .pyq-q-tag { font-size: 10px; font-weight: 700; color: var(--violet); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 10px; }
   .pyq-q-text { font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.45; letter-spacing: -0.2px; }
 
   /* Options */
-  .pyq-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-  /* Radio-style options */
+  .pyq-options { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
   .pyq-option {
-    padding: 14px 16px; border-radius: var(--r-md);
-    background: #fff; border: 1.5px solid var(--border);
+    padding: 14px 16px; border-radius: var(--r-md); border: none;
+    background: transparent;
     display: flex; align-items: center; gap: 12px;
-    cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+    cursor: pointer; transition: background 0.15s ease;
     font-family: 'Fustat', system-ui;
   }
   /* Radio circle */
   .pyq-radio {
-    width: 20px; height: 20px; border-radius: 50%;
+    width: 22px; height: 22px; border-radius: 50%;
     border: 2px solid #DCDCE0; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     transition: border-color 0.15s, background 0.15s;
   }
-  .pyq-radio-dot {
-    width: 10px; height: 10px; border-radius: 50%; background: transparent;
-    transition: background 0.15s;
-  }
+  .pyq-radio-dot { width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: background 0.15s; }
   .pyq-option-label { font-size: 12px; font-weight: 800; color: #BDBDBD; flex-shrink: 0; width: 18px; }
   .pyq-option-text { font-size: 14px; font-weight: 600; color: var(--text-1); flex: 1; line-height: 1.4; }
+  .pyq-option-icon { font-size: 16px; flex-shrink: 0; opacity: 0; transition: opacity 0.2s; }
   /* Selected */
-  .pyq-option.selected { border-color: var(--violet); background: rgba(107,72,194,0.04); }
+  .pyq-option.selected { background: rgba(107,72,194,0.04); }
   .pyq-option.selected .pyq-radio { border-color: var(--violet); }
   .pyq-option.selected .pyq-radio-dot { background: var(--violet); }
   .pyq-option.selected .pyq-option-label { color: var(--violet); }
-  /* Correct */
-  .pyq-option.correct { border-color: var(--green); background: rgba(46,107,58,0.06); }
-  .pyq-option.correct .pyq-radio { border-color: var(--green); }
+  /* Correct — flat fill, sharp rect */
+  .pyq-option.correct {
+    background: #E8F5EC; border-color: transparent;
+    border-radius: 0 !important;
+  }
+  .pyq-option.correct .pyq-radio {
+    border: 2.5px solid var(--green);
+    background: #C6E8CE;
+    box-shadow: 0 0 0 4px #E8F5EC;
+  }
   .pyq-option.correct .pyq-radio-dot { background: var(--green); }
   .pyq-option.correct .pyq-option-label { color: var(--green); }
-  .pyq-option.correct .pyq-option-text { color: var(--green); font-weight: 700; }
-  /* Wrong */
-  .pyq-option.wrong { border-color: #E84040; background: rgba(232,64,64,0.05); }
-  .pyq-option.wrong .pyq-radio { border-color: #E84040; }
+  .pyq-option.correct .pyq-option-text { color: var(--green); font-weight: 800; font-size: 15px; }
+  .pyq-option.correct .pyq-option-icon { opacity: 1; color: var(--green); }
+  /* Wrong — flat fill, sharp rect */
+  .pyq-option.wrong {
+    background: #FDEAEA; border-color: transparent;
+    border-radius: 0 !important;
+  }
+  .pyq-option.wrong .pyq-radio {
+    border: 2.5px solid #E84040;
+    background: #F9C4C4;
+    box-shadow: 0 0 0 4px #FDEAEA;
+  }
   .pyq-option.wrong .pyq-radio-dot { background: #E84040; }
   .pyq-option.wrong .pyq-option-label { color: #E84040; }
-  .pyq-option.wrong .pyq-option-text { color: #E84040; }
-  /* Result pill on option */
-  .pyq-option-result {
-    font-size: 10px; font-weight: 800; border-radius: 100px;
-    padding: 2px 8px; flex-shrink: 0; opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .pyq-option.correct .pyq-option-result { opacity: 1; background: var(--green); color: #fff; }
-  .pyq-option.wrong .pyq-option-result { opacity: 1; background: #E84040; color: #fff; }
+  .pyq-option.wrong .pyq-option-text { color: #E84040; font-weight: 800; font-size: 15px; }
+  .pyq-option.wrong .pyq-option-icon { opacity: 1; color: #E84040; }
   .pyq-option:disabled, .pyq-option.disabled { pointer-events: none; }
-
   /* Explanation */
-  .pyq-explanation {
-    padding: 14px 16px; border-radius: var(--r-md);
-    background: rgba(46,107,58,0.07); border: 1px solid rgba(46,107,58,0.2);
-    margin-bottom: 16px; display: none;
-  }
+  .pyq-explanation { margin-bottom: 16px; display: none; padding: 4px 0; }
   .pyq-explanation.show { display: block; }
-  .pyq-exp-label { font-size: 10px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
-  .pyq-exp-text { font-size: 13px; color: var(--text-2); line-height: 1.5; font-weight: 500; }
+  .pyq-exp-label { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; letter-spacing: -0.2px; }
+  .pyq-exp-text { font-size: 14px; color: var(--text-2); line-height: 1.55; font-weight: 500; }
+  /* Docked CTA */
+  .pyq-next-dock { flex-shrink: 0; padding: 12px 20px 28px; }
   .pyq-next-btn {
-    width: 100%; padding: 14px; border-radius: 100px;
+    width: 100%; padding: 16px; border-radius: 100px;
     background: var(--text-1); color: #fff;
-    font-size: 14px; font-weight: 800; font-family: 'Fustat', system-ui;
-    border: none; cursor: pointer; display: none;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer; display: flex;
     align-items: center; justify-content: center; gap: 8px;
-    transition: opacity 0.12s ease;
+    transition: opacity 0.2s ease;
+    opacity: 0.25; pointer-events: none;
   }
-  .pyq-next-btn.show { display: flex; }
+  .pyq-next-btn.enabled { opacity: 1; pointer-events: all; }
   .pyq-next-btn:active { opacity: 0.85; }
 
   /* ══════════════════════════════
@@ -1703,18 +1710,55 @@
   .pyqr-revise { margin: 22px 28px 0; background: #FEF6F0; border-radius: var(--r-lg); padding: 16px; border: 1px solid rgba(232,100,10,0.15); text-align: left; }
   .pyqr-revise-title { font-size: 11px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 8px; }
   .pyqr-revise-item { font-size: 13px; color: var(--text-2); font-weight: 500; padding: 3px 0; display: flex; align-items: center; gap: 6px; }
-  .pyqr-cta-area { padding: 22px 28px 32px; display: flex; flex-direction: column; gap: 10px; }
-  .pyqr-btn-primary {
+  /* PYQ Rules Modal */
+  .pyq-rules-blur {
+    position: absolute; inset: 0;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.28);
+  }
+  .pyq-rules-card {
+    position: relative; z-index: 1;
+    background: #fff; border-radius: 24px;
+    padding: 28px 24px 24px; margin: 0 16px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    animation: rulesSlideUp 0.38s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes rulesSlideUp {
+    from { opacity:0; transform: translateY(40px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  .pyq-rules-icon { font-size: 36px; margin-bottom: 14px; }
+  .pyq-rules-title { font-size: 20px; font-weight: 900; color: var(--text-1); letter-spacing: -0.4px; margin-bottom: 10px; line-height: 1.2; }
+  .pyq-rules-sub { font-size: 13px; color: var(--text-2); line-height: 1.6; font-weight: 500; margin-bottom: 18px; }
+  .pyq-rules-tips { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .pyq-rules-tip {
+    display: flex; align-items: center; gap: 10px; text-align: left;
+    font-size: 13px; font-weight: 600; color: var(--text-1); line-height: 1.4;
+    background: #F7F7F9; border-radius: 10px; padding: 10px 12px;
+  }
+  .pyq-rules-tip span { font-size: 16px; flex-shrink: 0; }
+  .pyq-rules-cta {
     width: 100%; padding: 15px; border-radius: 100px;
     background: var(--text-1); color: #fff;
-    font-size: 14px; font-weight: 800; font-family: 'Fustat', system-ui;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
+    border: none; cursor: pointer;
+  }
+  /* Blur the question content while modal is shown */
+  .pyq-content-blur { filter: blur(4px); pointer-events: none; transition: filter 0.3s ease; }
+
+  .pyqr-cta-area { padding: 22px 24px 36px; display: flex; flex-direction: column; gap: 10px; }
+  .pyqr-btn-primary {
+    width: 100%; padding: 16px; border-radius: 100px;
+    background: var(--text-1); color: #fff;
+    font-size: 15px; font-weight: 800; font-family: 'Fustat', system-ui;
     border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
   }
   .pyqr-btn-secondary {
-    width: 100%; padding: 13px; border-radius: 100px;
-    background: var(--surface-2); color: var(--text-2);
-    font-size: 13px; font-weight: 700; font-family: 'Fustat', system-ui;
-    border: none; cursor: pointer;
+    width: 100%; padding: 15px; border-radius: 100px;
+    background: transparent; color: var(--text-1);
+    font-size: 15px; font-weight: 700; font-family: 'Fustat', system-ui;
+    border: 1.5px solid rgba(0,0,0,0.18); cursor: pointer;
   }
   </style>
 </head>
@@ -2754,11 +2798,7 @@
 
         <!-- ── 4. PYQ WAR ROOM LOADER ── -->
         <div class="app-screen" id="sc-pyq-land" style="background:#fff;">
-          <div style="flex-shrink:0;display:flex;align-items:center;gap:12px;padding:52px 20px 0;">
-            <button style="width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.12);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;" onclick="chapNav.open('sc-chap')">
-              <i data-lucide="arrow-left" style="width:18px;height:18px;color:#111;"></i>
-            </button>
-          </div>
+          <div style="flex-shrink:0;height:86px;"></div>
           <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px 48px;">
             <div class="pyql-loader-ring">
               <svg viewBox="0 0 80 80" style="width:80px;height:80px;animation:pyqlSpin 1.4s linear infinite;">
@@ -2780,14 +2820,22 @@
 
         <!-- ── 5. PYQ QUESTION FLOW ── -->
         <div class="app-screen" id="sc-pyq-q">
+          <div class="ml-status">
+            <span class="ml-status-time">9:41</span>
+            <div class="ml-status-icons">
+              <i data-lucide="signal" style="width:14px;height:14px;"></i>
+              <i data-lucide="wifi" style="width:14px;height:14px;"></i>
+              <i data-lucide="battery-full" style="width:14px;height:14px;"></i>
+            </div>
+          </div>
           <div class="pyq-header">
-            <button class="pyq-back" id="pyqBack" onclick="chapNav.open('sc-pyq-land')">
-              <i data-lucide="x" style="width:18px;height:18px;"></i>
+            <button class="pyq-back" id="pyqBack" onclick="chapNav.open('sc-chap')">
+              <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
             </button>
             <div class="pyq-prog-wrap">
               <div class="pyq-prog-row">
-                <div class="pyq-prog-label" id="pyqProgLabel">Question 1 of 5</div>
-                <div class="pyq-prog-score" id="pyqScore">Score: 0</div>
+                <div class="pyq-prog-label" id="pyqProgLabel">Q 1 / 5</div>
+                <button class="pyq-continue-later" onclick="chapNav.open('sc-chap')">Continue later</button>
               </div>
               <div class="pyq-prog-bar"><div class="pyq-prog-fill" id="pyqProgFill" style="width:20%;"></div></div>
             </div>
@@ -2822,6 +2870,22 @@
               <i data-lucide="home" style="width:16px;height:16px;"></i> Back to Chapter
             </button>
             <button class="pyqr-btn-secondary" onclick="chapNav.open('sc-ml')">Review Weak Concepts</button>
+          </div>
+        </div>
+
+        <!-- PYQ Rules Modal -->
+        <div id="pyqRulesModal" style="display:none;position:absolute;inset:0;z-index:900;align-items:flex-end;justify-content:center;padding-bottom:32px;">
+          <div class="pyq-rules-blur"></div>
+          <div class="pyq-rules-card">
+            <div class="pyq-rules-icon">⚔️</div>
+            <div class="pyq-rules-title">Welcome to PYQ War Room</div>
+            <div class="pyq-rules-sub">You'll get 5 multiple choice questions from previous years' NEET papers. Read carefully — there's only one right answer.</div>
+            <div class="pyq-rules-tips">
+              <div class="pyq-rules-tip"><span>📌</span> All questions are from Human Physiology</div>
+              <div class="pyq-rules-tip"><span>🧠</span> Explanations shown after each answer</div>
+              <div class="pyq-rules-tip"><span>✅</span> Correct answers highlighted in green</div>
+            </div>
+            <button class="pyq-rules-cta" onclick="chapNav._dismissRules()">Got it, let's go!</button>
           </div>
         </div>
 
@@ -3413,15 +3477,15 @@ const chapNav = (() => {
         // update stats
         const remEl = document.getElementById('mldRemNum');
         const revEl = document.getElementById('mldRevNum');
-        if (remEl) { remEl.textContent = mlRemembered; remEl.className = 'mld-stat-num green'; }
-        if (revEl) { revEl.textContent = mlNeedsRevision; revEl.className = 'mld-stat-num orange'; }
+        if (remEl) { remEl.textContent = mlRemembered; remEl.className = 'mld-stat-num'; }
+        if (revEl) { revEl.textContent = mlNeedsRevision; revEl.className = 'mld-stat-num'; }
         // populate revision list
         const list = document.getElementById('mldReviseList');
         if (list) {
           if (mlRevisionCards.length === 0) {
             list.innerHTML = '<div style="font-size:13px;color:var(--green);font-weight:600;margin-top:4px;">🎯 Perfect — nothing to revise!</div>';
           } else {
-            list.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">Needs Revision</div>'
+            list.innerHTML = '<div class="mld-revise-hdr">Needs Revision</div>'
               + mlRevisionCards.map(i => `<div class="mld-revise-item"><div class="mld-revise-dot"></div>${ML_CARDS[i].tag}</div>`).join('');
           }
         }
@@ -3484,7 +3548,7 @@ const chapNav = (() => {
         clearInterval(iv);
         startPYQ();
       }
-    }, 900);
+    }, 400);
   }
 
   function startPYQ() {
@@ -3493,13 +3557,28 @@ const chapNav = (() => {
     pyqAnswered = new Array(PYQ_QUESTIONS.length).fill(null);
     show('sc-pyq-q');
     renderPYQQuestion();
+    // Show rules modal
+    const modal = document.getElementById('pyqRulesModal');
+    const scroll = document.getElementById('pyqScroll');
+    if (modal) { modal.style.display = 'flex'; }
+    if (scroll) scroll.classList.add('pyq-content-blur');
+    const dock = document.getElementById('pyqNextDock');
+    if (dock) dock.classList.add('pyq-content-blur');
+  }
+
+  function _dismissRules() {
+    const modal = document.getElementById('pyqRulesModal');
+    const scroll = document.getElementById('pyqScroll');
+    const dock = document.getElementById('pyqNextDock');
+    if (modal) { modal.style.opacity = '0'; modal.style.transition = 'opacity 0.25s'; setTimeout(() => { modal.style.display = 'none'; modal.style.opacity = ''; }, 260); }
+    if (scroll) scroll.classList.remove('pyq-content-blur');
+    if (dock) dock.classList.remove('pyq-content-blur');
   }
 
   function renderPYQQuestion() {
     const q = PYQ_QUESTIONS[pyqCurrent];
     const pct = ((pyqCurrent + 1) / PYQ_QUESTIONS.length * 100).toFixed(0);
-    document.getElementById('pyqProgLabel').textContent = `Q ${pyqCurrent + 1} / ${PYQ_QUESTIONS.length}`;
-    document.getElementById('pyqScore').textContent = `Score: ${pyqScore}`;
+    document.getElementById('pyqProgLabel').textContent = `${pyqCurrent + 1} / ${PYQ_QUESTIONS.length}`;
     document.getElementById('pyqProgFill').style.width = pct + '%';
 
     const labels = ['A', 'B', 'C', 'D'];
@@ -3508,15 +3587,17 @@ const chapNav = (() => {
         <div class="pyq-radio"><div class="pyq-radio-dot"></div></div>
         <div class="pyq-option-label">${labels[i]}</div>
         <div class="pyq-option-text">${opt}</div>
-        <div class="pyq-option-result" id="pyqOptRes${i}"></div>
+        <div class="pyq-option-icon" id="pyqOptIcon${i}"></div>
       </div>`).join('');
 
     const isLast = pyqCurrent === PYQ_QUESTIONS.length - 1;
+    const ctaLabel = isLast
+      ? '<i data-lucide="trophy" style="width:15px;height:15px;"></i> See Results'
+      : 'Next Question <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>';
 
     document.getElementById('pyqScroll').innerHTML = `
       <div style="height:8px;"></div>
       <div class="pyq-q-card">
-        <div class="pyq-q-tag">${q.type}</div>
         <div class="pyq-q-text" style="white-space:pre-line;">${q.q}</div>
       </div>
       <div class="pyq-options">${opts}</div>
@@ -3524,10 +3605,21 @@ const chapNav = (() => {
         <div class="pyq-exp-label">Explanation</div>
         <div class="pyq-exp-text">${q.explanation}</div>
       </div>
-      <button class="pyq-next-btn" id="pyqNext" onclick="chapNav._pyqNext()">
-        ${isLast ? '<i data-lucide="trophy" style="width:15px;height:15px;"></i> See Results' : 'Next Question <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>'}
-      </button>
       <div style="height:20px;"></div>`;
+
+    // docked CTA — always visible, disabled until answered
+    let dock = document.getElementById('pyqNextDock');
+    if (!dock) {
+      dock = document.createElement('div');
+      dock.id = 'pyqNextDock';
+      dock.className = 'pyq-next-dock';
+      dock.innerHTML = `<button class="pyq-next-btn" id="pyqNextBtn" onclick="chapNav._pyqNext()">${ctaLabel}</button>`;
+      document.getElementById('sc-pyq-q').appendChild(dock);
+    } else {
+      const btn = dock.querySelector('.pyq-next-btn');
+      btn.innerHTML = ctaLabel;
+      btn.classList.remove('enabled');
+    }
     lucide.createIcons();
   }
 
@@ -3537,25 +3629,23 @@ const chapNav = (() => {
     const q = PYQ_QUESTIONS[pyqCurrent];
     const isCorrect = idx === q.correct;
     if (isCorrect) pyqScore++;
-    document.getElementById('pyqScore').textContent = `Score: ${pyqScore}`;
 
     const opts = document.querySelectorAll('.pyq-option');
     opts.forEach((el, i) => {
       el.classList.add('disabled');
-      const resEl = document.getElementById(`pyqOptRes${i}`);
+      const iconEl = document.getElementById(`pyqOptIcon${i}`);
       if (i === q.correct) {
         el.classList.add('correct');
-        if (resEl) resEl.textContent = '✓ Correct';
+        if (iconEl) iconEl.textContent = '✓';
       } else if (i === idx && !isCorrect) {
         el.classList.add('wrong');
-        if (resEl) resEl.textContent = '✗ Wrong';
+        if (iconEl) iconEl.textContent = '✗';
       }
     });
-    // also mark selected (the one tapped)
-    document.getElementById(`pyqOpt${idx}`).classList.add('selected');
     document.getElementById('pyqExp').classList.add('show');
-    const nextBtn = document.getElementById('pyqNext');
-    nextBtn.classList.add('show');
+    const btn = document.querySelector('#pyqNextDock .pyq-next-btn');
+    if (btn) btn.classList.add('enabled');
+    lucide.createIcons();
     document.getElementById('pyqScroll').scrollTo({ top: 9999, behavior: 'smooth' });
   }
 
@@ -3608,7 +3698,7 @@ const chapNav = (() => {
     if (list) list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  return { open, goTo, openPYQ, startPYQ, _startPYQLoader, _mlReveal, mlSwipe, _pyqSelect, _pyqNext, _showRevision };
+  return { open, goTo, openPYQ, startPYQ, _startPYQLoader, _mlReveal, mlSwipe, _pyqSelect, _pyqNext, _showRevision, _dismissRules };
 })();
 </script>
 </body>
