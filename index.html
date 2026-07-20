@@ -174,7 +174,7 @@
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding-bottom: 16px;
+      padding-bottom: 100px;
     }
     .scroll-area::-webkit-scrollbar { display: none; }
 
@@ -709,26 +709,28 @@
 
     /* ─── BOTTOM NAV — Apple-style frosted glass ─── */
     .bottom-nav {
-      flex-shrink: 0;
+      position: absolute;
+      bottom: 20px;
+      left: 6px;
+      right: 6px;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      margin: 0 6px 20px;
-      padding: 10px 4px 12px;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      padding: 10px 2px 12px;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
+      -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.08);
       border-radius: 28px;
-      border: none;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
       z-index: 200;
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center; gap: 2px;
-      padding: 6px 12px 4px; border-radius: 100px; cursor: pointer;
+      padding: 6px 6px 4px; border-radius: 100px; cursor: pointer;
       color: #AAAAAA;
       transition: color 0.18s ease;
-      min-width: 44px;
+      min-width: 40px;
     }
     .nav-item.active { color: #111118; }
     .nav-item.active .nav-label { color: #111118; font-weight: 700; }
