@@ -1450,15 +1450,21 @@
 
   /* Swipe direction overlays on card */
   .ml-swipe-overlay {
-    position: absolute; inset: 0; border-radius: 28px;
-    display: flex; align-items: flex-end; justify-content: center;
-    padding-bottom: 24px; font-size: 16px; font-weight: 900; letter-spacing: 2px;
+    position: absolute; left: 0; right: 0; bottom: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; letter-spacing: 1.5px;
     opacity: 0; pointer-events: none;
     transition: opacity 0.12s ease;
-    border: 3px solid transparent;
+    z-index: 10;
   }
-  .ml-swipe-overlay.left  { background: rgba(232,100,10,0.08); color: #E8640A; border-color: rgba(232,100,10,0.3); }
-  .ml-swipe-overlay.right { background: rgba(46,107,58,0.08);  color: var(--green); border-color: rgba(46,107,58,0.3); }
+  .ml-swipe-overlay::after {
+    content: attr(data-label);
+    padding: 8px 20px; border-radius: 100px;
+  }
+  .ml-swipe-overlay.left  { color: #E8640A; }
+  .ml-swipe-overlay.left::after  { background: rgba(232,100,10,0.12); border: 1.5px solid rgba(232,100,10,0.35); }
+  .ml-swipe-overlay.right { color: var(--green); }
+  .ml-swipe-overlay.right::after { background: rgba(46,107,58,0.12);  border: 1.5px solid rgba(46,107,58,0.35); }
 
   /* ── Memory Lock Launcher ── */
   .ml-launcher {
@@ -3615,8 +3621,8 @@ const chapNav = (() => {
             <div class="ml-answer-takeaway">${card.takeaway}</div>
           </div>
         </div>
-        <div class="ml-swipe-overlay left" id="mlOverlayLeft">✗ NEEDS REVISION</div>
-        <div class="ml-swipe-overlay right" id="mlOverlayRight">✓ I REMEMBER</div>
+        <div class="ml-swipe-overlay left" id="mlOverlayLeft" data-label="✗ NEEDS REVISION"></div>
+        <div class="ml-swipe-overlay right" id="mlOverlayRight" data-label="✓ I REMEMBER"></div>
         ${tutorialHTML}
       </div>`;
 
