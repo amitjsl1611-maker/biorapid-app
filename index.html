@@ -177,6 +177,17 @@
     }
     .scroll-area::-webkit-scrollbar { display: none; }
 
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.52s cubic-bezier(0.22,1,0.36,1), transform 0.52s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ─── HEADER ─── */
     .header {
       display: flex;
@@ -625,10 +636,11 @@
     .act-list { display: flex; flex-direction: column; gap: 7px; padding: 0 16px; }
     .act-item {
       display: flex; align-items: center; gap: 11px;
-      background: #fff; border-radius: var(--r-md);
-      padding: 12px 14px; border: 1px solid var(--border);
-      box-shadow: var(--sh-xs);
+      background: transparent; border-radius: 0;
+      padding: 12px 4px; border: none;
+      border-bottom: 1px solid var(--border);
     }
+    .act-item:last-child { border-bottom: none; }
     .act-icon {
       width: 32px; height: 32px; border-radius: 50%;
       background: #D8F0E0; color: var(--green);
@@ -3770,6 +3782,51 @@ const chapNav = (() => {
     }, 100);
   }
 
+  /* ── Scroll reveal ── */
+  function initReveal() {
+    const scrollEl = document.querySelector('.scroll-area');
+    if (!scrollEl) return;
+
+    // Tag all direct section-level children for reveal
+    const targets = scrollEl.querySelectorAll(
+      '.hero-card, .sec-row, .challenge-card, .ai-coach-card, .streak-card, .act-item, .jump-back-card, .jump-back-item'
+    );
+    targets.forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = '0s'; // reset; stagger applied below
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          // re-hide when scrolled out so re-entry re-animates
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, {
+      root: scrollEl,
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.08
+    });
+
+    // Stagger siblings within same parent
+    const groups = new Map();
+    targets.forEach(el => {
+      const parent = el.parentElement;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent).push(el);
+    });
+    groups.forEach(siblings => {
+      siblings.forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.06}s`;
+      });
+    });
+
+    targets.forEach(el => obs.observe(el));
+  }
+
   /* ── Hero card click handler ── */
   function init() {
     const heroPhysio = document.getElementById('heroPhysio');
@@ -3781,6 +3838,7 @@ const chapNav = (() => {
       const modal = document.getElementById('welcomeModal');
       if (modal) modal.style.display = 'flex';
     }, 600);
+    initReveal();
   }
 
   document.addEventListener('DOMContentLoaded', init);
