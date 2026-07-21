@@ -1163,15 +1163,20 @@
        SCREEN 8 — PERSONALIZATION LOADER
     ───────────────────────────────────── */
     #ob-ploader {
-      background: linear-gradient(155deg, #EDF8EC 0%, #F4EFFE 55%, #EBF0FD 100%);
+      background: radial-gradient(ellipse 130% 50% at 10% 5%,  #C8E8FF 0%, transparent 48%),
+                  radial-gradient(ellipse 90%  50% at 90% 10%, #D8F0FF 0%, transparent 45%),
+                  radial-gradient(ellipse 70%  45% at 5%  55%, #BDE2FF 0%, transparent 45%),
+                  radial-gradient(ellipse 80%  45% at 95% 65%, #CCE9FF 0%, transparent 45%),
+                  radial-gradient(ellipse 110% 45% at 50% 100%,#D5EEFF 0%, transparent 50%),
+                  #EEF7FF;
       align-items: center; justify-content: center;
     }
     .ploader-wrap { text-align: center; padding: 0 28px; width: 100%; }
     .ploader-mark {
-      width: 68px; height: 68px; border-radius: 22px;
+      width: 72px; height: 72px; border-radius: 22px;
       background: #fff; box-shadow: var(--sh-md);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 22px; color: var(--green);
+      margin: 0 auto 16px; color: #3B82F6;
       animation: markPulse 2.4s ease-in-out infinite;
     }
     .ploader-title {
@@ -1193,7 +1198,7 @@
       flex-shrink: 0; color: #ABABAB;
       transition: background 0.35s ease, color 0.35s ease;
     }
-    .ploader-row.done .ploader-dot { background: var(--green); color: #fff; }
+    .ploader-row.done .ploader-dot { background: #3B82F6; color: #fff; }
     .ploader-row-text { font-size: 14px; font-weight: 600; color: var(--text-1); }
   /* ════════════════════════════════════════
      L2 / L3 SCREENS
@@ -2319,9 +2324,13 @@
           <div class="ob-screen" id="ob-ploader">
             <div class="ploader-wrap">
               <div class="ploader-mark">
-                <i data-lucide="leaf" style="width:34px;height:34px;"></i>
+                <svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" fill="none" style="width:42px;height:32px;">
+                  <path d="M60 52 C54 42, 36 24, 8 16 C1 14, 1 30, 10 40 C22 52, 44 54, 60 52Z" fill="#3B82F6"/>
+                  <path d="M60 52 C66 42, 84 24, 112 16 C119 14, 119 30, 110 40 C98 52, 76 54, 60 52Z" fill="#3B82F6"/>
+                  <rect x="54" y="51" width="12" height="26" rx="6" fill="#3B82F6"/>
+                </svg>
               </div>
-              <div style="font-size:26px;font-weight:900;letter-spacing:-1px;color:var(--text-1);margin-bottom:4px;"><span style="color:var(--green);">Bio</span>Rapid</div>
+              <div style="font-size:26px;font-weight:900;letter-spacing:-1px;color:var(--text-1);margin-bottom:4px;"><span style="color:#3B82F6;">Bio</span>Rapid</div>
               <div class="ploader-title" style="font-size:15px;font-weight:600;margin-top:20px;">Building Your Personalized Dashboard</div>
               <div class="ploader-sub">This will only take a moment</div>
               <div class="ploader-list" id="ploaderList">
