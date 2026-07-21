@@ -3184,6 +3184,13 @@
     ov.style.opacity = '0';
     setTimeout(() => {
       ov.style.display = 'none';
+      // Show welcome modal now that homepage is visible
+      if (window._showWelcomeOnHomepage) {
+        setTimeout(() => {
+          const modal = document.getElementById('welcomeModal');
+          if (modal) modal.style.display = 'flex';
+        }, 400);
+      }
       // Re-trigger homepage entrance animations
       document.querySelectorAll('.rng-arc').forEach(el => {
         el.classList.remove('go');
@@ -3963,11 +3970,8 @@ const chapNav = (() => {
     if (heroPhysio) heroPhysio.addEventListener('click', () => open('sc-chap'));
     document.getElementById('chapBack').addEventListener('click', hide);
     document.getElementById('mlBack').addEventListener('click', () => open('sc-chap'));
-    // Show welcome modal after short delay
-    setTimeout(() => {
-      const modal = document.getElementById('welcomeModal');
-      if (modal) modal.style.display = 'flex';
-    }, 600);
+    // Show welcome modal — only after onboarding exits
+    window._showWelcomeOnHomepage = true;
     initReveal();
   }
 
