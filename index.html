@@ -1078,10 +1078,16 @@
     }
     .ob-choice:active { transform: scale(0.98); }
     .ob-choice.sel {
-      background: #D0E9FF; border-color: #5AABFF;
-      box-shadow: 0 0 0 3px rgba(90,171,255,0.12);
+      background: #EBF4FF; border-color: #3B82F6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.10);
     }
-    .ob-choice-ico { font-size: 22px; line-height: 1; width: 30px; text-align: center; flex-shrink: 0; }
+    .ob-choice-ico {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: #EBF4FF; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: #3B82F6;
+      transition: background 0.15s ease;
+    }
+    .ob-choice.sel .ob-choice-ico { background: #DBEAFE; }
     .ob-choice-body { flex: 1; min-width: 0; }
     .ob-choice-title { font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.2px; }
     .ob-choice-sub { font-size: 11.5px; color: var(--text-2); margin-top: 1px; }
@@ -1092,7 +1098,7 @@
       color: transparent; font-size: 12px;
       transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
-    .ob-choice.sel .ob-choice-ring { background: var(--text-1); border-color: var(--text-1); color: #fff; }
+    .ob-choice.sel .ob-choice-ring { background: #3B82F6; border-color: #3B82F6; color: #fff; }
 
     /* Time grid (2-col) */
     .ob-time-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -2199,7 +2205,7 @@
             <div class="ob-content">
               <div class="ob-choices" id="prepChoices">
                 <div class="ob-choice" data-group="prep">
-                  <div class="ob-choice-ico">🌱</div>
+                  <div class="ob-choice-ico"><i data-lucide="sprout" style="width:20px;height:20px;"></i></div>
                   <div class="ob-choice-body">
                     <div class="ob-choice-title">Just Started</div>
                     <div class="ob-choice-sub">Beginning my NEET preparation</div>
@@ -2207,7 +2213,7 @@
                   <div class="ob-choice-ring"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
                 </div>
                 <div class="ob-choice" data-group="prep">
-                  <div class="ob-choice-ico">📖</div>
+                  <div class="ob-choice-ico"><i data-lucide="book-open" style="width:20px;height:20px;"></i></div>
                   <div class="ob-choice-body">
                     <div class="ob-choice-title">Halfway Through the Syllabus</div>
                     <div class="ob-choice-sub">Covered roughly half so far</div>
@@ -2215,7 +2221,7 @@
                   <div class="ob-choice-ring"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
                 </div>
                 <div class="ob-choice" data-group="prep">
-                  <div class="ob-choice-ico">🔄</div>
+                  <div class="ob-choice-ico"><i data-lucide="refresh-cw" style="width:20px;height:20px;"></i></div>
                   <div class="ob-choice-body">
                     <div class="ob-choice-title">Completed, Now Revising</div>
                     <div class="ob-choice-sub">Done once, now in revision mode</div>
@@ -2223,7 +2229,7 @@
                   <div class="ob-choice-ring"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
                 </div>
                 <div class="ob-choice" data-group="prep">
-                  <div class="ob-choice-ico">🎯</div>
+                  <div class="ob-choice-ico"><i data-lucide="target" style="width:20px;height:20px;"></i></div>
                   <div class="ob-choice-body">
                     <div class="ob-choice-title">Focused on Mock Tests</div>
                     <div class="ob-choice-sub">Practicing with full mock papers</div>
